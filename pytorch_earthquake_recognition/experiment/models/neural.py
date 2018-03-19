@@ -48,15 +48,17 @@ class mnist_model(nn.Module):
 
 
 class reduced_mnist_model(nn.Module):
-    __transformations = [transforms.Resize((200, 300)),
-                         transforms.RandomCrop((200, 200)),
-                         transforms.Grayscale(num_output_channels=3),
+    __transformations = [transforms.Grayscale(num_output_channels=3),
                          transforms.Resize((16, 16)),
                          transforms.ToTensor(),
                          transforms.Normalize(mean=[0.05744402642343559, 0.013903309317196117, 0.018187494838938993],
-                                             std=[0.0026338661418241613, 0.002147942197089102, 0.00220948527841007])]
+                                              std=[0.0026338661418241613, 0.002147942197089102, 0.00220948527841007])]
 
-    __train = []
+    __train = [transforms.Resize((200, 310)),
+               transforms.RandomCrop((200, 230))]
+
+    __test = [transforms.Resize((200, 310)),
+              transforms.CenterCrop((200, 230))]
 
     transformations = {'train':  transforms.Compose(__train + __transformations),
                        'test': transforms.Compose(__transformations)
@@ -91,6 +93,57 @@ class reduced_mnist_model(nn.Module):
 
     def forward(self, inputs):
         out = self.feats(inputs)
+        out = self.dropout(out)
+        out = self.classifier(out)
+        out = self.avgpool(out)
+        out = out.view(-1, 3)
+        return out
+
+
+
+class multiple_mnist_model(nn.Module):
+    __transformations = [transforms.Grayscale(num_output_channels=3),
+                         transforms.Resize((16, 16)),
+                         transforms.ToTensor(),
+                         transforms.Normalize(mean=[0.05744402642343559, 0.013903309317196117, 0.018187494838938993],
+                                              std=[0.0026338661418241613, 0.002147942197089102, 0.00220948527841007])]
+
+    __train = []
+
+    transformations = {'train':  transforms.Compose(__train + __transformations),
+                       'test': transforms.Compose(__transformations)
+                       }
+
+    def __init__(self):
+        super().__init__()
+        self.feats = nn.Sequential(
+            nn.Conv2d(3, 16, 3, 1, 1),
+            nn.MaxPool2d(2, 2),
+            nn.ReLU(True),
+            nn.BatchNorm2d(16),
+
+            nn.Conv2d(16, 32, 3, 1, 1),
+            nn.ReLU(True),
+            nn.BatchNorm2d(32),
+
+            nn.Conv2d(32, 32, 5, 1, 1),
+            nn.MaxPool2d(2, 2),
+            nn.ReLU(True),
+            nn.BatchNorm2d(32),
+
+            nn.Conv2d(32, 64, 3,  1, 1),
+            nn.ReLU(True),
+            nn.BatchNorm2d(64),
+
+        )
+
+        self.classifier = nn.Conv2d(64, 3, 1)
+        self.avgpool = nn.AvgPool2d(3, 3)
+        self.dropout = nn.Dropout(0.5)
+
+    def forward(self, x, y, z):
+        for inputs in [x, y, z]:
+            out = self.feats(inputs)
         out = self.dropout(out)
         out = self.classifier(out)
         out = self.avgpool(out)

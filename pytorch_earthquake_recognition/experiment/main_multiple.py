@@ -3,7 +3,7 @@ from torch import nn
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from loaders.custom_loader import SpectrogramDataset
+from loaders.multiple_loader import Spectrogram3ComponentDataset
 import models
 from pycrayon import CrayonClient
 import os
@@ -15,10 +15,10 @@ def to_np(x):
 
 IMG_PATH = os.path.join(os.getcwd(), 'spectrograms')
 IMG_EXT = '.png'
-BATCH_SIZE = 128
+BATCH_SIZE = 512
 
 # variables
-NET = models.AlexNet
+NET = models.mnist_multiple
 
 MODEL_PATH = f'checkpoints/{NET.__name__}'
 
@@ -26,37 +26,37 @@ MODEL_PATH = f'checkpoints/{NET.__name__}'
 # Visualize
 cc = CrayonClient(hostname="0.0.0.0")
 summary = cc.create_experiment(f"/{NET.__name__}/trial-{datetime.now()}")
+
 # Dataset
-dataset_train = SpectrogramDataset(IMG_PATH,
+dataset_train = Spectrogram3ComponentDataset(IMG_PATH,
                                    transform=NET.transformations['train'])
 
-dataset_test = SpectrogramDataset(IMG_PATH,
+dataset_test = Spectrogram3ComponentDataset(IMG_PATH,
                                   transform=NET.transformations['test'],
-                                  test=True
-                                  )
+                                  test=True)
 
 
 # Data Loader
 train_loader = DataLoader(dataset_train,
                           batch_size=BATCH_SIZE,
                           shuffle=True,
-                          num_workers=1,  # 1 for CUDA
+                          num_workers=10,
                           pin_memory=True  # CUDA only
                           )
 
 test_loader = DataLoader(dataset_test,
                          batch_size=BATCH_SIZE,
-                         num_workers=1,
+                         num_workers=10,
                          pin_memory=True
                          )
 
+# To test the  accuracy against the training dataset
 train_test_loader = DataLoader(dataset_train,
                           batch_size=BATCH_SIZE,
                           shuffle=True,
-                          num_workers=1,
+                          num_workers=10,
                           pin_memory=True
                           )
-
 
 
 # Setup Net
@@ -73,11 +73,12 @@ def guess_labels(batches):
 
     for i in range(batches):
         images, labels = dataiter.next()
+        images = [Variable(input).cuda() for image in images]
 
         # print images
         print('GroundTruth: ', ' '.join('%5s' % labels[j] for j in range(BATCH_SIZE)))
 
-        outputs = net(Variable(images).cuda())
+        outputs = net(images)
 
         _, predicted = torch.max(outputs.data, 1)
 
@@ -96,15 +97,13 @@ def class_evaluation(net, copy_net=False):
         Net.eval()
     else:
         Net = net
-    """
-    Tests how accurate each class is in the net - noise vs local vs nonlocal
-    """
+
     class_correct = list(0 for _ in range(3))
     class_total = list(0 for _ in range(3))
 
-    for (images, labels) in test_loader:
-        images, labels = images.cuda(), labels.cuda()
-        outputs = Net(Variable(images).cuda())
+    for (inputs, labels) in test_loader:
+        inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
+        outputs = Net(inputs)
         _, predicted = torch.max(outputs.data, 1)
         c = (predicted == labels).squeeze()
         for i in range(BATCH_SIZE):
@@ -145,9 +144,9 @@ def test(net, copy_net=False):
 
     correct = 0
     total = 0
-    for (images, labels) in test_loader:
-        images, labels = images.cuda(), labels.cuda()
-        outputs = Net(Variable(images).cuda())
+    for (inputs, labels) in test_loader:
+        inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
+        outputs = Net(inputs)
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum()
@@ -167,9 +166,9 @@ def test_on_training(net, copy_net=False):
 
     correct = 0
     total = 0
-    for (images, labels) in train_test_loader:
-        images, labels = images.cuda(), labels.cuda()
-        outputs = Net(Variable(images).cuda())
+    for (inputs, labels) in train_test_loader:
+        inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
+        outputs = Net(inputs)
         _, predicted = torch.max(outputs.data, 1)
         total += labels.size(0)
         correct += (predicted == labels).sum()
@@ -178,14 +177,13 @@ def test_on_training(net, copy_net=False):
     print('Accuracy of the network on the train images: %d %%' % correct)
     return correct
 
-
+from pprint import pprint
 # Train and test
 def train(epoch):
     running_loss = 0.0
-    for i, (inputs, true_labels) in enumerate(train_loader, 0):
-
+    for i, (true_inputs, true_labels) in enumerate(train_loader, 0):
         # wrap them in Variable
-        inputs, labels = Variable(inputs).cuda(), Variable(true_labels).cuda()
+        inputs, labels = [Variable(input).cuda() for input in true_inputs], Variable(true_labels).cuda()
 
         # zero the parameter gradients
         optimizer.zero_grad()
@@ -204,7 +202,7 @@ def train(epoch):
 
         def print_loss():
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                epoch, i * len(inputs), len(train_loader) * BATCH_SIZE,
+                epoch, int(i * len(true_inputs) * BATCH_SIZE / 3), len(train_loader) * BATCH_SIZE,
                        100. * i / len(train_loader), loss.data[0]))
 
             summary.add_scalar_value('train_loss', loss.data[0])
@@ -213,22 +211,23 @@ def train(epoch):
             summary.add_scalar_value('test_amount_correct', test(net, copy_net=True))
             summary.add_scalar_value('train_amount_correct', test_on_training(net, copy_net=True))
 
-        def write_model():
-            path = f'./checkpoints/{NET.__name__}/model{epoch}.pt'
-            save_model(path)
 
         def class_eval():
             values = class_evaluation(net, copy_net=True)
             summary.add_scalar_dict(data={'test_noise': values[0], 'test_local': values[1], 'test_nonlocal': values[2]}, step=epoch)
 
 
+        def write_model():
+            path = f'./checkpoints/{NET.__name__}/model{epoch}.pt'
+            save_model(path)
 
-        if i % 8 == 0:
+        if i % 2 == 0:
             print_loss()
 
-        if (epoch % 5 == 0) and i == 0:
+
+        if (epoch % 3 == 0) and i == 0:
             test_loss()
-            class_eval()
+            # class_eval()
 
         if (epoch % 10 == 0) and (i == 0):
             write_model()
@@ -239,11 +238,11 @@ if __name__ == '__main__':
          train(epoch)
     #######################
 
-    path = f'./checkpoints/{NET.__name__}/model650.pt'
+    path = f'./checkpoints/{NET.__name__}/model40.pt'
     load_model(path)
     net.eval()
 
-    test(net)
+    test_on_training(net)
     class_evaluation(net)
     guess_labels(1)
     pass

@@ -3,7 +3,8 @@ from torch.utils.data.dataset import Dataset
 from torchvision import transforms
 import glob
 from matplotlib import pyplot as plt
-from random import shuffle
+import random
+import os
 
 IMG_PATH = './spectrograms/'
 IMG_EXT = '.png'
@@ -11,14 +12,21 @@ IMG_EXT = '.png'
 class SpectrogramDataset(Dataset):
     """
     """
+    __SEED = 448
 
-    def __init__(self, img_path, transform=None, test=False, test_sample_every=7):   # about 15%
+
+    def __init__(self, img_path, transform=None, test=False, test_sample_every=5):   # about 20%
         self.img_path = img_path
         self.transform = transform
-        all_file_paths = glob.glob('./spectrograms/**/HNZ.png', recursive=True)
+        all_file_paths = glob.glob(os.path.join(img_path, '*/*/*/HNZ.png'))
+        # Randomly shuffle the files the same way each time, to keep the test and train dataset the same
+
+        random.seed(self.__SEED)
+        random.shuffle(all_file_paths)
 
         self.train_file_paths = []
         self.test_file_paths = []
+
         for i, path in enumerate(all_file_paths):
             if (i % test_sample_every == 0):
                 self.test_file_paths.append(path)
@@ -26,7 +34,7 @@ class SpectrogramDataset(Dataset):
                 self.train_file_paths.append(path)
 
         self.file_paths = self.test_file_paths if test else self.train_file_paths
-        shuffle(self.file_paths)
+
 
         self.labels = {
             'noise': 0,
@@ -66,6 +74,21 @@ class SpectrogramDataset(Dataset):
         return
 
 
+
+    def preview(self, number=3):
+        fig = plt.figure()
+
+        for i in range(number):
+            sample, label = self.__getitem__(0)
+            ax = plt.subplot(1, number, i + 1)
+            plt.tight_layout()
+            ax.set_title('Sample #{}'.format(i))
+            ax.axis('off')
+            self.show_img(transforms.ToPILImage()(sample))
+
+        plt.show()
+
+
     @staticmethod
     def show_img(image):
         plt.imshow(image)
@@ -93,6 +116,7 @@ class SpectrogramDataset(Dataset):
         plt.tight_layout()
         cls.show_img(image)
         plt.show()
+
 
 if __name__ == '__main__':
     transformations = transforms.Compose([transforms.Resize(32), transforms.ToTensor()])

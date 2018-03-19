@@ -8,5 +8,5 @@ notebooks/Earthquake-audio-activity/
 **/*.wave
 /convnettorch/
 **/**/runs/
-**/**/models/
-
+**/**/checkpoints/
+**/**/spectrograms/
