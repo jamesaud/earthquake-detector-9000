@@ -3,7 +3,7 @@ from torch import nn
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from loaders.multiple_loader import Spectrogram3ComponentDataset
+from loaders.multiple_loader import SpectrogramMultipleDataset
 import models
 from pycrayon import CrayonClient
 import os
@@ -28,10 +28,10 @@ cc = CrayonClient(hostname="0.0.0.0")
 summary = cc.create_experiment(f"/{NET.__name__}/trial-{datetime.now()}")
 
 # Dataset
-dataset_train = Spectrogram3ComponentDataset(IMG_PATH,
+dataset_train = SpectrogramMultipleDataset(IMG_PATH,
                                    transform=NET.transformations['train'])
 
-dataset_test = Spectrogram3ComponentDataset(IMG_PATH,
+dataset_test = SpectrogramMultipleDataset(IMG_PATH,
                                   transform=NET.transformations['test'],
                                   test=True)
 
@@ -98,8 +98,8 @@ def class_evaluation(net, copy_net=False):
     else:
         Net = net
 
-    class_correct = list(0 for _ in range(3))
-    class_total = list(0 for _ in range(3))
+    class_correct = list(0 for _ in range(2))
+    class_total = list(0 for _ in range(2))
 
     for (inputs, labels) in test_loader:
         inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
@@ -114,11 +114,11 @@ def class_evaluation(net, copy_net=False):
             except IndexError:
                 continue
 
-    for i in range(3):
+    for i in range(2):
         print('Accuracy of %5s : %2d %%' % (
             i, 100 * class_correct[i] / class_total[i]))
 
-    return [100 * class_correct[i] / class_total[i] for i in range(3)]
+    return [100 * class_correct[i] / class_total[i] for i in range(2)]
 
 
 def save_model(path):
@@ -202,7 +202,7 @@ def train(epoch):
 
         def print_loss():
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                epoch, int(i * len(true_inputs) * BATCH_SIZE / 3), len(train_loader) * BATCH_SIZE,
+                epoch, int(i * len(true_inputs) * BATCH_SIZE / 2), len(train_loader) * BATCH_SIZE,
                        100. * i / len(train_loader), loss.data[0]))
 
             summary.add_scalar_value('train_loss', loss.data[0])

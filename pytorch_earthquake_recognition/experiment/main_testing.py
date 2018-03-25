@@ -1,5 +1,5 @@
 
-from loaders.custom_loader import SpectrogramDataset
+from loaders.single_loader import SpectrogramDataset
 from loaders.multiple_loader import Spectrogram3ComponentDataset
 import models
 from matplotlib import pyplot as plt
@@ -26,11 +26,11 @@ def preview_multiple_loader_dataset(num):
     dt = iter(dataset_train)
     imgs, label = next(dt)
 
-    dataset_train.preview(index=num)
+    dataset_train.preview(index=num, show=False)
 
 # Good Local Indexes: 3, 13
 preview_multiple_loader_dataset(13)
-
+plt.show()
 
 
 

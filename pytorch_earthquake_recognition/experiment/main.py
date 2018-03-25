@@ -3,7 +3,7 @@ from torch import nn
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from loaders.custom_loader import SpectrogramDataset
+from loaders.single_loader import SpectrogramDataset
 import models
 from pycrayon import CrayonClient
 import os
