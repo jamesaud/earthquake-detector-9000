@@ -1,32 +1,32 @@
 import torch.nn as nn
 import torchvision.transforms as transforms
 import torch
-import mytransforms.transforms as mytransforms
-from PIL import ImageFilter
+import config
+from mytransforms import transforms as mytransforms
 
 
-class mnist_two(nn.Module):
+class mnist_three_component(nn.Module):
 
-    DIM = 32  # by 16
-    BORDER_COLOR = 30  # Ignore border color when adding NOISE
-    NOISE_RGB_AMOUNT = 8  # How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
 
-    __transformations = [transforms.Grayscale(num_output_channels=3),
+    DIM = 64  # by 64
+    NOISE_RGB_AMOUNT = 3  # How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
+
+    _transformations = [transforms.Grayscale(num_output_channels=3),
                          transforms.Resize((DIM, DIM)),
                          transforms.ToTensor(),
-                         transforms.Normalize(mean=[0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943],
-                                              std=[0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851])
+                         mytransforms.NormalizeGray
                          ]
 
-    __train = [transforms.Grayscale(num_output_channels=1),
-               mytransforms.Add1DNoise(BORDER_COLOR, NOISE_RGB_AMOUNT),
-               transforms.Lambda(lambda img: img.filter(ImageFilter.GaussianBlur(radius=2))),
-               ]
+    _train = [
+        # transforms.Grayscale(num_output_channels=1),
+        # mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_RGB_AMOUNT),
+        # mytransforms.Gaussian_Blur(2),
+    ]
 
-    __test = []
+    _test = []
 
-    transformations = {'train':  transforms.Compose(__train + __transformations),
-                       'test': transforms.Compose(__test + __transformations)
+    transformations = {'train':  transforms.Compose(_train + _transformations),
+                       'test': transforms.Compose(_test + _transformations)
                        }
 
     def __init__(self):
@@ -51,8 +51,9 @@ class mnist_two(nn.Module):
             nn.BatchNorm2d(64),
         )
 
+
         self.classifier = nn.Sequential(
-            nn.Linear(self.DIM * 6 * 5 * 5, 128, bias=False),
+            nn.Linear(192*13*13, 128, bias=False),
             nn.BatchNorm1d(128),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
@@ -67,7 +68,6 @@ class mnist_two(nn.Module):
         n, z, e = components
         nout, zout, eout = self.feats(n), self.feats(z), self.feats(e)
         out = torch.cat((nout, zout, eout), 1)
-        out = out.view(-1, self.DIM * 6 * 5 * 5)
-
+        out = out.view(-1, 192*13*13)
         out = self.classifier(out)
         return out

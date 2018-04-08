@@ -3,22 +3,20 @@ from torch import nn
 import torch.optim as optim
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from loaders.single_loader import SpectrogramDataset
+from loaders.single_loader import SpectrogramSingleDataset
 import models
 from pycrayon import CrayonClient
 import os
 from datetime import datetime
 
 
-def to_np(x):
-    return x.data.cpu().numpy()
-
 IMG_PATH = os.path.join(os.getcwd(), 'spectrograms')
 IMG_EXT = '.png'
-BATCH_SIZE = 128
+BATCH_SIZE = 256
+NUM_CLASSES = 2
 
 # variables
-NET = models.AlexNet
+NET = models.mnist_one_component
 
 MODEL_PATH = f'checkpoints/{NET.__name__}'
 
@@ -26,34 +24,47 @@ MODEL_PATH = f'checkpoints/{NET.__name__}'
 # Visualize
 cc = CrayonClient(hostname="0.0.0.0")
 summary = cc.create_experiment(f"/{NET.__name__}/trial-{datetime.now()}")
-# Dataset
-dataset_train = SpectrogramDataset(IMG_PATH,
-                                   transform=NET.transformations['train'])
 
-dataset_test = SpectrogramDataset(IMG_PATH,
-                                  transform=NET.transformations['test'],
-                                  test=True
-                                  )
+
+# Dataset
+
+# 1. resize  2. crop
+crop = resize = False
+
+resize = (217, 316)
+crop = False  # (217, 316)     # (height, width)
+
+dataset_train = SpectrogramSingleDataset(IMG_PATH,
+                                         transform=NET.transformations['train'],
+                                         crop=crop,
+                                         resize=resize
+                                         )
+
+dataset_test = SpectrogramSingleDataset(IMG_PATH,
+                                        transform=NET.transformations['test'],
+                                        test=True,
+                                        crop=crop,
+                                        resize=resize
+                                        )
 
 
 # Data Loader
 train_loader = DataLoader(dataset_train,
                           batch_size=BATCH_SIZE,
                           shuffle=True,
-                          num_workers=1,  # 1 for CUDA
+                          num_workers=10,
                           pin_memory=True  # CUDA only
                           )
 
 test_loader = DataLoader(dataset_test,
                          batch_size=BATCH_SIZE,
-                         num_workers=1,
+                         num_workers=10,
                          pin_memory=True
                          )
 
 train_test_loader = DataLoader(dataset_train,
                           batch_size=BATCH_SIZE,
-                          shuffle=True,
-                          num_workers=1,
+                          num_workers=10,
                           pin_memory=True
                           )
 
@@ -99,8 +110,8 @@ def class_evaluation(net, copy_net=False):
     """
     Tests how accurate each class is in the net - noise vs local vs nonlocal
     """
-    class_correct = list(0 for _ in range(3))
-    class_total = list(0 for _ in range(3))
+    class_correct = list(0 for _ in range(NUM_CLASSES))
+    class_total = list(0 for _ in range(NUM_CLASSES))
 
     for (images, labels) in test_loader:
         images, labels = images.cuda(), labels.cuda()
@@ -115,11 +126,11 @@ def class_evaluation(net, copy_net=False):
             except IndexError:
                 continue
 
-    for i in range(3):
+    for i in range(NUM_CLASSES):
         print('Accuracy of %5s : %2d %%' % (
             i, 100 * class_correct[i] / class_total[i]))
 
-    return [100 * class_correct[i] / class_total[i] for i in range(3)]
+    return [100 * class_correct[i] / class_total[i] for i in range(NUM_CLASSES)]
 
 
 def save_model(path):
@@ -219,7 +230,7 @@ def train(epoch):
 
         def class_eval():
             values = class_evaluation(net, copy_net=True)
-            summary.add_scalar_dict(data={'test_noise': values[0], 'test_local': values[1], 'test_nonlocal': values[2]}, step=epoch)
+            # summary.add_scalar_dict(data={'test_noise': values[0], 'test_local': values[1], 'test_nonlocal': values[2]}, step=epoch)
 
 
 
@@ -235,7 +246,7 @@ def train(epoch):
 
 
 if __name__ == '__main__':
-    for epoch in range(1000):
+    for epoch in range(10000):
          train(epoch)
     #######################
 
@@ -246,4 +257,3 @@ if __name__ == '__main__':
     test(net)
     class_evaluation(net)
     guess_labels(1)
-    pass

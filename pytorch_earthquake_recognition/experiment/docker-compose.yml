@@ -5,7 +5,7 @@ services:
   crayon:
     image: alband/crayon
     ports:
-      - 8888:8888
+      - 8890:8888
       - 8889:8889
     volumes:
       - ./visualize/runs:/tmp/tensorboard

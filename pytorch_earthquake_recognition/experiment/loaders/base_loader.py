@@ -1,4 +1,3 @@
-from PIL import Image
 from torch.utils.data.dataset import Dataset
 from torchvision import transforms
 import glob
@@ -8,8 +7,8 @@ import os
 from collections import namedtuple
 from PIL import ImageFile
 from mytransforms.RandomSameCrop import RandomSameCropWidth
-from typing import List
 from PIL import Image
+import config
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 Components = namedtuple('Components', ('N', 'Z', 'E'))
@@ -19,7 +18,7 @@ class SpectrogramBaseDataset(Dataset):
     """
     __SEED = 448
 
-    def __init__(self, img_path, transform=None, test=False, resize=(200, 310), crop=(200, 260), divide_test=.3, **kwargs):
+    def __init__(self, img_path, transform=None, test=False, resize=False, crop=False, divide_test=config.DIVIDE_TEST, ignore=None, **kwargs):
         """
 
         :param img_path: path to the 'spectrograms' folder
@@ -34,19 +33,25 @@ class SpectrogramBaseDataset(Dataset):
              - crop
              - transform
         """
-
-        self.crop, self.resize = crop, resize
-
+        ignore_names = ignore or []
         self.img_path = img_path
         self.test = test
 
         # Transforms
         self.transform = transform
-        self.resize = transforms.Resize(resize)
-        self.transform_random_same_crop = RandomSameCropWidth(crop[1])
+
+        if resize:
+            resize = transforms.Resize(resize)
+
+        self.resize = resize
+
+        if crop:
+            self.transform_random_same_crop = RandomSameCropWidth(crop[1])
+
+        self.crop = crop
 
         # Get paths
-        local_paths, noise_paths = self.get_spectrograms(img_path)
+        local_paths, noise_paths = self.get_spectrograms(img_path, ignore_names=ignore_names)
 
         # Randomly shuffle the files the same way each time, to keep the test and train dataset the same
         self.shuffle(local_paths)
@@ -62,15 +67,17 @@ class SpectrogramBaseDataset(Dataset):
             file_paths = train_local + train_noise
 
         self.file_paths = self.shuffle(file_paths)
+        self.file_paths = self.clean_paths(file_paths)
 
         self.labels = {
             'noise': 0,
             'local': 1,
         }
+
         self.reverse_map(self.labels)
 
     def separate_paths(self, paths, amount):
-        if not (0 < amount < 1):
+        if not (0 <= amount <= 1):
             raise ValueError("'amount' should be between 0 and 1")
         separate_index = int(len(paths) * amount)
         return paths[:separate_index], paths[separate_index:]
@@ -81,17 +88,39 @@ class SpectrogramBaseDataset(Dataset):
         return paths
 
     @staticmethod
-    def get_spectrograms(path):
-        local_path = glob.glob(os.path.join(path + '/*/local/*/'))
-        noise_path = glob.glob(os.path.join(path + '/*/noise/*/'))
+    def get_spectrograms(path, ignore_names=None):
+
+        def get_ignore_filepaths(ignore_names):
+            ignore_paths = [os.path.join(path, name) for name in ignore_names]
+            ignore_local_paths = [glob.glob(os.path.join(ipath, 'local/*/')) for ipath in ignore_paths]
+            ignore_noise_paths = [glob.glob(os.path.join(ipath, 'noise/*/')) for ipath in ignore_paths]
+            ignore_local_paths = [item for sublist in ignore_local_paths for item in sublist]
+            ignore_noise_paths = [item for sublist in ignore_noise_paths for item in sublist]
+            return ignore_local_paths, ignore_noise_paths
+
+        def remove_paths(paths, paths_to_remove):
+            paths = set(paths) - set(paths_to_remove)
+            return list(paths)
 
         def get_components(paths_to_components):
             return [glob.glob(os.path.join(path, "*.png")) for path in paths_to_components]
 
+        ignore_local, ignore_noise = get_ignore_filepaths(ignore_names or [])
+
+        local_path = glob.glob(os.path.join(path + '/*/local/*/'))
+        noise_path = glob.glob(os.path.join(path + '/*/noise/*/'))
+
+        local_path = remove_paths(local_path, ignore_local)
+        noise_path = remove_paths(noise_path, ignore_noise)
         local_paths = get_components(local_path)
         noise_paths = get_components(noise_path)
 
+        # Maintain the same order each time, because subtracting sets does not guarantee order!
+        local_paths.sort()
+        noise_paths.sort()
+
         return local_paths, noise_paths
+
 
     def apply_transforms(self, components):
         components = [self.open_image(component) for component in components]
@@ -115,7 +144,6 @@ class SpectrogramBaseDataset(Dataset):
         return img
 
     def apply_crop(self, components):
-        components[0].height
         if self.test:
             crop = transforms.CenterCrop(self.crop)
         else:
@@ -133,6 +161,23 @@ class SpectrogramBaseDataset(Dataset):
         label = self.label_to_number(self.get_label(n))
         n, z, e = self.apply_transforms((n, z, e))
         return Components(n, z, e), label
+
+    def _getitem_raw(self, index):
+        n, z, e = self.file_paths[index]
+        label = self.label_to_number(self.get_label(n))
+        n, z, e = [self.open_image(component) for component in (n, z, e)]
+        n, z, e = map(transforms.ToTensor(), (n, z, e))
+        return Components(n, z, e), label
+
+    def get_next_index_with_label(self, label) -> int:
+        if label not in self.labels:
+            raise ValueError("Label is not in the labels: ", self.labels)
+
+        for i, (sample, labl) in enumerate(self):
+            if label == labl:
+                yield i
+        else:
+            raise ValueError("No Label Found")
 
     def __len__(self):
         return len(self.file_paths)
@@ -155,6 +200,26 @@ class SpectrogramBaseDataset(Dataset):
         if show:
             plt.show()
 
+        return fig
+
+    def preview_raw(self, index=0, show=True):
+        components, label = self._getitem_raw(index)
+
+        fig = plt.figure()
+        plt.suptitle(self.labels[label])
+        for i, title in enumerate(['n', 'z', 'e']):
+            ax = plt.subplot(1, 3, i + 1)
+            plt.tight_layout()
+            ax.set_title(title)
+            ax.axis('off')
+            self.show_img(transforms.ToPILImage()(components[i]))
+
+        if show:
+            plt.show()
+
+        return fig
+
+
     @staticmethod
     def clean_paths(file_paths):
         return [components for components in file_paths if len(components) == 3]
@@ -175,6 +240,6 @@ class SpectrogramBaseDataset(Dataset):
 
 if __name__ == '__main__':
     IMG_PATH = '../spectrograms'
-    s = SpectrogramBaseDataset(IMG_PATH)
+    s = SpectrogramBaseDataset(IMG_PATH, ignore=['UtahQuakes', 'AmatriceQuakes'])
     s = iter(s)
     print(next(s))

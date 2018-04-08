@@ -10,3 +10,5 @@ notebooks/Earthquake-audio-activity/
 **/**/runs/
 **/**/checkpoints/
 **/**/spectrograms/
+**/**/visualize/
+**/**/models/

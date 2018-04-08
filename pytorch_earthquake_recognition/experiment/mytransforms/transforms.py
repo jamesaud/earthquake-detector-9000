@@ -2,7 +2,8 @@ from torchvision import transforms
 import PIL
 import numpy as np
 from random import getrandbits
-
+from PIL import ImageFilter
+import config
 
 def _print_state(img):
     print(img)
@@ -26,10 +27,18 @@ def _add_noise(img, BORDER_COLOR, NOISE_RGB_AMOUNT):
 
 
 
-
-
 def PrintState():
     return transforms.Lambda(lambda img: _print_state(img))
 
 def Add1DNoise(IGNORE_COLOR, NOISE_RGB_AMOUNT):
     return transforms.Lambda(lambda img: _add_noise(img, IGNORE_COLOR, NOISE_RGB_AMOUNT))
+
+def Gaussian_Blur(radius=2):
+    return transforms.Lambda(lambda img: img.filter(ImageFilter.GaussianBlur(radius=radius)))
+
+
+NormalizeGray = transforms.Normalize(mean=config.GRAY_MEAN,
+                                     std=config.GRAY_STD)
+
+NormalizeColor = transforms.Normalize(mean=config.RGB_MEAN,
+                                      std=config.RGB_STD)

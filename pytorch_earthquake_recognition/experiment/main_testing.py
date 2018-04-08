@@ -1,10 +1,10 @@
 
-from loaders.single_loader import SpectrogramDataset
-from loaders.multiple_loader import Spectrogram3ComponentDataset
+from loaders.single_loader import SpectrogramSingleDataset
+from loaders.multiple_loader import SpectrogramMultipleDataset
 import models
 from matplotlib import pyplot as plt
 import numpy as np
-
+from torchvision import transforms
 
 plt.switch_backend("TkAgg")
 
@@ -13,32 +13,48 @@ IMG_EXT = '.png'
 BATCH_SIZE = 256
 
 # variables
-NET = models.mnist_multiple
+NET = models.mnist_one_component
+NET_MULTIPLE = models.mnist_three_component
 MODEL_PATH = f'checkpoints/{NET.__name__}'
 
 
 # Dataset
+def preview_dataset(num, raw=False):
+    dataset_train = SpectrogramSingleDataset(IMG_PATH, transform=NET.transformations['train'])
+    if raw:
+        dataset_train.preview_raw(index=num, show=False)
+    else:
+        dataset_train.preview(index=num, show=False)
 
 
+def preview_multiple_dataset(num, raw=False):
+    dataset_train = SpectrogramMultipleDataset(IMG_PATH, transform=NET_MULTIPLE.transformations['train'])
+    if raw:
+        dataset_train.preview_raw(index=num, show=False)
+    else:
+        dataset_train.preview(index=num, show=False)
 
-def preview_multiple_loader_dataset(num):
-    dataset_train = Spectrogram3ComponentDataset(IMG_PATH, transform=NET.transformations['train'])
-    dt = iter(dataset_train)
-    imgs, label = next(dt)
-
-    dataset_train.preview(index=num, show=False)
 
 # Good Local Indexes: 3, 13
-preview_multiple_loader_dataset(13)
-plt.show()
+preview_multiple_dataset(13, raw=True)
+preview_multiple_dataset(13, raw=False)
 
 
 
-def compute_mean_and_std():
-    dataset_train = SpectrogramDataset(IMG_PATH, transform=NET.transformations['train'])
+def compute_mean_and_std(grayscale=False):
+    dataset_train = SpectrogramSingleDataset(IMG_PATH)
+    resize = transforms.Resize((217, 316))
+    to_pil = transforms.ToPILImage()
+    to_grayscale = transforms.Grayscale(num_output_channels=3)
+    to_tensor = transforms.ToTensor()
 
     r, g, b = [], [], []
+
     for img, label in dataset_train:
+        img = resize(img)
+        if grayscale:
+            img = to_grayscale(img)
+        img = to_tensor(img)
         img = img.numpy()
         r.append(img[0]); g.append(img[1]); b.append(img[2])
 
@@ -48,14 +64,16 @@ def compute_mean_and_std():
     stds = [color.std()/255 for color in (r, g, b)]
     print(means, stds)
 
-#compute_mean_and_std()
 
 
-# GRAY Mean: [0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943]
-# GRAY std : [0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851]
+# compute_mean_and_std(grayscale=True)
 
-# GRAY Mean: [0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943]
-# GRAY std : [0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851]
+
+# RGB Mean: [0.0009950225259743484, 0.000795141388388241, 0.0018111652018977147]
+# RGB std : [0.0001881388618665583, 0.0006368028766968671, 0.00028853512862149407]
+
+# GRAY Mean: [0.0009636541207631429, 0.0009636541207631429, 0.0009636541207631429]
+# GRAY std : [0.0003674938398249009, 0.0003674938398249009, 0.0003674938398249009]
 
 
 

@@ -1,38 +1,33 @@
 import torch.nn as nn
 import torchvision.transforms as transforms
-
+import mytransforms.transforms as mytransforms
 
 
 class AlexNet(nn.Module):
 
-    normalize = transforms.Normalize(mean=[0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943],
-                                     std=[0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851])
-
+    normalize = mytransforms.NormalizeGray
     grayscale = transforms.Grayscale(num_output_channels=3)
 
-    __train = [transforms.Resize((200, 310)),
-               transforms.RandomCrop((200, 250))]
 
-    __test = [transforms.Resize((200, 310)),
-              transforms.RandomCrop((200, 250))]
+    __transformations = [
+            transforms.ToTensor(),
+        ]
+
+    __train = [
+               ]
+
+    __test = [
+              ]
 
     transformations = {
-        'train': transforms.Compose(__train + [
-            grayscale,
-            transforms.Resize((224, 224)),  # 256
-            transforms.ToTensor(),
-            normalize
-        ]),
-        'test': transforms.Compose(__test + [
-            grayscale,
-            transforms.Resize((224, 224)),   # 256
-            transforms.ToTensor(),
-            normalize
-        ])
+        'train': transforms.Compose(__train + __transformations),
+        'test': transforms.Compose(__test + __transformations)
     }
 
-    def __init__(self, num_classes=3):
+    def __init__(self, num_classes=2):
         super().__init__()
+        self.DIM = 256 * 5 * 8
+
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2,
                       bias=False),
@@ -55,7 +50,7 @@ class AlexNet(nn.Module):
             nn.BatchNorm2d(256)
         )
         self.classifier = nn.Sequential(
-            nn.Linear(256 * 6 * 6, 4096, bias=False),
+            nn.Linear(self.DIM, 4096, bias=False),
             nn.BatchNorm1d(4096),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
@@ -69,44 +64,33 @@ class AlexNet(nn.Module):
 
     def forward(self, x):
         x = self.features(x)
-        x = x.view(-1, 256 * 6 * 6)
+        x = x.view(-1, self.DIM)
         x = self.classifier(x)
         return x
 
 
-
-
 import torch
-
+import config
 class AlexNetMultiple(nn.Module):
 
-    normalize = transforms.Normalize(mean=[0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943],
-                                     std=[0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851])
+    normalize = transforms.Normalize(mean=config.RGB_MEAN,
+                                     std=config.RGB_STD)
 
-    grayscale = transforms.Grayscale(num_output_channels=3)
-
-    __train = [transforms.Resize((200, 310)),
-               transforms.RandomCrop((200, 260))]
-
-    __test = [transforms.Resize((200, 310)),
-              transforms.RandomCrop((200, 260))]
+    __train = []
+    __test = []
 
     transformations = {
         'train': transforms.Compose(__train + [
-            grayscale,
-            transforms.Resize((224, 224)),  # 256
             transforms.ToTensor(),
             normalize
         ]),
         'test': transforms.Compose(__test + [
-            grayscale,
-            transforms.Resize((224, 224)),   # 256
             transforms.ToTensor(),
             normalize
         ])
     }
 
-    def __init__(self, num_classes=3):
+    def __init__(self, num_classes=2):
         super().__init__()
         self.features = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=11, stride=4, padding=2,
@@ -130,23 +114,23 @@ class AlexNetMultiple(nn.Module):
             nn.BatchNorm2d(256)
         )
         self.classifier = nn.Sequential(
-            nn.Linear(256 * 6 * 6 * 3, 4096, bias=False),
-            nn.BatchNorm1d(4096),
+            nn.Linear(768*5*5, 1024, bias=False),
+            nn.BatchNorm1d(1024),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
-            nn.Linear(4096, 4096, bias=False),
-            nn.BatchNorm1d(4096),
+            nn.Linear(1024, 1024, bias=False),
+            nn.BatchNorm1d(1024),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
-            nn.Linear(4096, num_classes)
+            nn.Linear(1024, num_classes)
         )
 
 
     def forward(self, components):
         n, z, e = components
         nout, zout, eout = self.features(n), self.features(z), self.features(e)
-        x = torch.cat((nout, zout, eout), 0)
-        x = x.view(-1, 256 * 6 * 6 * 3)
+        x = torch.cat((nout, zout, eout), 1)
+        x = x.view(-1, 768*5*5)
         x = self.classifier(x)
         return x
 

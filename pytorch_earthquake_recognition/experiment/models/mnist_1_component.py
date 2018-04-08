@@ -1,20 +1,22 @@
 import torch.nn as nn
 import torchvision.transforms as transforms
+import mytransforms.transforms as mytransforms
 
 
-class mnist_reduced(nn.Module):
-    __transformations = [transforms.Grayscale(num_output_channels=3),
-                         transforms.Resize((16, 16)),
+class mnist_one_component(nn.Module):
+    _transformations = [
+                         transforms.Grayscale(num_output_channels=3),
+                         transforms.Resize((32, 32)),
                          transforms.ToTensor(),
-                         transforms.Normalize(mean=[0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943],
-                                              std=[0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851])]
+                         mytransforms.NormalizeGray
+                        ]
 
-    __train = [transforms.Resize((200, 310))]
+    _train = []
 
-    __test = [transforms.Resize((200, 310))]
+    _test = []
 
-    transformations = {'train':  transforms.Compose(__train + __transformations),
-                       'test': transforms.Compose(__test + __transformations)
+    transformations = {'train':  transforms.Compose(_train + _transformations),
+                       'test': transforms.Compose(_test + _transformations)
                        }
 
     def __init__(self):
@@ -43,13 +45,27 @@ class mnist_reduced(nn.Module):
         self.classifier = nn.Conv2d(64, 3, 1)
         self.avgpool = nn.AvgPool2d(3, 3)
         self.dropout = nn.Dropout(0.5)
+        self.linear = nn.Sequential(
+            nn.Linear(12, 12),
+            nn.BatchNorm1d(12),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+
+            nn.Linear(12, 12, bias=False),
+            nn.BatchNorm1d(12),
+            nn.ReLU(inplace=True),
+            nn.Dropout(0.5),
+
+            nn.Linear(12, 2)
+        )
 
     def forward(self, inputs):
         out = self.feats(inputs)
         out = self.dropout(out)
         out = self.classifier(out)
         out = self.avgpool(out)
-        out = out.view(-1, 3)
+        out = out.view(-1, 3 * 2 * 2)
+        out = self.linear(out)
         return out
 
 

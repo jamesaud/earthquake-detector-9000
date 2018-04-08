@@ -1,6 +1,6 @@
 import torch.nn as nn
 import torchvision.transforms as transforms
-import mytransforms.transforms as mytransforms
+from mytransforms.transforms import NormalizeGray
 import torch.nn.functional as F
 import torch
 
@@ -9,22 +9,20 @@ class mnist_simple(nn.Module):
     BORDER_COLOR = 30      # Ignore border color when adding NOISE
     NOISE_RGB_AMOUNT = 4   # How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
 
-    __transformations = [transforms.Grayscale(num_output_channels=3),
+    _transformations = [transforms.Grayscale(num_output_channels=3),
                          transforms.Resize((DIM, DIM)),  # 16 x 16
                          transforms.ToTensor(),
-                         transforms.Normalize(
-                             mean=[0.0007967819185817943, 0.0007967819185817943, 0.0007967819185817943],
-                             std=[0.0002987987562721851, 0.0002987987562721851, 0.0002987987562721851])
+                         NormalizeGray
                          ]
 
-    __train = [#transforms.Grayscale(num_output_channels=1),
+    _train = [#transforms.Grayscale(num_output_channels=1),
                #mytransforms.Add1DNoise(BORDER_COLOR, NOISE_RGB_AMOUNT),
                ]
 
-    __test = []
+    _test = []
 
-    transformations = {'train': transforms.Compose(__train + __transformations),
-                       'test': transforms.Compose(__test + __transformations)
+    transformations = {'train': transforms.Compose(_train + _transformations),
+                       'test': transforms.Compose(_test + _transformations)
                        }
 
     def __init__(self):
