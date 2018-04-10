@@ -165,7 +165,9 @@ def test(net, loader, copy_net=False):
 
 
 def write_images():
-
+    """
+    :return:
+    """
     # Write Images
     noise_index = next(dataset_train.get_next_index_with_label(0))
     local_index = next(dataset_train.get_next_index_with_label(1))
@@ -191,8 +193,8 @@ def write_images():
 
 def write_info():
     transforms = ['Resize: ' + str(resize), 'Crop: ' + str(crop)]
-
     step = 0
+
     for transformation in transforms + NET._train + NET._transformations:
         writer.add_text('Transformations_Train', str(transformation), global_step=step)
         step += 1
@@ -277,18 +279,21 @@ if __name__ == '__main__':
     write_info()
     write_images()
 
-    # print("\nTraining...")
-    # for epoch in range(100):
-    #     train(epoch)
+    def train_net(epochs):
+        for epoch in range(epochs):
+            train(epoch)
 
+    train_net(100)
 
-    # #######################
-    #
-    # path = f'./checkpoints/{NET.__name__}/model40.pt'
-    # load_model(path)
-    # net.eval()
-    #
-    # test_on_training(net)
-    # class_evaluation(net)
-    # guess_labels(1)
+    #########################
+
+    def load_net():
+        path = f'./checkpoints/{NET.__name__}/model40.pt'
+        load_model(path)
+        net.eval()
+
+    load_net()
+    evaluate(net, test_loader, copy_net=False)
+    guess_labels(1)
+
     pass
