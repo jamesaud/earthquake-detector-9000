@@ -18,7 +18,7 @@ class SpectrogramBaseDataset(Dataset):
     """
     __SEED = 448
 
-    def __init__(self, img_path, transform=None, test=False, resize=False, crop=False, divide_test=config.DIVIDE_TEST, ignore=None, **kwargs):
+    def __init__(self, img_path, divide_test, transform=None, test=False, resize=False, crop=False, ignore=None, **kwargs):
         """
 
         :param img_path: path to the 'spectrograms' folder
@@ -33,6 +33,7 @@ class SpectrogramBaseDataset(Dataset):
              - crop
              - transform
         """
+        super().__init__()
         ignore_names = ignore or []
         self.img_path = img_path
         self.test = test
@@ -70,8 +71,8 @@ class SpectrogramBaseDataset(Dataset):
         self.file_paths = self.clean_paths(file_paths)
 
         self.labels = {
-            'noise': 0,
-            'local': 1,
+            0: 'noise',
+            1: 'local',
         }
 
         self.reverse_map(self.labels)
@@ -156,10 +157,11 @@ class SpectrogramBaseDataset(Dataset):
         n, z, e = map(self.resize, components)
         return n, z, e
 
-    def __getitem__(self, index):
+    def __getitem__(self, index, apply_transforms=True):
         n, z, e = self.file_paths[index]
         label = self.label_to_number(self.get_label(n))
-        n, z, e = self.apply_transforms((n, z, e))
+        if apply_transforms:
+            n, z, e = self.apply_transforms((n, z, e))
         return Components(n, z, e), label
 
     def _getitem_raw(self, index):
@@ -219,18 +221,17 @@ class SpectrogramBaseDataset(Dataset):
 
         return fig
 
-
     @staticmethod
     def clean_paths(file_paths):
         return [components for components in file_paths if len(components) == 3]
 
     @staticmethod
-    def reverse_map(dic):
-        dic.update({v:k for k,v in dic.items()})
-
-    @staticmethod
     def get_label(file_path):
         return file_path.split('/')[-3]
+
+    @staticmethod
+    def reverse_map(dic):
+        dic.update({v: k for k, v in dic.items()})
 
     @staticmethod
     def show_img(image):

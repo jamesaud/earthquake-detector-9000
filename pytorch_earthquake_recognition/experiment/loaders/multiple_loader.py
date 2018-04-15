@@ -7,8 +7,8 @@ class SpectrogramMultipleDataset(SpectrogramBaseDataset):
     """
     """
 
-    def __init__(self, img_path, transform=None, test=False, divide_test=.3, **kwargs):   # 30%
-        super().__init__(img_path, transform, test, divide_test=divide_test, **kwargs)
+    def __init__(self, img_path, divide_test, transform=None, test=False, **kwargs):   # 30%
+        super().__init__(img_path, divide_test, transform, test, **kwargs)
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ from mytransforms import transforms as mytransforms
 class mnist_three_component(nn.Module):
 
 
-    DIM = 64  # by 64
+    DIM = 32
     NOISE_RGB_AMOUNT = 3  # How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
 
     _transformations = [transforms.Grayscale(num_output_channels=3),
@@ -51,9 +51,8 @@ class mnist_three_component(nn.Module):
             nn.BatchNorm2d(64),
         )
 
-
         self.classifier = nn.Sequential(
-            nn.Linear(192*13*13, 128, bias=False),
+            nn.Linear(192*5*5, 128, bias=False),
             nn.BatchNorm1d(128),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
@@ -68,6 +67,6 @@ class mnist_three_component(nn.Module):
         n, z, e = components
         nout, zout, eout = self.feats(n), self.feats(z), self.feats(e)
         out = torch.cat((nout, zout, eout), 1)
-        out = out.view(-1, 192*13*13)
+        out = out.view(-1, 192*5*5)
         out = self.classifier(out)
         return out

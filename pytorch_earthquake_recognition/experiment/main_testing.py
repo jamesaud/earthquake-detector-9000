@@ -5,8 +5,9 @@ import models
 from matplotlib import pyplot as plt
 import numpy as np
 from torchvision import transforms
-
-plt.switch_backend("TkAgg")
+import torch
+from tensorboardX import SummaryWriter
+from torch.autograd import Variable
 
 IMG_PATH = './spectrograms/'
 IMG_EXT = '.png'
@@ -16,6 +17,8 @@ BATCH_SIZE = 256
 NET = models.mnist_one_component
 NET_MULTIPLE = models.mnist_three_component
 MODEL_PATH = f'checkpoints/{NET.__name__}'
+
+from load_loader import *
 
 
 # Dataset
@@ -35,10 +38,49 @@ def preview_multiple_dataset(num, raw=False):
         dataset_train.preview(index=num, show=False)
 
 
-# Good Local Indexes: 3, 13
-preview_multiple_dataset(13, raw=True)
-preview_multiple_dataset(13, raw=False)
+# # Good Local Indexes: 3, 13
+# preview_multiple_dataset(13, raw=True)
+# preview_multiple_dataset(13, raw=False)
+#
 
+
+writer = SummaryWriter("visualize/runs/test")
+
+def add_histogram():
+    for name, param in NET().named_parameters():
+        writer.add_histogram(name, param.clone().cpu().data.numpy(), 1)
+
+
+
+import random
+def write_embedding():
+    dataset = SpectrogramSingleDataset(TRAIN_IMG_PATH,
+                                        transform=NET.transformations['train'],
+                                        crop=crop,  # Will be random horizontal crop in the loader
+                                        resize=resize,
+                                        ignore=ignore_train,
+                                        divide_test=train_test_split)
+
+    # Data Loaders
+    loader_args = dict(
+        batch_size=BATCH_SIZE,
+        num_workers=10,
+        pin_memory=True,
+        drop_last=True,
+    )
+
+    loader = DataLoader(dataset,
+                              shuffle=True,
+                              **loader_args)
+
+    true_inputs, true_labels = next(iter(loader))
+    inputs, labels = Variable(true_inputs), list(true_labels)
+    dim = len(labels)
+    mat = torch.FloatTensor([[random.random() for j in range(dim)] for i in range(dim)])
+    writer.add_embedding(mat=mat, metadata=labels, label_img=inputs, global_step=0)
+
+
+write_embedding()
 
 
 def compute_mean_and_std(grayscale=False):

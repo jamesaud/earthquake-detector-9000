@@ -1,13 +1,25 @@
 class dotdict(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, *kwargs)
+
+
     """dot.notation access to dictionary attributes"""
-    __getattr__ = dict.get
+    def __getattr__(self, attr):
+        return self.get(attr)
+
     __delattr__ = dict.__delitem__
 
     def __setitem__(self, key, value):
-        if isinstance(value, dict):
+        if type(value) is dict:
             value = dotdict(value)
-        return dict.__setitem__(self, key, value)
+        return super().__setitem__(key, value)
 
+    def get(self, key):
+        value = super().get(key)
+        if type(value) is dict:
+            self.__setitem__(key, dotdict(value))
+            value = self.__getitem__(key)
+        return value
 
 class Evaluator:
 
@@ -44,3 +56,30 @@ class Evaluator:
 
     def __str__(self):
         return 'Evaluator Object: ' + str(self.class_info)
+
+
+def make_weights_for_balanced_classes(images, nclasses):
+    count = [0] * nclasses
+    items = [images.__getitem__(index, apply_transforms=False) for index in range(len(images))]
+
+
+    for item in items:
+        count[item[1]] += 1
+    weight_per_class = [0.] * nclasses
+    N = float(sum(count))
+    for i in range(nclasses):
+        weight_per_class[i] = N/float(count[i])
+    weight = [0] * len(images)
+    for idx, val in enumerate(items):
+        weight[idx] = weight_per_class[val[1]]
+    return weight
+
+
+import torch
+
+# Weighted sampler
+def make_weighted_sampler(dataset, num_classes) -> torch.utils.data.sampler.WeightedRandomSampler:
+    weights = make_weights_for_balanced_classes(dataset, num_classes)
+    weights = torch.DoubleTensor(weights)
+    sampler = torch.utils.data.sampler.WeightedRandomSampler(weights, len(weights))
+    return sampler

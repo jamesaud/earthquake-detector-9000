@@ -1,5 +1,6 @@
 import matplotlib
-matplotlib.use('TkAgg')
+matplotlib.use('agg')
+matplotlib.interactive(False)
 
 import torch
 from torch import nn
@@ -13,17 +14,61 @@ from datetime import datetime
 import config
 from utils import Evaluator
 from writer_util import MySummaryWriter as SummaryWriter
-from config import Folders
-import matplotlib.pyplot as plt
-import io
-from pprint import pprint
+from utils import dotdict
+import sys
+import utils
+
+# Settings
+ignore = config.Folders.values()
+ignore.remove(config.Folders.Oklahoma.value)
+
+options = dict(
+    oklahoma={
+        'train': {
+            'path': 'new-spectrograms-oklahoma',
+            'divide_test': 0.2,
+        },
+        'test': {
+            'path': 'new-spectrograms-oklahoma',
+            'divide_test': 0.2
+        },
+        'image': {
+          'height': 258,
+          'width': 293,
+        }
+    },
+    custom={
+        'train': {
+            'path': 'spectrograms',
+            'divide_test': 0.2,
+            'ignore': ignore
+        },
+        'test': {
+            'path': 'spectrograms',
+            'divide_test': 0.2,
+            'ignore': ignore
+        },
+        'image': {
+          'height': 217,
+          'width': 296,
+        }
+    }
+)
+
+settings = options['oklahoma']
+settings = dotdict(settings)
 
 
 # Train and test
-IMG_PATH = os.path.join(os.getcwd(), 'spectrograms')
-BATCH_SIZE = 8   # 128
-NUM_CLASSES = 2
+make_path = lambda path: os.path.join(os.getcwd(), os.path.join('data', path))
 
+TRAIN_IMG_PATH = make_path(settings.train.path)
+TEST_IMG_PATH = make_path(settings.test.path)
+
+# Variables
+BATCH_SIZE = 128   # 128
+NUM_CLASSES = 2
+iterations = 0
 
 # Neural Net Model
 NET = models.mnist_three_component
@@ -34,30 +79,30 @@ path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/tr
 writer = SummaryWriter(path)
 
 # Ignore Paths
-ignore = Folders.values()
-ignore_test = Folders.values()
+ignore_train = settings.train.get('ignore')
+ignore_test = settings.test.get('ignore')
 
-ignore.remove(Folders.Oklahoma.value)
-ignore_test.remove(Folders.Oklahoma.value)
+# Dataset
+train_test_split = settings.train.divide_test
+test_split = settings.test.divide_test
 
-iterations = 0
+# Dimentional Transforms
+width_percent = .8  # 0.5 to 1.0
+height, width = settings.image.height, settings.image.width
 
-test_split = config.DIVIDE_TEST
-# Applies in the order: 1. resize  2. crop
-crop = resize = False
-resize = (217, 316)   # (height, width)
-crop = (217, 217)     # (height, width)
+resize = (height, width)   # (height, width)
+crop = (height, int(width * width_percent))     # (height, width)
 
 
-dataset_train = SpectrogramMultipleDataset(IMG_PATH,
+dataset_train = SpectrogramMultipleDataset(TRAIN_IMG_PATH,
                                            transform=NET.transformations['train'],
                                            crop=crop,  # Will be random horizontal crop in the loader
                                            resize=resize,
-                                           ignore=ignore,
-                                           divide_test=test_split
+                                           ignore=ignore_train,
+                                           divide_test=train_test_split
                                            )
 
-dataset_test = SpectrogramMultipleDataset(IMG_PATH,
+dataset_test = SpectrogramMultipleDataset(TEST_IMG_PATH,
                                           transform=NET.transformations['test'],
                                           crop=crop,   # Will be center crop in the loader
                                           resize=resize,
@@ -65,17 +110,31 @@ dataset_test = SpectrogramMultipleDataset(IMG_PATH,
                                           divide_test=test_split,
                                           test=True
                                           )
+
+
+
+
+train_sampler = None #utils.make_weighted_sampler(dataset_train, NUM_CLASSES)
+
 # Data Loaders
 loader_args = dict(
                    batch_size=BATCH_SIZE,
-                   num_workers=5,
+                   num_workers=10,
                    pin_memory=True,
-                   drop_last=True
+                   drop_last=True,
                    )
 
-train_loader = DataLoader(dataset_train, shuffle=True, **loader_args)
-train_test_loader = DataLoader(dataset_train, shuffle=True, **loader_args)
-test_loader = DataLoader(dataset_test, **loader_args)
+train_loader = DataLoader(dataset_train,
+                          shuffle=True,
+                          sampler=train_sampler,
+                          **loader_args)
+
+train_test_loader = DataLoader(dataset_train,
+                               **loader_args)
+
+test_loader = DataLoader(dataset_test,
+                         **loader_args)
+
 
 # Setup Net
 net = NET().cuda()
@@ -99,6 +158,22 @@ def guess_labels(batches):
         print()
 
 
+def write_mistakes(net):
+    pass
+
+def write_pr(evaluator, step):
+    local_info = evaluator.class_details(1)
+    noise_info = evaluator.class_details(0)
+
+    true_labels = [0] * noise_info.amount_total + [1] * local_info.amount_total    # True labels
+
+    predicted_noise = [0] * noise_info.amount_correct + [1] * (noise_info.amount_total - noise_info.amount_correct)
+    predicted_local = [1] * local_info.amount_correct + [0] * (local_info.amount_total - local_info.amount_correct)
+    predicted = predicted_noise + predicted_local
+
+    writer.add_pr_curve('PR', torch.IntTensor(true_labels), torch.IntTensor(predicted), step)
+
+
 def evaluate(net, data_loader, copy_net=False):
     """
     :param net:
@@ -117,6 +192,7 @@ def evaluate(net, data_loader, copy_net=False):
     class_correct = [0 for _ in range(NUM_CLASSES)]
     class_total = [0 for _ in range(NUM_CLASSES)]
 
+    i, size = 0, BATCH_SIZE * len(data_loader)
     for (inputs, labels) in data_loader:
         inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
         outputs = Net(inputs)
@@ -128,6 +204,10 @@ def evaluate(net, data_loader, copy_net=False):
         for guess, label in zip(guesses, labels):
             class_correct[label] += guess
             class_total[label] += 1
+
+        i += BATCH_SIZE
+        sys.stdout.write('\r' + str(i) + '/' + str(size))
+        sys.stdout.flush()
 
     # Update the information in the Evaluator
     for i, (correct, total) in enumerate(zip(class_correct, class_total)):
@@ -191,10 +271,15 @@ def write_images():
     writer.add_pil_image('Transformations', image)
 
 
+def write_histogram(net, n):
+    for name, param in net.named_parameters():
+        writer.add_histogram(name, param.clone().cpu().data.numpy(), n)
+
+
 def write_info():
     transforms = ['Resize: ' + str(resize), 'Crop: ' + str(crop)]
-    step = 0
 
+    step = 0
     for transformation in transforms + NET._train + NET._transformations:
         writer.add_text('Transformations_Train', str(transformation), global_step=step)
         step += 1
@@ -228,24 +313,26 @@ def train(epoch):
         running_loss += loss.data[0]
 
         def print_loss():
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+            msg = 'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                   epoch,
                   int(i * len(true_inputs) * BATCH_SIZE / 3),
                   len(train_loader) * BATCH_SIZE,
                   100. * i / len(train_loader),
-                  loss.data[0]))
+                  loss.data[0])
+
+            sys.stdout.write('\r' + msg); sys.stdout.flush()
 
             writer.add_scalar('train_loss', loss.data[0], iterations)
 
         def test_loss():
-            test_evaluator = evaluate(net, test_loader, copy_net=True)
-            train_evaluator = evaluate(net, train_test_loader, copy_net=True)
+            print("\nTesting...")
+            test_evaluator = evaluate(net, test_loader, copy_net=True); print()
+            train_evaluator = evaluate(net, train_test_loader, copy_net=True); print()
 
-            print()
-            print_evaluation(test_evaluator, 'test')
-            print()
-            print_evaluation(train_evaluator, 'train')
-            print()
+            write_pr(test_evaluator, step=epoch)
+
+            print_evaluation(test_evaluator, 'test'); print()
+            print_evaluation(train_evaluator, 'train'); print()
 
             percent_correct = lambda evaluator: evaluator.total_percent_correct() * 100
             writer.add_scalars('amount_correct',
@@ -258,21 +345,25 @@ def train(epoch):
                                 'test_local': test_evaluator.percent_correct(1)},
                                epoch)
 
+
         def write_model():
             path = f'./checkpoints/{NET.__name__}/model{epoch}.pt'
             save_model(path)
 
-        if iterations % 1000 == 0:
+        if i == 0:
+            print()
+
+        if iterations % 1000 < BATCH_SIZE:
             print_loss()
 
         if epoch % 3 == 0 and i == 0:
             test_loss()
+            write_histogram(net, epoch)
 
         if epoch % 10 == 0 and i == 0:
             write_model()
 
         iterations += BATCH_SIZE
-
 
 if __name__ == '__main__':
     print("Writing Info")
@@ -283,7 +374,7 @@ if __name__ == '__main__':
         for epoch in range(epochs):
             train(epoch)
 
-    train_net(100)
+    train_net(1000)
 
     #########################
 
@@ -295,5 +386,4 @@ if __name__ == '__main__':
     load_net()
     evaluate(net, test_loader, copy_net=False)
     guess_labels(1)
-
     pass
