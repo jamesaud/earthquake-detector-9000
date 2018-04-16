@@ -18,44 +18,8 @@ from utils import dotdict
 import sys
 import utils
 
-# Settings
-ignore = config.Folders.values()
-ignore.remove(config.Folders.Oklahoma.value)
 
-options = dict(
-    oklahoma={
-        'train': {
-            'path': 'new-spectrograms-oklahoma',
-            'divide_test': 0.2,
-        },
-        'test': {
-            'path': 'new-spectrograms-oklahoma',
-            'divide_test': 0.2
-        },
-        'image': {
-          'height': 258,
-          'width': 293,
-        }
-    },
-    custom={
-        'train': {
-            'path': 'spectrograms',
-            'divide_test': 0.2,
-            'ignore': ignore
-        },
-        'test': {
-            'path': 'spectrograms',
-            'divide_test': 0.2,
-            'ignore': ignore
-        },
-        'image': {
-          'height': 217,
-          'width': 296,
-        }
-    }
-)
-
-settings = options['oklahoma']
+settings = config.options['oklahoma']
 settings = dotdict(settings)
 
 
@@ -66,12 +30,12 @@ TRAIN_IMG_PATH = make_path(settings.train.path)
 TEST_IMG_PATH = make_path(settings.test.path)
 
 # Variables
-BATCH_SIZE = 256   # 128
+BATCH_SIZE = 128   # 128
 NUM_CLASSES = 2
 iterations = 0
 
 # Neural Net Model
-NET = models.mnist_one_component
+NET = models.mnist_three_component
 MODEL_PATH = f'checkpoints/{NET.__name__}'
 
 # Visualize
@@ -87,7 +51,7 @@ train_test_split = settings.train.divide_test
 test_split = settings.test.divide_test
 
 # Dimentional Transforms
-width_percent = .5  # 0.5 to 1.0
+width_percent = .75  # 0.5 to 1.0
 height, width = settings.image.height, settings.image.width
 
 resize = (height, width)   # (height, width)
@@ -111,15 +75,12 @@ dataset_test = SpectrogramMultipleDataset(TEST_IMG_PATH,
                                           test=True
                                           )
 
-
-
-
-train_sampler = None #utils.make_weighted_sampler(dataset_train, NUM_CLASSES)
+train_sampler = utils.make_weighted_sampler(dataset_train, NUM_CLASSES)
 
 # Data Loaders
 loader_args = dict(
                    batch_size=BATCH_SIZE,
-                   num_workers=3,
+                   num_workers=2,
                    pin_memory=True,
                    drop_last=True,
                    )
