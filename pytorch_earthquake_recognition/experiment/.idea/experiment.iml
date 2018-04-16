@@ -7,6 +7,7 @@
     <orderEntry type="module" module-name="download_waveforms" />
     <orderEntry type="module" module-name="download_waveforms" />
     <orderEntry type="module" module-name="pytorch" />
+    <orderEntry type="module" module-name="earthquake-recognition" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="renderExternalDocumentation" value="true" />

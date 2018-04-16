@@ -45,21 +45,23 @@ class mnist_one_component(nn.Module):
         self.classifier = nn.Conv2d(64, 3, 1)
         self.avgpool = nn.AvgPool2d(3, 3)
         self.dropout = nn.Dropout(0.5)
+
         self.linear = nn.Sequential(
-            nn.Linear(12, 12),
-            nn.BatchNorm1d(12),
+            nn.Linear(3*2*2, 128),
+            nn.BatchNorm1d(128),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
 
-            nn.Linear(12, 12, bias=False),
-            nn.BatchNorm1d(12),
+            nn.Linear(128, 128, bias=False),
+            nn.BatchNorm1d(128),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
 
-            nn.Linear(12, 2)
+            nn.Linear(128, 2)
         )
 
-    def forward(self, inputs):
+    def forward(self, components):
+        inputs = components[0]  # the z component, I think
         out = self.feats(inputs)
         out = self.dropout(out)
         out = self.classifier(out)

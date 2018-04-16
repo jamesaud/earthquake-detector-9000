@@ -66,12 +66,12 @@ TRAIN_IMG_PATH = make_path(settings.train.path)
 TEST_IMG_PATH = make_path(settings.test.path)
 
 # Variables
-BATCH_SIZE = 128   # 128
+BATCH_SIZE = 256   # 128
 NUM_CLASSES = 2
 iterations = 0
 
 # Neural Net Model
-NET = models.mnist_three_component
+NET = models.mnist_one_component
 MODEL_PATH = f'checkpoints/{NET.__name__}'
 
 # Visualize
@@ -87,7 +87,7 @@ train_test_split = settings.train.divide_test
 test_split = settings.test.divide_test
 
 # Dimentional Transforms
-width_percent = .8  # 0.5 to 1.0
+width_percent = .5  # 0.5 to 1.0
 height, width = settings.image.height, settings.image.width
 
 resize = (height, width)   # (height, width)
@@ -119,7 +119,7 @@ train_sampler = None #utils.make_weighted_sampler(dataset_train, NUM_CLASSES)
 # Data Loaders
 loader_args = dict(
                    batch_size=BATCH_SIZE,
-                   num_workers=10,
+                   num_workers=3,
                    pin_memory=True,
                    drop_last=True,
                    )

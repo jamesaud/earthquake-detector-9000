@@ -9,19 +9,19 @@ class AlexNet(nn.Module):
     grayscale = transforms.Grayscale(num_output_channels=3)
 
 
-    __transformations = [
+    _transformations = [
             transforms.ToTensor(),
         ]
 
-    __train = [
+    _train = [
                ]
 
-    __test = [
+    _test = [
               ]
 
     transformations = {
-        'train': transforms.Compose(__train + __transformations),
-        'test': transforms.Compose(__test + __transformations)
+        'train': transforms.Compose(_train + _transformations),
+        'test': transforms.Compose(_test + _transformations)
     }
 
     def __init__(self, num_classes=2):
@@ -80,15 +80,15 @@ class AlexNetMultiple(nn.Module):
     normalize = transforms.Normalize(mean=config.RGB_MEAN,
                                      std=config.RGB_STD)
 
-    __train = []
-    __test = []
-
+    _train = []
+    _test = []
+    _transformations = []
     transformations = {
-        'train': transforms.Compose(__train + [
+        'train': transforms.Compose(_train + [
             transforms.ToTensor(),
             normalize
         ]),
-        'test': transforms.Compose(__test + [
+        'test': transforms.Compose(_test + [
             transforms.ToTensor(),
             normalize
         ])
@@ -122,7 +122,7 @@ class AlexNetMultiple(nn.Module):
             nn.BatchNorm2d(256)
         )
         self.classifier = nn.Sequential(
-            nn.Linear(768*5*5, 1024, bias=False),
+            nn.Linear(768*7*8, 1024, bias=False),
             nn.BatchNorm1d(1024),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
@@ -138,7 +138,7 @@ class AlexNetMultiple(nn.Module):
         n, z, e = components
         nout, zout, eout = self.features(n), self.features(z), self.features(e)
         x = torch.cat((nout, zout, eout), 1)
-        x = x.view(-1, 768*5*5)
+        x = x.view(-1, 768*7*8)
         x = self.classifier(x)
         return x
 

@@ -1,11 +1,11 @@
 from torchvision.models.vgg import make_layers, VGG, cfg, model_zoo, model_urls
-from mytransforms.transforms import Normalize
+from mytransforms.transforms import NormalizeGray
 import torchvision.transforms as transforms
 
 class MyVGG(VGG):
     _transformations = [transforms.Grayscale(num_output_channels=3),
                          transforms.ToTensor(),
-                         Normalize]
+                         NormalizeGray]
 
     _train = [transforms.Resize((200, 310)),
                transforms.RandomCrop((200, 270))
