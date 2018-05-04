@@ -40,7 +40,7 @@ https://github.com/jamesaud/earthquake-detector-9000/blob/master/models/mnist_3_
 
 It's an interesting model because it feeds 3 components (N, Z, E), meaning three spectrograms, and then combines features to make a detection.
 
-The convnet does 99.5 - 99.9% accuracy on single location QUALITY datasets. 
+The convnet does 99.0 - 99.9% accuracy on single location QUALITY datasets. 
 
 Many times, the automatic generation of seismic datasets has improperly labeled events or noise. In order to determine what is good quality, use Data Validation. 
 
