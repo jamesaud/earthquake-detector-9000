@@ -17,3 +17,7 @@ notebooks/Earthquake-audio-activity/
 **/**/waveforms
 data/
 data/**
+.idea/
+.cache/
+__pycache__/
+.vscode/
