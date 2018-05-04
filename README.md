@@ -1,4 +1,4 @@
-# earthquake-recognition
+# Building a Generalized Earthquake Detector: G.E.D 9000
 
 ## Idea 
 
