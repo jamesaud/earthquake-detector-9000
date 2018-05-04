@@ -12,3 +12,8 @@ notebooks/Earthquake-audio-activity/
 **/**/spectrograms/
 **/**/visualize/
 **/**/models/
+**/*.zip
+**/**/waveforms-locations
+**/**/waveforms
+data/
+data/**
