@@ -1,17 +1,22 @@
 # earthquake-recognition
 
+## Idea 
+
+The idea is to feed in Spectrogram images to a convolutional neural network in order to detect earthquakes.
+
+The final goal is to make a Generalized Earthquake Detector, meaning it doesn't need to have seen data in a location to be able to find earthquakes.
 
 ## Dataset
 
-1. Retrieving and processing the data:
+Retrieving and processing the data:
 
 https://github.com/jamesaud/seismic-analysis-toolbox
 
-The idea is to feed in Spectrogram images to a convolutional neural network in order to detect earthquakes.
 
 The data is too large to be held on github, but you can download the data with the toolbox. I will make my dataset available in the future (on Dropbox or something).
 
 On my machine I have roughly 4 million waveforms downloaded!
+
 
 ## Code
 
@@ -27,11 +32,9 @@ https://github.com/jamesaud/earthquake-detector-9000/blob/master/config.py
 
 In the 'main' code, if the configuration is set to 'environment', `configuration = 'environment'` , then it will read in the configuration from validator/config.json.
 
-
-
 ## Performance
 
-The convnet does 99.9% accuracy on QUALITY datasets. 
+The convnet does 99.5 - 99.9% accuracy on single location QUALITY datasets. 
 
 Many times, the automatic generation of seismic datasets has improperly labeled events or noise. In order to determine what is good quality, use Data Validation. 
 
