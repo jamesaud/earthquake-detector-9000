@@ -21,7 +21,7 @@ import sys
 import utils
 from pprint import pprint
 
-configuration = 'environment'
+configuration = 'everywhere'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -377,7 +377,7 @@ if __name__ == '__main__':
         for epoch in range(epochs):
             train(epoch)
 
-    train_net(1)
+    train_net(5)
 
     #########################
 

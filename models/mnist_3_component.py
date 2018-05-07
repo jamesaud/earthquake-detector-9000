@@ -26,9 +26,6 @@ class mnist_three_component(nn.Module):
     ]
 
     _test = [
-        # transforms.Grayscale(num_output_channels=1),
-        #      mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, 1),
-        #      mytransforms.Gaussian_Blur(1)
              ]
 
     transformations = {'train':  transforms.Compose(_train + _transformations),
@@ -103,9 +100,6 @@ class mnist_three_component_kernel(nn.Module):
     ]
 
     _test = [
-        # transforms.Grayscale(num_output_channels=1),
-        #      mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, 1),
-        #      mytransforms.Gaussian_Blur(1)
              ]
 
     transformations = {'train':  transforms.Compose(_train + _transformations),

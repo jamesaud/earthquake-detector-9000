@@ -69,9 +69,12 @@ class SpectrogramBaseDataset(Dataset):
 
         if test:
             file_paths = test_local + test_noise
+            self.local, self.noise = test_local, test_noise
         else:
             file_paths = train_local + train_noise
+            self.local, self.noise = train_local, train_noise
 
+        
         self.file_paths = self.shuffle(file_paths)
         self.file_paths = self.clean_paths(file_paths)
 

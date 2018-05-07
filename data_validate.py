@@ -12,7 +12,7 @@ cwd = os.getcwd()
 spectrogram_path = os.path.join(cwd, 'data', folder)
 file = 'validator/config.json'
 validator_path = 'validator'
-csv_file = 'results_everywhere.csv'
+csv_file = 'results.csv'
 csv_path = os.path.join(validator_path, csv_file)
 epochs = 10
 
