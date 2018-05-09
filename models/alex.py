@@ -122,7 +122,7 @@ class AlexNetMultiple(nn.Module):
             nn.BatchNorm2d(256)
         )
         self.classifier = nn.Sequential(
-            nn.Linear(768*7*8, 1024, bias=False),
+            nn.Linear(768*4*7, 1024, bias=False),
             nn.BatchNorm1d(1024),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
@@ -138,7 +138,7 @@ class AlexNetMultiple(nn.Module):
         n, z, e = components
         nout, zout, eout = self.features(n), self.features(z), self.features(e)
         x = torch.cat((nout, zout, eout), 1)
-        x = x.view(-1, 768*7*8)
+        x = x.view(-1, 768*4*7)
         x = self.classifier(x)
         return x
 

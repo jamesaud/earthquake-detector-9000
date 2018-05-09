@@ -38,7 +38,7 @@ BATCH_SIZE = 256   # 128
 NUM_CLASSES = 2
 iterations = 0
 
-WEIGH_CLASSES = None #[5, 1]
+WEIGH_CLASSES = settings.weigh_classes
 
 # Neural Net Model
 NET = models.mnist_three_component
@@ -54,18 +54,10 @@ height, width = settings.image.height, settings.image.width
 
 resize = (height, width)
 crop = (int(height * height_percent), int(width * width_percent)) 
-
-
-def calculate_crop_padding_pixels(crop_padding_percent, img_height, img_width):
-    height, width = img_height, img_width
-    left, right, top, bottom = crop_padding
-    left, right = width * left, width * right
-    top, bottom = height * top, height * bottom
-    return (left, right, top, bottom)      # (padding_left, padding_right) in pixels
     
 crop_padding = settings.image.padding
 if crop_padding:
-    crop_padding = calculate_crop_padding_pixels(crop_padding, height, width)
+    crop_padding = utils.calculate_crop_padding_pixels(crop_padding, height, width)
 
 # DATASET
 
@@ -357,19 +349,20 @@ def train(epoch, write=True):
         if iterations % 1000 < BATCH_SIZE:
             write_loss()
 
-        if iterations % 10000 < BATCH_SIZE:
+        if iterations % 5000 < BATCH_SIZE:
             test_loss()
+            write_model()
+
+        if iterations % 10000 < BATCH_SIZE:
             write_histogram(net, iterations)
 
-        if epoch % 3 == 0 and epoch >= 3 and i == 0:
+        if epoch % 2 == 0 and epoch >= 2 and i == 0:
             train_loss()
 
-        if epoch % 10 == 0 and i == 0:
-            write_model()
 
 
 if __name__ == '__main__':
-    print("Writing Info")
+    print("\nWriting Info")
     write_info()
     write_images()
 

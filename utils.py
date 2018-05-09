@@ -109,3 +109,11 @@ def verify_dataset_integrity(*args):
 
 def lmap(*args, **kwargs):
     return list(map(*args, **kwargs))
+
+
+def calculate_crop_padding_pixels(crop_padding_percent, img_height, img_width):
+    height, width = img_height, img_width
+    left, right, top, bottom = crop_padding_percent
+    left, right = width * left, width * right
+    top, bottom = height * top, height * bottom
+    return (left, right, top, bottom)      # (padding_left, padding_right) in pixels

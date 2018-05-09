@@ -20,7 +20,7 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 path = 'everywhere-once'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path)
-use = 'AmatriceQuakes'
+use = '-22.95196--68.178757'
 everywhere_folders.remove(use)
 
 options = dict(
@@ -38,26 +38,28 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (.7, .6),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (.2, 0, .1, 0)    # left, right, top, bottom
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
+        'weigh_classes': [7, 1]
     },
-    test={
+    single_location={
         'train': {
-            'path': f'everywhere-97/{use}',
+            'path': f'everywhere-once/{use}',
             'divide_test': .2,
         },
         'test': {
-            'path': f'everywhere-97/{use}',
+            'path': f'everywhere-once/{use}',
             'divide_test': .2,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (1, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (.8, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
-        'loader': 'direct'
+        'loader': 'direct',
+        'weigh_classes': [10, 1]
     })  
 
 # Path to configuration file

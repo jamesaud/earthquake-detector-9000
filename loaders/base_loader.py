@@ -110,6 +110,7 @@ class SpectrogramBaseDataset(Dataset):
             
         file_paths = [] 
         for folder in folders:
+            print(folder, path, end='\r')
             file_paths += get_file_paths(folder)
 
         # Maintain the same order each time, guaranteed with sorting
