@@ -14,14 +14,15 @@ import models
 import os
 from datetime import datetime
 import config
-from utils import Evaluator
+from evaluator.evaluator import Evaluator
 from writer_util import MySummaryWriter as SummaryWriter
 from utils import dotdict, verify_dataset_integrity
 import sys
 import utils
 from pprint import pprint
+from evaluator.csv_write import write_predictions_to_csv
 
-configuration = 'environment'
+configuration = 'single_location'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -270,7 +271,7 @@ def train(epoch, write=True):
     global iterations
     running_loss = 0.0
 
-    for i, (true_inputs, true_labels) in enumerate(train_loader, 0):
+    for i, (true_inputs, true_labels) in enumerate(train_loader):
         # wrap them in Variable
         inputs, labels = [Variable(input).cuda() for input in true_inputs], Variable(true_labels).cuda()
 
@@ -330,8 +331,8 @@ def train(epoch, write=True):
                                {'train_amount_correct': percent_correct(train_evaluator)},
                                iterations)
 
-        def write_model():
-            path = f'./checkpoints/{NET.__name__}/model{epoch}.pt'
+        def write_model(name):
+            path = f'./checkpoints/{NET.__name__}/model-{name}.pt'
             save_model(path)
 
         iterations += BATCH_SIZE
@@ -351,7 +352,7 @@ def train(epoch, write=True):
 
         if iterations % 5000 < BATCH_SIZE:
             test_loss()
-            write_model()
+            write_model(str(iterations // 5000))
 
         if iterations % 10000 < BATCH_SIZE:
             write_histogram(net, iterations)
@@ -362,24 +363,24 @@ def train(epoch, write=True):
 
 
 if __name__ == '__main__':
-    print("\nWriting Info")
-    write_info()
-    write_images()
+    # print("\nWriting Info")
+    # write_info()
+    # write_images()
 
-    def train_net(epochs):
-        for epoch in range(epochs):
-            train(epoch)
+    # def train_net(epochs):
+    #     for epoch in range(epochs):
+    #         train(epoch)
 
-    train_net(5)
+    # train_net(30)
 
     #########################
 
     def load_net():
-        path = f'./checkpoints/{NET.__name__}/model40.pt'
+        path = f'./checkpoints/{NET.__name__}/BestModel.pt'
         load_model(path)
         net.eval()
-
+    
+    print("Loading Net")
     load_net()
-    evaluate(net, test_loader, copy_net=False)
-    guess_labels(1)
-    pass
+    print("Testing Net")
+    write_predictions_to_csv(net, test_loader, 2, 'evaluator/predictions.csv')

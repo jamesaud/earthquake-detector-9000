@@ -45,11 +45,11 @@ options = dict(
     },
     single_location={
         'train': {
-            'path': f'everywhere-once/{use}',
+            'path': f'spectrograms/new-spectrograms-oklahoma',
             'divide_test': .2,
         },
         'test': {
-            'path': f'everywhere-once/{use}',
+            'path': f'spectrograms/new-spectrograms-oklahoma',
             'divide_test': .2,
         },
         'image': {

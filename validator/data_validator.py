@@ -1,7 +1,8 @@
 import glob
 import json
 from main import *
-
+from evaluator.evaluator import NetEval
+import csv
 
 def test_dataset(epochs, write=False):
 
@@ -30,7 +31,5 @@ def update_config(dic, path):
     dic['train']['path'] = path
     dic['test']['path'] = path
     return dic
-
-
 
 
