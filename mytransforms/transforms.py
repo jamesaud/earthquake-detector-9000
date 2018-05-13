@@ -24,9 +24,6 @@ def _add_noise(img, BORDER_COLOR, NOISE_RGB_AMOUNT):
 
     return img
 
-
-
-
 def PrintState():
     return transforms.Lambda(lambda img: _print_state(img))
 

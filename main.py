@@ -21,7 +21,7 @@ import sys
 import utils
 from pprint import pprint
 
-configuration = 'everywhere'
+configuration = 'environment'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 

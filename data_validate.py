@@ -65,9 +65,9 @@ def run_environ():
         dv.update_config(configuration, dir)
         dv.write_config(file, configuration)
         
-        # Reload environment variables and main file with new configuration
-        reset()
         try:
+        # Reload environment variables and main file with new configuration
+            reset()
             print("Training Net on " + dir)
             evaluator = dv.test_dataset(epochs)
             
