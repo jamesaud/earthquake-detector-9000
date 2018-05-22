@@ -16,7 +16,7 @@ class mnist_three_component(nn.Module):
     _transformations = [transforms.Grayscale(num_output_channels=3),
                          transforms.Resize((DIM, DIM)),
                          transforms.ToTensor(),
-                         mytransforms.NormalizeGray
+                        #  mytransforms.NormalizeGray
                          ]
 
     _train = [
@@ -76,4 +76,3 @@ class mnist_three_component(nn.Module):
         out = out.view(-1, 192*5*5)
         out = self.classifier(out)
         return out
-

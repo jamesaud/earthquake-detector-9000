@@ -1,1 +1,1 @@
-{"train": {"path": "everywhere-untested/40.699669--111.793671", "divide_test": 0.2}, "test": {"path": "everywhere-untested/40.699669--111.793671", "divide_test": 0.2}, "image": {"height": 258, "width": 293, "crop": [1, 0.8]}, "loader": "direct"}
+{"train": {"path": "everywhere-untested/47.5751--122.417603", "divide_test": 0.2}, "test": {"path": "everywhere-untested/47.5751--122.417603", "divide_test": 0.2}, "image": {"height": 258, "width": 293, "crop": [1, 0.8]}, "loader": "direct"}

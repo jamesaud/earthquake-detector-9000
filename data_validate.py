@@ -71,10 +71,6 @@ def run_environ():
             print("Training Net on " + dir)
             evaluator = dv.test_dataset(epochs)
             
-        except Exception as e:
-            print("Failed to run neural net: ", e)
-
-        else:
             print('\n', evaluator, '\n')
             write_to_csv(dir, 
                     evaluator.class_details(0).amount_correct, 
@@ -85,7 +81,42 @@ def run_environ():
                     epochs,
                     )
        
+        except Exception as e:
+            print("Failed to run neural net: ", e)
 
+
+
+def run_cross_validation():
+    """Leave one out cross validation"""
+    file = 'config_cv.json'
+    os.environ['CONFIGURATION'] = file
+    dirs = dv.get_paths(spectrogram_path)
+    configuration = dv.read_config(file)
+    initialize_csv(csv_path)
+
+    for dir in dirs:
+        dir = get_name(dir)
+        dv.update_config(configuration, dir)
+        dv.write_config(file, configuration)
+        
+        try:
+        # Reload environment variables and main file with new configuration
+            reset()
+            print("Training Net on " + dir)
+            evaluator = dv.test_dataset(epochs=1)
+            
+            print('\n', evaluator, '\n')
+            write_to_csv(dir, 
+                    evaluator.class_details(0).amount_correct, 
+                    evaluator.class_details(0).amount_total, 
+                    evaluator.class_details(1).amount_correct, 
+                    evaluator.class_details(1).amount_total, 
+                    str(evaluator.total_percent_correct()),
+                    epochs,
+                    )
+       
+        except Exception as e:
+            print("Failed to run neural net: ", e)
 
 if __name__ == '__main__':
     run_environ()

@@ -96,17 +96,19 @@ class SpectrogramBaseDataset(Dataset):
         random.shuffle(paths)
         return paths
 
+    @staticmethod
+    def get_components(paths_to_components):
+        return [glob.glob(os.path.join(path, "*.png")) for path in paths_to_components]
+
+
     def get_spectrograms(self, path, folder_name,  pattern='', ignore_names=None):
         folders = lmap(os.path.basename, glob.glob(os.path.join(path, '*')))
         folders = [f for f in folders if f not in ignore_names]
 
-        def get_components(paths_to_components):
-            return [glob.glob(os.path.join(path, "*.png")) for path in paths_to_components]
-
         def get_file_paths(folder_path):
             folders_path = os.path.join(path, folder_path, pattern, folder_name, '*/')
             subfolder_paths = glob.glob(folders_path)
-            return get_components(subfolder_paths)
+            return self.get_components(subfolder_paths)
             
         file_paths = [] 
         for folder in folders:

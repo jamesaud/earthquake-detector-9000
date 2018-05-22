@@ -20,15 +20,15 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 path = 'everywhere-once'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path)
-use = '-22.95196--68.178757'
-everywhere_folders.remove(use)
+test = 'AmatriceQuakes'
+everywhere_folders.remove(test)
 
 options = dict(
     everywhere={
         'train': {
             'path': path,
             'divide_test': 0,
-            'ignore': [use],
+            'ignore': [test],
         },
         'test': {
             'path': path,
@@ -38,18 +38,18 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+          'crop':  (.8, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (.1, 0, 0, 0)    # left, right, top, bottom
         },
-        'weigh_classes': [7, 1]
+        'weigh_classes': [1, 1]
     },
     single_location={
         'train': {
-            'path': f'spectrograms/new-spectrograms-oklahoma',
+            'path': f'Benz/spectrograms-train',
             'divide_test': .2,
         },
         'test': {
-            'path': f'spectrograms/new-spectrograms-oklahoma',
+            'path': f'Benz/spectrograms-train',
             'divide_test': .2,
         },
         'image': {
@@ -59,7 +59,7 @@ options = dict(
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
-        'weigh_classes': [10, 1]
+        'weigh_classes': None #[10, 1]
     })  
 
 # Path to configuration file

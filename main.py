@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader
 from loaders.multiple_loader import SpectrogramMultipleDataset
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
 from loaders.direct_loader import SpectrogramDirectDataset
+from loaders.unknown_loader import SpectrogramUnknownDataset
 import models
 import os
 from datetime import datetime
@@ -20,9 +21,9 @@ from utils import dotdict, verify_dataset_integrity
 import sys
 import utils
 from pprint import pprint
-from evaluator.csv_write import write_predictions_to_csv
+from evaluator.csv_write import write_unknown_predictions_to_csv
 
-configuration = 'single_location'
+configuration = 'everywhere'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -35,7 +36,7 @@ TRAIN_IMG_PATH = make_path(settings.train.path)
 TEST_IMG_PATH = make_path(settings.test.path)
 
 # Variables
-BATCH_SIZE = 256   # 128
+BATCH_SIZE = 512   # 128
 NUM_CLASSES = 2
 iterations = 0
 
@@ -62,8 +63,7 @@ if crop_padding:
 
 # DATASET
 
-Dataset = SpectrogramDirectDataset if settings.loader == "direct" \
-          else SpectrogramCustomPathDataset
+Dataset = SpectrogramDirectDataset if settings.loader == "direct" else SpectrogramCustomPathDataset
 
 dataset_args = dict(
     path_pattern=settings.path_pattern or '',
@@ -86,7 +86,7 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
                         ignore=settings.test.get('ignore'),
                         divide_test=settings.test.divide_test,
                         test=True,
-                        crop_center=True,
+                        #crop_center=True,
                         **dataset_args
                         )
 
@@ -99,7 +99,7 @@ loader_args = dict(
                    batch_size=BATCH_SIZE,
                    num_workers=8,
                    pin_memory=True,
-                   drop_last=True,
+                   drop_last=True
                    )
 
 train_loader = DataLoader(dataset_train,
@@ -311,7 +311,7 @@ def train(epoch, write=True):
 
             write_pr(test_evaluator, step=iterations)
 
-            print_evaluation(test_evaluator, 'test'); print()
+            print_evaluation(test_evaluator, 'test');
 
             writer.add_scalars('amount_correct',
                                {'test_amount_correct': percent_correct(test_evaluator),
@@ -333,6 +333,7 @@ def train(epoch, write=True):
 
         def write_model(name):
             path = f'./checkpoints/{NET.__name__}/model-{name}.pt'
+            print(f'Writing model: {name}')
             save_model(path)
 
         iterations += BATCH_SIZE
@@ -353,6 +354,7 @@ def train(epoch, write=True):
         if iterations % 5000 < BATCH_SIZE:
             test_loss()
             write_model(str(iterations // 5000))
+            print()
 
         if iterations % 10000 < BATCH_SIZE:
             write_histogram(net, iterations)
@@ -363,15 +365,15 @@ def train(epoch, write=True):
 
 
 if __name__ == '__main__':
-    # print("\nWriting Info")
-    # write_info()
-    # write_images()
+    print("\nWriting Info")
+    write_info()
+    write_images()
 
-    # def train_net(epochs):
-    #     for epoch in range(epochs):
-    #         train(epoch)
+    def train_net(epochs):
+        for epoch in range(epochs):
+            train(epoch)
 
-    # train_net(30)
+    train_net(30)
 
     #########################
 
@@ -380,7 +382,7 @@ if __name__ == '__main__':
         load_model(path)
         net.eval()
     
-    print("Loading Net")
-    load_net()
-    print("Testing Net")
-    write_predictions_to_csv(net, test_loader, 2, 'evaluator/predictions.csv')
+    # print("Loading Net")
+    # load_net()
+    # print("Testing Net")
+    # write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')

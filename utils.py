@@ -6,7 +6,6 @@ class dotdict(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
 
-
     """dot.notation access to dictionary attributes"""
     def __getattr__(self, attr):
         return self.get(attr)
@@ -39,7 +38,7 @@ def make_weights_for_classes(images, nclasses, weigh_classes=None):
     N = sum(count)   # Total number of samples
 
     for i in range(nclasses):
-        weight_per_class[i] = N/count[i]                   # Weight is, if 500 samples, 100/500 local and 400/500 quake
+        weight_per_class[i] = N/count[i]         
 
     weight = [0] * len(images)
     for idx, val in enumerate(items):

@@ -4,6 +4,7 @@ from torch.autograd import Variable
 from utils import dotdict
 import os
 import sys
+import copy
 
 class Evaluator:
 
@@ -42,6 +43,7 @@ class Evaluator:
         return 'Evaluator Object: ' + str(self.class_info)
 
 
+
 class NetEval:
 
     def __init__(self, net):
@@ -51,7 +53,7 @@ class NetEval:
         outputs = self.net(inputs)
         return outputs
 
-    def predict(self, inputs, labels):
+    def predict(self, inputs):
         outputs = self.forward(inputs)
         predicted_labels = self.predicted_classes(outputs)
         return predicted_labels
@@ -88,7 +90,7 @@ def evaluate(net, data_loader, NUM_CLASSES, BATCH_SIZE):
 
     for (inputs, labels) in data_loader:
         inputs, labels = net_eval.to_cuda(inputs), labels.cuda()
-        guesses = net_eval.predict(inputs, labels)
+        guesses = net_eval.predict(inputs)
 
         for guess, label in zip(guesses, labels):
             class_correct[label] += guess
