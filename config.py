@@ -17,7 +17,7 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
 
 
-path = 'everywhere-once'
+path = 'everywhere-97'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path)
 test = 'AmatriceQuakes'
@@ -41,7 +41,7 @@ options = dict(
           'crop':  (.8, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (.1, 0, 0, 0)    # left, right, top, bottom
         },
-        'weigh_classes': [1, 1]
+        'weigh_classes': [4, 1]
     },
     single_location={
         'train': {
@@ -59,8 +59,25 @@ options = dict(
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
-        'weigh_classes': None #[10, 1]
-    })  
+        'weigh_classes': [2, 1]
+    },
+    unknown={
+        'train': {
+            'path': f'Benz/spectrograms-all-29',
+            'divide_test': 0,
+        },
+        'test': {
+            'path': f'Benz/spectrograms-all-29',
+            'divide_test': 1,
+        },
+        'image': {
+          'height': int(258 * 1),
+          'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
+          'crop':  (.8, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+        },
+        'loader': 'direct',
+    })
 
 # Path to configuration file
 default_config_path = os.path.join(os.getcwd(), 'validator/config.json')

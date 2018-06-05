@@ -7,12 +7,13 @@ import pathlib
 import csv
 
 
-folder = 'everywhere-untested'
+folder = 'everywhere-97'
 cwd = os.getcwd()
 spectrogram_path = os.path.join(cwd, 'data', folder)
-file = 'validator/config.json'
+
+file = 'validator/config_crossvalidation.json'
 validator_path = 'validator'
-csv_file = 'results.csv'
+csv_file = 'cv-results-97-new.csv'
 csv_path = os.path.join(validator_path, csv_file)
 epochs = 10
 
@@ -60,6 +61,7 @@ def run_environ():
     dirs = dv.get_paths(spectrogram_path)
     configuration = dv.read_config(file)
     initialize_csv(csv_path)
+
     for dir in dirs:
         dir = get_name(dir)
         dv.update_config(configuration, dir)
@@ -84,26 +86,33 @@ def run_environ():
         except Exception as e:
             print("Failed to run neural net: ", e)
 
-
-
 def run_cross_validation():
     """Leave one out cross validation"""
-    file = 'config_cv.json'
+    import glob
+    import copy
+
     os.environ['CONFIGURATION'] = file
-    dirs = dv.get_paths(spectrogram_path)
+    dirs = list(map(os.path.basename, 
+                    map(get_name, dv.get_paths(spectrogram_path))))
+
     configuration = dv.read_config(file)
     initialize_csv(csv_path)
 
     for dir in dirs:
-        dir = get_name(dir)
-        dv.update_config(configuration, dir)
+        
+        ignore_test = copy.copy(dirs)
+        ignore_test.remove(dir)
+
+        configuration['train']['ignore'] = [dir]
+        configuration['test']['ignore'] = ignore_test
+
         dv.write_config(file, configuration)
         
         try:
         # Reload environment variables and main file with new configuration
             reset()
             print("Training Net on " + dir)
-            evaluator = dv.test_dataset(epochs=1)
+            evaluator = dv.test_best_dataset(epochs=1)
             
             print('\n', evaluator, '\n')
             write_to_csv(dir, 
@@ -112,11 +121,12 @@ def run_cross_validation():
                     evaluator.class_details(1).amount_correct, 
                     evaluator.class_details(1).amount_total, 
                     str(evaluator.total_percent_correct()),
-                    epochs,
+                    evaluator.iteration,
                     )
        
         except Exception as e:
             print("Failed to run neural net: ", e)
+            raise
 
 if __name__ == '__main__':
-    run_environ()
+    run_cross_validation()

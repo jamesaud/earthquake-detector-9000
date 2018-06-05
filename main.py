@@ -23,7 +23,8 @@ import utils
 from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
 
-configuration = 'everywhere'
+
+configuration = 'single_location'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -63,7 +64,7 @@ if crop_padding:
 
 # DATASET
 
-Dataset = SpectrogramDirectDataset if settings.loader == "direct" else SpectrogramCustomPathDataset
+Dataset =  SpectrogramDirectDataset if settings.loader == "direct" else SpectrogramCustomPathDataset  # SpectrogramUnknownDataset
 
 dataset_args = dict(
     path_pattern=settings.path_pattern or '',
@@ -267,10 +268,9 @@ def write_info():
 
     writer.add_text('Configuration', str(settings))
 
-def train(epoch, write=True):
+def train(epoch, write=True, yield_evaluator=False):
     global iterations
     running_loss = 0.0
-
     for i, (true_inputs, true_labels) in enumerate(train_loader):
         # wrap them in Variable
         inputs, labels = [Variable(input).cuda() for input in true_inputs], Variable(true_labels).cuda()
@@ -311,7 +311,7 @@ def train(epoch, write=True):
 
             write_pr(test_evaluator, step=iterations)
 
-            print_evaluation(test_evaluator, 'test');
+            print_evaluation(test_evaluator, 'test')
 
             writer.add_scalars('amount_correct',
                                {'test_amount_correct': percent_correct(test_evaluator),
@@ -323,6 +323,7 @@ def train(epoch, write=True):
                                 'test_local': test_evaluator.percent_correct(1)},
                                iterations)
                                
+            return test_evaluator
 
         def train_loss():
             train_evaluator = evaluate(net, train_test_loader, copy_net=True); print()
@@ -344,17 +345,18 @@ def train(epoch, write=True):
         if iterations % 1000 < BATCH_SIZE:
             print_loss()
 
-        # Don't run the write conditions if set to false
-        if write is False: 
-            continue
 
         if iterations % 1000 < BATCH_SIZE:
             write_loss()
 
         if iterations % 5000 < BATCH_SIZE:
-            test_loss()
-            write_model(str(iterations // 5000))
+            evaluator = test_loss()
+            write_model(str(iterations // 5000) + '-' + str(evaluator.total_percent_correct()))
             print()
+        
+        # Don't run the write conditions if set to false
+        if write is False: 
+            continue
 
         if iterations % 10000 < BATCH_SIZE:
             write_histogram(net, iterations)
@@ -362,6 +364,7 @@ def train(epoch, write=True):
         if epoch % 2 == 0 and epoch >= 2 and i == 0:
             train_loss()
 
+        
 
 
 if __name__ == '__main__':
@@ -375,12 +378,12 @@ if __name__ == '__main__':
 
     train_net(30)
 
-    #########################
+    ########################
 
-    def load_net():
-        path = f'./checkpoints/{NET.__name__}/BestModel.pt'
-        load_model(path)
-        net.eval()
+    # def load_net():
+    #     path = f'./checkpoints/{NET.__name__}/BestModel.pt'
+    #     load_model(path)
+    #     net.eval()
     
     # print("Loading Net")
     # load_net()

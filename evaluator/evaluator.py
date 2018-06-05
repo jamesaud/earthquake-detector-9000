@@ -26,7 +26,10 @@ class Evaluator:
 
     def percent_correct(self, class_name):
         Class = self.class_info[class_name]
-        return Class.amount_correct / Class.amount_total
+        try:
+            return Class.amount_correct / Class.amount_total
+        except ZeroDivisionError:
+            return 0
 
     def total_percent_correct(self):
 
@@ -37,11 +40,16 @@ class Evaluator:
             amount_correct += info.amount_correct
             amount_total += info.amount_total
 
-        return amount_correct / amount_total
+        try:
+            return amount_correct / amount_total
+        except ZeroDivisionError:
+            return 0
+    
+    def normalized_percent_correct(self):
+        return (self.percent_correct(0)*1.1 + self.percent_correct(1)) / 2.1
 
     def __str__(self):
         return 'Evaluator Object: ' + str(self.class_info)
-
 
 
 class NetEval:
