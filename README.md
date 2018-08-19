@@ -52,7 +52,8 @@ To run the conv net on every location, run:
 
 to produce results that tell you the detection accuracy for each location:
 
-https://github.com/jamesaud/earthquake-detector-9000/blob/master/validator/results_everywhere.csv
+https://github.com/jamesaud/earthquake-detector-9000/blob/master/validator/backup/results_everywhere_backup.csv
+
 
 ## Generalized Model
 
