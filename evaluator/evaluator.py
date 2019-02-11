@@ -16,6 +16,7 @@ class Evaluator:
                 self.class_info[key] = value
 
     def update_accuracy(self, class_name: str, amount_correct: int, amount_total: int):
+
         self.class_info[class_name] = {
             'amount_correct': amount_correct,
             'amount_total': amount_total

@@ -104,7 +104,7 @@ loader_args = dict(
                    )
 
 train_loader = DataLoader(dataset_train,
-                          shuffle=True, # (not train_sampler)
+                          shuffle= not train_sampler,
                           sampler=train_sampler,
                           **loader_args)
 
@@ -179,6 +179,8 @@ def evaluate(net, data_loader, copy_net=False):
         # label: int, 0 to len(NUM_CLASSES)
         # guess: int, 0 or 1 (i.e. True or False)
         for guess, label in zip(guesses, labels):
+            # Added
+            guess, label = guess.item(), label.item()
             class_correct[label] += guess
             class_total[label] += 1
 
@@ -309,7 +311,7 @@ def train(epoch, write=True, yield_evaluator=False):
             print("\nTesting...")
             test_evaluator = evaluate(net, test_loader, copy_net=True); print()
 
-            write_pr(test_evaluator, step=iterations)
+            #write_pr(test_evaluator, step=iterations)
 
             print_evaluation(test_evaluator, 'test')
 
@@ -364,7 +366,8 @@ def train(epoch, write=True, yield_evaluator=False):
         if epoch % 2 == 0 and epoch >= 2 and i == 0:
             train_loss()
 
-        
+        # Added: Debuggin
+        evaluator = test_loss()
 
 
 if __name__ == '__main__':
@@ -376,7 +379,7 @@ if __name__ == '__main__':
         for epoch in range(epochs):
             train(epoch)
 
-    train_net(30)
+    train_net(50)
 
     ########################
 

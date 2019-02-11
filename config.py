@@ -55,7 +55,7 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (.8, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (.6, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
