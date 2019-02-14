@@ -24,7 +24,7 @@ from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
 
 
-configuration = 'single_location'
+configuration = 'benz_test_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -104,7 +104,7 @@ loader_args = dict(
                    )
 
 train_loader = DataLoader(dataset_train,
-                          shuffle= not train_sampler,
+                          shuffle=not train_sampler,
                           sampler=train_sampler,
                           **loader_args)
 
@@ -290,7 +290,8 @@ def train(epoch, write=True, yield_evaluator=False):
         loss.backward()
         optimizer.step()
 
-        running_loss += loss.data[0]
+
+        running_loss += loss.data.item()
 
         def print_loss():
             msg = 'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
@@ -298,12 +299,12 @@ def train(epoch, write=True, yield_evaluator=False):
                   int(i * len(true_inputs) * BATCH_SIZE / 3),
                   len(train_loader) * BATCH_SIZE,
                   100. * i / len(train_loader),
-                  loss.data[0])
+                  loss.data.item())
 
             sys.stdout.write('\r' + msg); sys.stdout.flush()
 
         def write_loss():
-            writer.add_scalar('train_loss', loss.data[0], iterations)
+            writer.add_scalar('train_loss', loss.data.item(), iterations)
 
         percent_correct = lambda evaluator: evaluator.total_percent_correct() * 100
 
@@ -316,8 +317,7 @@ def train(epoch, write=True, yield_evaluator=False):
             print_evaluation(test_evaluator, 'test')
 
             writer.add_scalars('amount_correct',
-                               {'test_amount_correct': percent_correct(test_evaluator),
-                                },
+                               {'test_amount_correct': percent_correct(test_evaluator)},
                                iterations)
 
             writer.add_scalars('test_class_correct',
@@ -353,7 +353,7 @@ def train(epoch, write=True, yield_evaluator=False):
 
         if iterations % 5000 < BATCH_SIZE:
             evaluator = test_loss()
-            write_model(str(iterations // 5000) + '-' + str(evaluator.total_percent_correct()))
+            write_model(str(iterations // 5000) + '-' + str(round(evaluator.total_percent_correct(), 4)))
             print()
         
         # Don't run the write conditions if set to false
@@ -366,29 +366,42 @@ def train(epoch, write=True, yield_evaluator=False):
         if epoch % 2 == 0 and epoch >= 2 and i == 0:
             train_loss()
 
-        # Added: Debuggin
-        evaluator = test_loss()
 
 
 if __name__ == '__main__':
-    print("\nWriting Info")
-    write_info()
-    write_images()
 
-    def train_net(epochs):
-        for epoch in range(epochs):
-            train(epoch)
+    #################
+    # TRAINING MODEL
+    ##################
 
-    train_net(50)
+    # print("\nWriting Info")
+    # write_info()
+    # write_images()
+    #
+    # def train_net(epochs):
+    #     for epoch in range(epochs):
+    #         train(epoch)
+    #
+    # train_net(50)
 
     ########################
+    # RUN MODEL
+    ########################
+    MODEL_TO_LOAD = 'model-63-0.9895.pt'
 
-    # def load_net():
-    #     path = f'./checkpoints/{NET.__name__}/BestModel.pt'
-    #     load_model(path)
-    #     net.eval()
-    
-    # print("Loading Net")
-    # load_net()
-    # print("Testing Net")
-    # write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+    def load_net():
+        path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
+        load_model(path)
+        net.eval()
+
+    print("Loading Net")
+    load_net()
+    print("Testing Net")
+
+    # Test the evaluator
+    test_evaluator = evaluate(net, test_loader, copy_net=True);
+    print()
+    print_evaluation(test_evaluator, 'test')
+
+    write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+    print("\nWrote csv")

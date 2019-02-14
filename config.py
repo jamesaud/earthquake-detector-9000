@@ -9,7 +9,7 @@ RGB_STD = [0.0001881388618665583, 0.0006368028766968671, 0.00028853512862149407]
 GRAY_MEAN = [0.0009710071717991548, 0.0009710071717991548, 0.0009710071717991548]
 GRAY_STD = [0.00037422115896262377, 0.00037422115896262377, 0.00037422115896262377]
 
-BORDER_COLOR_GRAY = 30
+BORDER_COLOR_GRAY = 30   # Important to get right, for adding noise to spectrograms
 
 DIVIDE_TEST = .2   # % test
 
@@ -43,7 +43,7 @@ options = dict(
         },
         'weigh_classes': [4, 1]
     },
-    single_location={
+    benz_train_set={
         'train': {
             'path': f'Benz/spectrograms-train',
             'divide_test': .2,
@@ -55,11 +55,29 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (.6, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (1, .75),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (0, .1, 0, 0)    # left, right, top, bottom
+        },
+        'loader': 'direct',
+        'weigh_classes': [4, 1]
+    },
+    benz_test_set={
+        'train': {
+            'path': f'Benz/spectrograms-testset-benz/GK29',
+            'divide_test': .99,
+        },
+        'test': {
+            'path': f'Benz/spectrograms-testset-benz/GK29',
+            'divide_test': .99,
+        },
+        'image': {
+          'height': int(258 * 1),
+          'width': int(219.75 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
-        'weigh_classes': [2, 1]
+        'weigh_classes': [1, 1]
     },
     unknown={
         'train': {

@@ -50,7 +50,7 @@ def write_unknown_csv_prediction(names, guesses, csv_file):
         writer = csv.writer(csvfile)
 
         for guess, name in zip(guesses, names):
-            guess = guess[0]
+            guess, name = guess.item(), name.item()
             writer.writerow([name, guess])
 
 def write_unknown_predictions_to_csv(net, unknown_data_loader, csv_path):
