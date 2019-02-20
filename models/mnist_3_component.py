@@ -9,8 +9,8 @@ class mnist_three_component(nn.Module):
 
 
     DIM = 32
-    NOISE_RGB_AMOUNT = 15 # 25  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
-    BLUR = 2
+    NOISE_RGB_AMOUNT = 15  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
+    BLUR = 0              # 2
     F_DIM = 64
 
     _transformations = [transforms.Grayscale(num_output_channels=3),

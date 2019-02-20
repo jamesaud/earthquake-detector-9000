@@ -24,7 +24,7 @@ from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
 
 
-configuration = 'benz_test_set'
+configuration = 'benz_train_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -173,6 +173,8 @@ def evaluate(net, data_loader, copy_net=False):
     for (inputs, labels) in data_loader:
         inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
         outputs = Net(inputs)
+
+        # TODO: Make this a variable in the evaluator
         _, predicted = torch.max(outputs.data, 1)
         guesses = (predicted == labels).squeeze()
 
@@ -213,6 +215,8 @@ def print_evaluation(evaluator, description):
                                                                                info.amount_correct,
                                                                                info.amount_total,
                                                                                evaluator.percent_correct(name) * 100))
+
+
 
 def test(net, loader, copy_net=False):
     """
@@ -369,25 +373,31 @@ def train(epoch, write=True, yield_evaluator=False):
 
 
 if __name__ == '__main__':
+    ### VIEW IMAGES ####
+    # dataset_train.transform = False
+    # input_images = next(iter(dataset_train))[0]
+    # print(input_images)
+    # exit()
 
+    ################
+    #
+   # TRAINING MODEL
     #################
-    # TRAINING MODEL
-    ##################
 
-    # print("\nWriting Info")
-    # write_info()
-    # write_images()
-    #
-    # def train_net(epochs):
-    #     for epoch in range(epochs):
-    #         train(epoch)
-    #
-    # train_net(50)
+    print("\nWriting Info")
+    write_info()
+    write_images()
+
+    def train_net(epochs):
+        for epoch in range(epochs):
+            train(epoch)
+
+    train_net(50)
 
     ########################
-    # RUN MODEL
-    ########################
-    MODEL_TO_LOAD = 'model-63-0.9895.pt'
+    #RUN MODEL
+    #######################
+    MODEL_TO_LOAD = 'model-13-0.9857.pt'
 
     def load_net():
         path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
@@ -399,7 +409,7 @@ if __name__ == '__main__':
     print("Testing Net")
 
     # Test the evaluator
-    test_evaluator = evaluate(net, test_loader, copy_net=True);
+    test_evaluator = evaluate(net, test_loader, copy_net=True)
     print()
     print_evaluation(test_evaluator, 'test')
 

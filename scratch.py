@@ -95,3 +95,4 @@ compute_mean_and_std(grayscale=True)
 # test_sampler = SubsetRandomSampler(test_idx)
 
 
+from sklearn.metrics import roc_curve

@@ -15,8 +15,37 @@ class Evaluator:
             for key, value in class_accuracy_dict.items():
                 self.class_info[key] = value
 
-    def update_accuracy(self, class_name: str, amount_correct: int, amount_total: int):
+        # Should be updated as arrays
+        self.true_labels = None
+        self.predicted = None
+        self.guesses = None
 
+    def compute_accuracy(predicted, true_labels, class_labels):
+        """
+        :param predicted: 1d Tensor: An array of predictions (probabilities for each label)
+        :param predicted: 1d Tensor: the predicted lab
+        :param class_labels: List: the class labels
+        :return:
+        """
+        class_correct = [0 for _ in range(NUM_CLASSES)]
+        class_total = [0 for _ in range(NUM_CLASSES)]
+
+        guesses = (predicted == labels).squeeze()
+
+        self.true_labels = true_labels
+        self.predicted = predicted
+        self.guesses = guesses
+
+        for guess, label in zip(guesses, labels):
+            guess, label = guess.item(), label.item()
+            class_correct[label] += guess
+            class_total[label] += 1
+
+        for i, (correct, total) in enumerate(zip(class_correct, class_total)):
+            self.update_accuracy(class_name=i, amount_correct=correct, amount_total=total)
+
+
+    def update_accuracy(self, class_name: str, amount_correct: int, amount_total: int):
         self.class_info[class_name] = {
             'amount_correct': amount_correct,
             'amount_total': amount_total
@@ -33,7 +62,6 @@ class Evaluator:
             return 0
 
     def total_percent_correct(self):
-
         amount_correct = 0
         amount_total = 0
 

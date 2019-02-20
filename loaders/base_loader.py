@@ -17,7 +17,7 @@ Components = namedtuple('Components', ('N', 'Z', 'E'))
 class SpectrogramBaseDataset(Dataset):
     """
     """
-    __SEED = 448
+    __SEED = 448   # For randomly splitting the traintest set consistantly
 
     def __init__(self, img_path, divide_test, transform=None, test=False, resize=False, ignore=None,
         crop=False, crop_center=None, crop_padding=None,  **kwargs):
