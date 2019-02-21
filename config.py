@@ -12,7 +12,8 @@ RGB_STD = [0.0001881388618665583, 0.0006368028766968671, 0.00028853512862149407]
 GRAY_MEAN = [0.0009710071717991548, 0.0009710071717991548, 0.0009710071717991548]
 GRAY_STD = [0.00037422115896262377, 0.00037422115896262377, 0.00037422115896262377]
 
-BORDER_COLOR_GRAY = 30   # Important to get right, for adding noise to spectrograms
+BORDER_COLOR_GRAY = 30   #
+# Important to get right, for adding noise to spectrograms
 
 VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
@@ -44,13 +45,31 @@ options = dict(
         },
         'weigh_classes': [4, 1]
     },
+    benz_train_set_old={
+        'train': {
+            'path': f'Benz/trainset-old/spectrograms-train-gs29-original',
+            'divide_test': .2,
+        },
+        'test': {
+            'path': f'Benz/trainset-old/spectrograms-train-gs29-original',
+            'divide_test': .2,
+        },
+        'image': {
+          'height': int(258 * 1),
+          'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
+          'crop':  (1, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (0, .1, 0, 0)    # left, right, top, bottom
+        },
+        'loader': 'direct',
+        'weigh_classes': [4, 1]
+    },
     benz_train_set={
         'train': {
-            'path': f'Benz/training_set_benz',
+            'path': f'Benz/spectrograms/train_set_benz',
             'divide_test': .15,
         },
         'test': {
-            'path': f'Benz/training_set_benz',
+            'path': f'Benz/spectrograms/train_set_benz',
             'divide_test': .15,
         },
         'image': {
@@ -64,12 +83,12 @@ options = dict(
     },
     benz_test_set={
         'train': {
-            'path': f'Benz/spectrograms-testset-benz/GK29-20-seconds',
-            'divide_test': .01,
+            'path': f'Benz/spectrograms/test_set_benz',
+            'divide_test': .15,
         },
         'test': {
-            'path': f'Benz/spectrograms-testset-benz/GK29-20-seconds',
-            'divide_test': .99,
+            'path': f'Benz/spectrograms/test_set_benz',
+            'divide_test': .15,
         },
         'image': {
           'height': int(258 * 1),

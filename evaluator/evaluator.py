@@ -8,35 +8,33 @@ import copy
 
 class Evaluator:
 
-    def __init__(self, class_accuracy_dict=None):
+    def __init__(self, true_labels, output_labels, num_classes):
         self.class_info = dotdict()  # Javasript style item access
 
-        if class_accuracy_dict:
-            for key, value in class_accuracy_dict.items():
-                self.class_info[key] = value
-
         # Should be updated as arrays
-        self.true_labels = None
-        self.predicted = None
-        self.guesses = None
+        self.true_labels = true_labels         # True labels
+        self.output_labels = output_labels     # Raw output classes of neural net
 
-    def compute_accuracy(predicted, true_labels, class_labels):
+        print(output_labels.data)
+        _, predicted_labels = torch.max(output_labels.data, 1)
+        predicted_labels = predicted_labels    # Labels projected to the nearest class
+        self.predicted_labels = predicted_labels
+
+        self.compute_accuracy(predicted_labels, true_labels, num_classes)
+
+    def compute_accuracy(self, predicted_labels, true_labels, num_classes):
         """
         :param predicted: 1d Tensor: An array of predictions (probabilities for each label)
         :param predicted: 1d Tensor: the predicted lab
         :param class_labels: List: the class labels
         :return:
         """
-        class_correct = [0 for _ in range(NUM_CLASSES)]
-        class_total = [0 for _ in range(NUM_CLASSES)]
+        class_correct = [0 for _ in range(num_classes)]
+        class_total = [0 for _ in range(num_classes)]
 
-        guesses = (predicted == labels).squeeze()
+        guesses = (predicted_labels == true_labels).squeeze()
 
-        self.true_labels = true_labels
-        self.predicted = predicted
-        self.guesses = guesses
-
-        for guess, label in zip(guesses, labels):
+        for guess, label in zip(guesses, true_labels):
             guess, label = guess.item(), label.item()
             class_correct[label] += guess
             class_total[label] += 1
@@ -107,7 +105,7 @@ class NetEval:
         return [Variable(input).cuda() for input in inputs]
 
 
-def evaluate(net, data_loader, NUM_CLASSES, BATCH_SIZE):
+def evaluate(net, data_loader, num_classes, BATCH_SIZE):
     """
     Goes through entire loader one time
     :param net: neural net
@@ -119,8 +117,8 @@ def evaluate(net, data_loader, NUM_CLASSES, BATCH_SIZE):
     net_eval = NetEval(Net)
     eval = Evaluator()
 
-    class_correct = [0 for _ in range(NUM_CLASSES)]
-    class_total = [0 for _ in range(NUM_CLASSES)]
+    class_correct = [0 for _ in range(num_classes)]
+    class_total = [0 for _ in range(num_classes)]
 
     i = 0 
     size = BATCH_SIZE * len(data_loader)

@@ -24,7 +24,7 @@ from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
 
 
-configuration = 'benz_train_set'
+configuration = 'benz_test_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -149,6 +149,12 @@ def write_pr(evaluator, step):
     writer.add_pr_curve('PR', torch.IntTensor(true_labels), torch.IntTensor(predicted), step)
 
 
+def write_roc(evaluator):
+    true_labels = evaluator.true_labels
+    output_labels = evaluator.output_labels
+    fpr, tpr, threshold = metrics.roc_curve(y_test, preds)
+
+
 def evaluate(net, data_loader, copy_net=False):
     """
     :param net: neural net
@@ -163,36 +169,24 @@ def evaluate(net, data_loader, copy_net=False):
     else:
         Net = net
 
-    eval = Evaluator()
-    class_correct = [0 for _ in range(NUM_CLASSES)]
-    class_total = [0 for _ in range(NUM_CLASSES)]
-
-    i = 0 
-    size = BATCH_SIZE * len(data_loader)
+    i = 0
+    all_output_labels = torch.FloatTensor()
+    all_true_labels = torch.LongTensor()
 
     for (inputs, labels) in data_loader:
-        inputs, labels = [Variable(input).cuda() for input in inputs], labels.cuda()
-        outputs = Net(inputs)
+        inputs, labels = [Variable(input).cuda() for input in inputs], labels
+        output_labels = Net(inputs).cpu().detach()
 
-        # TODO: Make this a variable in the evaluator
-        _, predicted = torch.max(outputs.data, 1)
-        guesses = (predicted == labels).squeeze()
-
-        # label: int, 0 to len(NUM_CLASSES)
-        # guess: int, 0 or 1 (i.e. True or False)
-        for guess, label in zip(guesses, labels):
-            # Added
-            guess, label = guess.item(), label.item()
-            class_correct[label] += guess
-            class_total[label] += 1
+        all_output_labels = torch.cat((all_output_labels, output_labels))
+        all_true_labels = torch.cat((all_true_labels, labels))
 
         i += BATCH_SIZE
-        sys.stdout.write('\r' + str(i) + '/' + str(size))
+        sys.stdout.write('\r' + str(i) + '/' + str(BATCH_SIZE * len(data_loader)))
         sys.stdout.flush()
 
+
     # Update the information in the Evaluator
-    for i, (correct, total) in enumerate(zip(class_correct, class_total)):
-        eval.update_accuracy(class_name=i, amount_correct=correct, amount_total=total)
+    eval = Evaluator(all_true_labels, all_output_labels, 2)
 
     return eval
 
@@ -215,7 +209,6 @@ def print_evaluation(evaluator, description):
                                                                                info.amount_correct,
                                                                                info.amount_total,
                                                                                evaluator.percent_correct(name) * 100))
-
 
 
 def test(net, loader, copy_net=False):
@@ -278,6 +271,7 @@ def train(epoch, write=True, yield_evaluator=False):
     global iterations
     running_loss = 0.0
     for i, (true_inputs, true_labels) in enumerate(train_loader):
+
         # wrap them in Variable
         inputs, labels = [Variable(input).cuda() for input in true_inputs], Variable(true_labels).cuda()
 
@@ -359,16 +353,15 @@ def train(epoch, write=True, yield_evaluator=False):
             evaluator = test_loss()
             write_model(str(iterations // 5000) + '-' + str(round(evaluator.total_percent_correct(), 4)))
             print()
-        
-        # Don't run the write conditions if set to false
-        if write is False: 
-            continue
-
-        if iterations % 10000 < BATCH_SIZE:
-            write_histogram(net, iterations)
 
         if epoch % 2 == 0 and epoch >= 2 and i == 0:
             train_loss()
+
+        # Don't run the write conditions if set to false
+        if write:
+            if iterations % 10000 < BATCH_SIZE:
+                write_histogram(net, iterations)
+
 
 
 
@@ -397,21 +390,22 @@ if __name__ == '__main__':
     ########################
     #RUN MODEL
     #######################
-    MODEL_TO_LOAD = 'model-13-0.9857.pt'
-
-    def load_net():
-        path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
-        load_model(path)
-        net.eval()
-
-    print("Loading Net")
-    load_net()
-    print("Testing Net")
-
-    # Test the evaluator
-    test_evaluator = evaluate(net, test_loader, copy_net=True)
-    print()
-    print_evaluation(test_evaluator, 'test')
-
-    write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
-    print("\nWrote csv")
+    #
+    # MODEL_TO_LOAD = 'model-18-0.9788.pt'
+    #
+    # def load_net():
+    #     path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
+    #     load_model(path)
+    #     net.eval()
+    #
+    # print("Loading Net")
+    # load_net()
+    # print("Testing Net")
+    #
+    # # Test the evaluator
+    # test_evaluator = evaluate(net, test_loader, copy_net=True)
+    # print()
+    # print_evaluation(test_evaluator, 'test')
+    #
+    # write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+    # print("\nWrote csv")
