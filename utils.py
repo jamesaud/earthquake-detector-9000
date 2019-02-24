@@ -80,7 +80,7 @@ def calculate_crop_padding_pixels(crop_padding_percent, img_height, img_width):
     left, right, top, bottom = crop_padding_percent
     left, right = width * left, width * right
     top, bottom = height * top, height * bottom
-    return (left, right, top, bottom)      # (padding_left, padding_right) in pixels
+    return (left, right, top, bottom)      # (padding_left, padding_right, top, bottom) in pixels
 
 
 

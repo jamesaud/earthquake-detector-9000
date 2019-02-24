@@ -22,9 +22,9 @@ import sys
 import utils
 from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
+import scikitplot as skplt
 
-
-configuration = 'benz_test_set'
+configuration = 'benz_train_set_old'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -152,8 +152,10 @@ def write_pr(evaluator, step):
 def write_roc(evaluator):
     true_labels = evaluator.true_labels
     output_labels = evaluator.output_labels
-    fpr, tpr, threshold = metrics.roc_curve(y_test, preds)
-
+    fpr, tpr, threshold = metrics.roc_curve(true_labels, output_labels)
+    roc_auc = metrics.auc(fpr, tpr)
+    plot = skplt.metrics.plot_roc_curve(y_true, y_probas)
+    plt.savefig('visualize/roc/roc.png')
 
 def evaluate(net, data_loader, copy_net=False):
     """
@@ -350,8 +352,14 @@ def train(epoch, write=True, yield_evaluator=False):
             write_loss()
 
         if iterations % 5000 < BATCH_SIZE:
+            rounded = lambda decimal: str(round(decimal, 4))
             evaluator = test_loss()
-            write_model(str(iterations // 5000) + '-' + str(round(evaluator.total_percent_correct(), 4)))
+            write_model(
+                        str(iterations // 5000) +  \
+                        '-' + rounded(evaluator.total_percent_correct()) + \
+                        '-' + rounded(evaluator.percent_correct(0)) + \
+                        '-' + rounded(evaluator.percent_correct(1)) \
+                        )
             print()
 
         if epoch % 2 == 0 and epoch >= 2 and i == 0:
@@ -374,38 +382,41 @@ if __name__ == '__main__':
 
     ################
     #
-   # TRAINING MODEL
+    # TRAINING MODEL
     #################
 
-    print("\nWriting Info")
-    write_info()
-    write_images()
-
-    def train_net(epochs):
-        for epoch in range(epochs):
-            train(epoch)
-
-    train_net(50)
+    # print("\nWriting Info")
+    # write_info()
+    # write_images()
+    #
+    # def train_net(epochs):
+    #     for epoch in range(epochs):
+    #         train(epoch)
+    #
+    # train_net(50)
 
     ########################
     #RUN MODEL
     #######################
     #
-    # MODEL_TO_LOAD = 'model-18-0.9788.pt'
-    #
-    # def load_net():
-    #     path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
-    #     load_model(path)
-    #     net.eval()
-    #
-    # print("Loading Net")
-    # load_net()
-    # print("Testing Net")
-    #
-    # # Test the evaluator
-    # test_evaluator = evaluate(net, test_loader, copy_net=True)
-    # print()
-    # print_evaluation(test_evaluator, 'test')
-    #
-    # write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
-    # print("\nWrote csv")
+    MODEL_TO_LOAD = 'BestModel.pt'
+
+    def load_net():
+        path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
+        load_model(path)
+        net.eval()
+
+    print("Loading Net")
+    load_net()
+    print("Testing Net")
+
+    # Test the evaluator
+    test_evaluator = evaluate(net, test_loader, copy_net=True)
+    print()
+    print_evaluation(test_evaluator, 'test')
+
+    print("Writing ROC curve")
+    write_roc(test_evaluator)
+
+    write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+    print("\nWrote csv")

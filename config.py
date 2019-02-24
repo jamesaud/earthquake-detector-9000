@@ -97,7 +97,7 @@ options = dict(
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
-        'weigh_classes': [1, 1]
+        'weigh_classes': [4, 1]
     },
     benz_experiment_set={
         'train': {

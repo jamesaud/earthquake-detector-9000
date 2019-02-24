@@ -15,7 +15,6 @@ class Evaluator:
         self.true_labels = true_labels         # True labels
         self.output_labels = output_labels     # Raw output classes of neural net
 
-        print(output_labels.data)
         _, predicted_labels = torch.max(output_labels.data, 1)
         predicted_labels = predicted_labels    # Labels projected to the nearest class
         self.predicted_labels = predicted_labels
