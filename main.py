@@ -394,12 +394,7 @@ if __name__ == '__main__':
 
     # Write figures
     print("Writing stats...")
-    # stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
-    # stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
-    import scikitplot as skplt
-    import matplotlib.pyplot as plt
-    fig = skplt.metrics.plot_precision_recall(test_evaluator.true_labels, test_evaluator.output_labels)
-    plt.savefig('visualize/pr.png')
+    ßstats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
 
     # Write CSV predictions
     write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
