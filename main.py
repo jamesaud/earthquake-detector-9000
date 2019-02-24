@@ -394,7 +394,7 @@ if __name__ == '__main__':
 
     # Write figures
     print("Writing stats...")
-    ßstats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
+    stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
 
     # Write CSV predictions
     write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
