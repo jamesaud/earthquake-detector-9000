@@ -394,6 +394,7 @@ if __name__ == '__main__':
 
     # Write figures
     print("Writing stats...")
+    stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
     stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
 
     # Write CSV predictions
