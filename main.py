@@ -22,16 +22,17 @@ import sys
 import utils
 from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
-import scikitplot as skplt
+from writer_util.stats_writer import StatsWriter
 
 configuration = 'benz_train_set_old'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
 settings = dotdict(settings)
+CWD = os.getcwd()
 
 # Train and test
-make_path = lambda path: os.path.join(os.getcwd(), os.path.join('data', path))
+make_path = lambda path: os.path.join(CWD, os.path.join('data', path))
 
 TRAIN_IMG_PATH = make_path(settings.train.path)
 TEST_IMG_PATH = make_path(settings.test.path)
@@ -136,26 +137,6 @@ def guess_labels(batches):
         print('Predicted:   ', ' '.join('%5s' % predicted[j] for j in range(BATCH_SIZE)))
         print()
 
-def write_pr(evaluator, step):
-    local_info = evaluator.class_details(1)
-    noise_info = evaluator.class_details(0)
-
-    true_labels = [0] * noise_info.amount_total + [1] * local_info.amount_total    # True labels
-
-    predicted_noise = [0] * noise_info.amount_correct + [1] * (noise_info.amount_total - noise_info.amount_correct)
-    predicted_local = [1] * local_info.amount_correct + [0] * (local_info.amount_total - local_info.amount_correct)
-    predicted = predicted_noise + predicted_local
-
-    writer.add_pr_curve('PR', torch.IntTensor(true_labels), torch.IntTensor(predicted), step)
-
-
-def write_roc(evaluator):
-    true_labels = evaluator.true_labels
-    output_labels = evaluator.output_labels
-    fpr, tpr, threshold = metrics.roc_curve(true_labels, output_labels)
-    roc_auc = metrics.auc(fpr, tpr)
-    plot = skplt.metrics.plot_roc_curve(y_true, y_probas)
-    plt.savefig('visualize/roc/roc.png')
 
 def evaluate(net, data_loader, copy_net=False):
     """
@@ -312,8 +293,6 @@ def train(epoch, write=True, yield_evaluator=False):
             print("\nTesting...")
             test_evaluator = evaluate(net, test_loader, copy_net=True); print()
 
-            #write_pr(test_evaluator, step=iterations)
-
             print_evaluation(test_evaluator, 'test')
 
             writer.add_scalars('amount_correct',
@@ -374,11 +353,7 @@ def train(epoch, write=True, yield_evaluator=False):
 
 
 if __name__ == '__main__':
-    ### VIEW IMAGES ####
-    # dataset_train.transform = False
-    # input_images = next(iter(dataset_train))[0]
-    # print(input_images)
-    # exit()
+
 
     ################
     #
@@ -399,6 +374,8 @@ if __name__ == '__main__':
     #RUN MODEL
     #######################
     #
+
+    # Load Net
     MODEL_TO_LOAD = 'BestModel.pt'
 
     def load_net():
@@ -408,15 +385,22 @@ if __name__ == '__main__':
 
     print("Loading Net")
     load_net()
-    print("Testing Net")
 
     # Test the evaluator
+    print("Testing Net")
     test_evaluator = evaluate(net, test_loader, copy_net=True)
     print()
     print_evaluation(test_evaluator, 'test')
 
-    print("Writing ROC curve")
-    write_roc(test_evaluator)
+    # Write figures
+    print("Writing stats...")
+    # stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
+    # stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
+    import scikitplot as skplt
+    import matplotlib.pyplot as plt
+    fig = skplt.metrics.plot_precision_recall(test_evaluator.true_labels, test_evaluator.output_labels)
+    plt.savefig('visualize/pr.png')
 
+    # Write CSV predictions
     write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
     print("\nWrote csv")

@@ -95,4 +95,8 @@ compute_mean_and_std(grayscale=True)
 # test_sampler = SubsetRandomSampler(test_idx)
 
 
-from sklearn.metrics import roc_curve
+### VIEW IMAGES ####
+# dataset_train.transform = False                # View before transformations
+# input_images = next(iter(dataset_train))[0]    # Get next image
+# print(input_images)                            # Call PLT.save() or .view() to see the images
+# exit()
