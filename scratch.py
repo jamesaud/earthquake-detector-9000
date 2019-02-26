@@ -3,6 +3,8 @@ matplotlib.use('TkAgg')
 
 from loaders.single_loader import SpectrogramSingleDataset
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
+from loaders.unknown_loader import SpectrogramKnownDataset
+
 import models
 from matplotlib import pyplot as plt
 import numpy as np
@@ -11,7 +13,7 @@ import torch
 from tensorboardX import SummaryWriter
 from torch.autograd import Variable
 
-IMG_PATH = './data/everywhere-97/'
+IMG_PATH = './data/spectrograms/AmatriceQuakes'
 IMG_EXT = '.png'
 BATCH_SIZE = 256
 
@@ -73,7 +75,7 @@ def compute_mean_and_std(grayscale=False):
     print(means, stds)
 
 
-compute_mean_and_std(grayscale=True)
+# compute_mean_and_std(grayscale=True)
 
 
 # RGB Mean: [0.0009950225259743484, 0.000795141388388241, 0.0018111652018977147]
@@ -100,3 +102,8 @@ compute_mean_and_std(grayscale=True)
 # input_images = next(iter(dataset_train))[0]    # Get next image
 # print(input_images)                            # Call PLT.save() or .view() to see the images
 # exit()
+
+
+dataset = SpectrogramKnownDataset(img_path=IMG_PATH, divide_test=.1)
+dataset_iter = iter(dataset)
+print(next(dataset_iter))

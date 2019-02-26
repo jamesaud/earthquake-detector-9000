@@ -24,7 +24,7 @@ from pprint import pprint
 from evaluator.csv_write import write_unknown_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 
-configuration = 'benz_train_set_old'
+configuration = 'benz_test_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -65,7 +65,13 @@ if crop_padding:
 
 # DATASET
 
-Dataset =  SpectrogramDirectDataset if settings.loader == "direct" else SpectrogramCustomPathDataset  # SpectrogramUnknownDataset
+loaders = {
+    'direct': SpectrogramDirecetDataset,
+    'custom': SpectrogamCustomPathDataset,
+    'unknown': SpectrogramUnkownDataset
+}
+
+Dataset =  loaders[settings.loader]
 
 dataset_args = dict(
     path_pattern=settings.path_pattern or '',
@@ -134,6 +140,7 @@ def guess_labels(batches):
         print('GroundTruth: ', ' '.join('%5s' % labels[j] for j in range(BATCH_SIZE)))
         outputs = net(images)
         _, predicted = torch.max(outputs.data, 1)
+
         print('Predicted:   ', ' '.join('%5s' % predicted[j] for j in range(BATCH_SIZE)))
         print()
 
@@ -271,12 +278,11 @@ def train(epoch, write=True, yield_evaluator=False):
         loss.backward()
         optimizer.step()
 
-
         running_loss += loss.data.item()
 
         def print_loss():
             msg = 'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                  epoch,
+                  epoch + 1,
                   int(i * len(true_inputs) * BATCH_SIZE / 3),
                   len(train_loader) * BATCH_SIZE,
                   100. * i / len(train_loader),
@@ -309,6 +315,7 @@ def train(epoch, write=True, yield_evaluator=False):
         def train_loss():
             train_evaluator = evaluate(net, train_test_loader, copy_net=True); print()
             print_evaluation(train_evaluator, 'train'); print()
+
             writer.add_scalars('amount_correct',
                                {'train_amount_correct': percent_correct(train_evaluator)},
                                iterations)
@@ -326,11 +333,10 @@ def train(epoch, write=True, yield_evaluator=False):
         if iterations % 1000 < BATCH_SIZE:
             print_loss()
 
-
-        if iterations % 1000 < BATCH_SIZE:
+        if iterations % 1000 < BATCH_SIZE and write:
             write_loss()
 
-        if iterations % 5000 < BATCH_SIZE:
+        if iterations % 10000 < BATCH_SIZE:
             rounded = lambda decimal: str(round(decimal, 4))
             evaluator = test_loss()
             write_model(
@@ -341,62 +347,66 @@ def train(epoch, write=True, yield_evaluator=False):
                         )
             print()
 
+
         if epoch % 2 == 0 and epoch >= 2 and i == 0:
             train_loss()
 
-        # Don't run the write conditions if set to false
-        if write:
-            if iterations % 10000 < BATCH_SIZE:
-                write_histogram(net, iterations)
+        if iterations % 10000 < BATCH_SIZE and write:
+            write_histogram(net, iterations)
 
 
-
+def train_evaluator(epoch, yield_every):
+    """ Yields the evaluator every X iterations """
+    pass
 
 if __name__ == '__main__':
 
+    TRAIN_MODE = False
+    TEST_MODE = not TRAIN_MODE
 
     ################
     #
     # TRAINING MODEL
     #################
 
-    # print("\nWriting Info")
-    # write_info()
-    # write_images()
-    #
-    # def train_net(epochs):
-    #     for epoch in range(epochs):
-    #         train(epoch)
-    #
-    # train_net(50)
+    if TRAIN_MODE:
+        print("\nWriting Info")
+        write_info()
+        write_images()
+
+        def train_net(epochs):
+            for epoch in range(epochs):
+                train(epoch)
+
+        train_net(100)
 
     ########################
     #RUN MODEL
     #######################
     #
+    if TEST_MODE:
+        # Load Net
+        MODEL_TO_LOAD = 'Best-.8-crop-width-.8-crop-height.pt'
 
-    # Load Net
-    MODEL_TO_LOAD = 'BestModel.pt'
+        def load_net():
+            path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
+            load_model(path)
+            net.eval()
 
-    def load_net():
-        path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
-        load_model(path)
-        net.eval()
+        print("Loading Net")
+        load_net()
 
-    print("Loading Net")
-    load_net()
+        # Test the evaluator
+        print("Testing Net")
+        test_evaluator = evaluate(net, test_loader, copy_net=True)
+        print()
+        print_evaluation(test_evaluator, 'test')
 
-    # Test the evaluator
-    print("Testing Net")
-    test_evaluator = evaluate(net, test_loader, copy_net=True)
-    print()
-    print_evaluation(test_evaluator, 'test')
+        # Write figures
+        print("Writing stats...")
+        stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
+        stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
 
-    # Write figures
-    print("Writing stats...")
-    stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
-    stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
-
-    # Write CSV predictions
-    write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
-    print("\nWrote csv")
+        # Write CSV predictions
+        write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+        print("\nWrote csv")

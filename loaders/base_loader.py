@@ -20,7 +20,7 @@ class SpectrogramBaseDataset(Dataset):
     __SEED = 448   # For randomly splitting the traintest set consistantly
 
     def __init__(self, img_path, divide_test, transform=None, test=False, resize=False, ignore=None,
-        crop=False, crop_center=None, crop_padding=None,  **kwargs):
+        crop=False, crop_center=None, crop_padding=None, **kwargs):
         """
 
         :param img_path: path to the 'spectrograms' folder
@@ -174,6 +174,7 @@ class SpectrogramBaseDataset(Dataset):
         return labels
         
     def _getitem_raw(self, index):
+        """ Returns the components without any trasnforms applied """
         n, z, e = self.file_paths[index]
         label = self.label_to_number(self.get_label(n))
         n, z, e = [self.open_image(component) for component in (n, z, e)]
@@ -206,7 +207,16 @@ class SpectrogramBaseDataset(Dataset):
             plt.tight_layout()
             ax.set_title(title)
             ax.axis('off')
-            self.show_img(transforms.ToPILImage()(components[i]))
+
+            # Sometimes need to convert to PIL Image, sometimes not dpeending on user settings
+            # TODO: Be explicit and check for conditions to run the write code rather than try/except
+            try:
+                self.show_img(transforms.ToPILImage()(components[i]))
+            except Exception as e:
+                try:
+                    self.show_img(components[i])
+                except Exception as f:
+                    raise
 
         if show:
             plt.show()

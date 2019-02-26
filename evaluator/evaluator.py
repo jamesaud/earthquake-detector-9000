@@ -71,6 +71,7 @@ class Evaluator:
         except ZeroDivisionError:
             return 0
     
+    # Can'at remmeber what I was doing with ths method
     def normalized_percent_correct(self):
         return (self.percent_correct(0)*1.1 + self.percent_correct(1)) / 2.1
 
@@ -102,42 +103,4 @@ class NetEval:
 
     def to_cuda(self, inputs):
         return [Variable(input).cuda() for input in inputs]
-
-
-def evaluate(net, data_loader, num_classes, BATCH_SIZE):
-    """
-    Goes through entire loader one time
-    :param net: neural net
-    :param copy_net: boolean
-    :param data_loader: DataLoader
-    :return: Data structure of class Evaluator containing the amount correct for each class
-    """
-    Net = net
-    net_eval = NetEval(Net)
-    eval = Evaluator()
-
-    class_correct = [0 for _ in range(num_classes)]
-    class_total = [0 for _ in range(num_classes)]
-
-    i = 0 
-    size = BATCH_SIZE * len(data_loader)
-
-    for (inputs, labels) in data_loader:
-        inputs, labels = net_eval.to_cuda(inputs), labels.cuda()
-        guesses = net_eval.predict(inputs)
-
-        for guess, label in zip(guesses, labels):
-            class_correct[label] += guess
-            class_total[label] += 1
-
-        i += BATCH_SIZE
-        sys.stdout.write('\r' + str(i) + '/' + str(size))
-        sys.stdout.flush()
-
-    # Update the information in the Evaluator
-    for i, (correct, total) in enumerate(zip(class_correct, class_total)):
-        eval.update_accuracy(class_name=i, amount_correct=correct, amount_total=total)
-
-    return eval
-
 

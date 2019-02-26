@@ -40,28 +40,11 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (1, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (1, .7),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (.1, 0, 0, 0)    # left, right, top, bottom
         },
-        'weigh_classes': [4, 1]
-    },
-    benz_train_set_old={
-        'train': {
-            'path': f'Benz/trainset-old/spectrograms-train-gs29-original',
-            'divide_test': .2,
-        },
-        'test': {
-            'path': f'Benz/trainset-old/spectrograms-train-gs29-original',
-            'divide_test': .2,
-        },
-        'image': {
-          'height': int(258 * 1),
-          'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (1, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, .1, 0, 0)    # left, right, top, bottom
-        },
-        'loader': 'direct',
-        'weigh_classes': [4, 1]
+        'weigh_classes': [4, 1],
+        'loader': 'custom'
     },
     benz_train_set={
         'train': {
@@ -75,25 +58,25 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (1, .7),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, .1, 0, 0)    # left, right, top, bottom
+          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
         'weigh_classes': [4, 1]
     },
     benz_test_set={
         'train': {
-            'path': f'Benz/spectrograms/test_set_benz',
-            'divide_test': .15,
+            'path': f'Benz/spectrograms/test_set_benz_2',
+            'divide_test': .99,
         },
         'test': {
-            'path': f'Benz/spectrograms/test_set_benz',
-            'divide_test': .15,
+            'path': f'Benz/spectrograms/test_set_benz_2',
+            'divide_test': .99,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (1, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
@@ -111,8 +94,8 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (1, .6),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (.1, 0, 0, 0)    # left, right, top, bottom
+          'crop':  (1, .4),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'direct',
         'weigh_classes': [2, 1]
