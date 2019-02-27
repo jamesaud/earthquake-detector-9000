@@ -14,7 +14,7 @@ class RandomSameCrop(transforms.RandomCrop):
 
         Args:
             img (PIL Image): Image to be cropped.
-            output_size (tuple): Expected output size of the crop.
+            output_size (tuple): Expected output size of the crop in (height, width).
 
         Returns:
             tuple: params (i, j, h, w) to be passed to ``crop`` for random crop.

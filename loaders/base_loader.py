@@ -40,7 +40,7 @@ class SpectrogramBaseDataset(Dataset):
         ignore_names = ignore or []
         self.img_path = img_path
         self.test = test
-        self.crop_padding= crop_padding
+        self.crop_padding = crop_padding
         # Transforms
         self.transform = transform
 

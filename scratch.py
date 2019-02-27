@@ -3,7 +3,7 @@ matplotlib.use('TkAgg')
 
 from loaders.single_loader import SpectrogramSingleDataset
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
-from loaders.unknown_loader import SpectrogramKnownDataset
+from loaders.named_loader import SpectrogramNamedDataset
 
 import models
 from matplotlib import pyplot as plt
@@ -104,6 +104,6 @@ def compute_mean_and_std(grayscale=False):
 # exit()
 
 
-dataset = SpectrogramKnownDataset(img_path=IMG_PATH, divide_test=.1)
-dataset_iter = iter(dataset)
-print(next(dataset_iter))
+# dataset = SpectrogramNamedDataset(img_path=IMG_PATH, divide_test=.2)
+# dataset_iter = iter(dataset)
+# print(next(dataset_iter))

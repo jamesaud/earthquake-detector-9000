@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from loaders.multiple_loader import SpectrogramMultipleDataset
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
 from loaders.direct_loader import SpectrogramDirectDataset
-from loaders.unknown_loader import SpectrogramUnknownDataset
+from loaders.named_loader import SpectrogramNamedDataset, SpectrogramNamedTimestampDataset
 import models
 import os
 from datetime import datetime
@@ -21,10 +21,10 @@ from utils import dotdict, verify_dataset_integrity
 import sys
 import utils
 from pprint import pprint
-from evaluator.csv_write import write_unknown_predictions_to_csv
+from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 
-configuration = 'benz_test_set'
+configuration = 'benz_train_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -50,6 +50,7 @@ MODEL_PATH = f'checkpoints/{NET.__name__}'
 
 # Visualize
 path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/trial-{datetime.now()}'))
+checkpoint_path = os.path.join(path, 'checkpoints')
 writer = SummaryWriter(path)
 
 # Dimentional Transforms
@@ -59,19 +60,25 @@ height, width = settings.image.height, settings.image.width
 resize = (height, width)
 crop = (int(height * height_percent), int(width * width_percent)) 
     
-crop_padding = settings.image.padding
-if crop_padding:
-    crop_padding = utils.calculate_crop_padding_pixels(crop_padding, height, width)
+crop_padding_train = settings.image.padding_train
+crop_padding_test = settings.image.padding_test
+
+if crop_padding_train:
+    crop_padding_train = utils.calculate_crop_padding_pixels(crop_padding_train, height, width)
+
+if crop_padding_test:
+    crop_padding_test = utils.calculate_crop_padding_pixels(crop_padding_test, height, width)
 
 # DATASET
 
 loaders = {
-    'direct': SpectrogramDirecetDataset,
-    'custom': SpectrogamCustomPathDataset,
-    'unknown': SpectrogramUnkownDataset
+    'direct': SpectrogramDirectDataset,
+    'custom': SpectrogramCustomPathDataset,
+    'named_timestamp': SpectrogramNamedTimestampDataset,
+    'named': SpectrogramNamedDataset
 }
 
-Dataset =  loaders[settings.loader]
+Dataset = loaders[settings.loader]
 
 dataset_args = dict(
     path_pattern=settings.path_pattern or '',
@@ -85,7 +92,7 @@ dataset_train = Dataset(img_path=TRAIN_IMG_PATH,
                         transform=NET.transformations['train'],
                         ignore=settings.train.get('ignore'),
                         divide_test=settings.train.divide_test,
-                        crop_padding = crop_padding,
+                        crop_padding=crop_padding_train,
                         **dataset_args
                         )
 
@@ -94,7 +101,7 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
                         ignore=settings.test.get('ignore'),
                         divide_test=settings.test.divide_test,
                         test=True,
-                        #crop_center=True,
+                        crop_padding=crop_padding_test,
                         **dataset_args
                         )
 
@@ -321,7 +328,7 @@ def train(epoch, write=True, yield_evaluator=False):
                                iterations)
 
         def write_model(name):
-            path = f'./checkpoints/{NET.__name__}/model-{name}.pt'
+            path = os.path.join(checkpoint_path, f'{name}.pt')
             print(f'Writing model: {name}')
             save_model(path)
 
@@ -336,7 +343,7 @@ def train(epoch, write=True, yield_evaluator=False):
         if iterations % 1000 < BATCH_SIZE and write:
             write_loss()
 
-        if iterations % 10000 < BATCH_SIZE:
+        if iterations % 20000 < BATCH_SIZE:
             rounded = lambda decimal: str(round(decimal, 4))
             evaluator = test_loss()
             write_model(
@@ -348,10 +355,10 @@ def train(epoch, write=True, yield_evaluator=False):
             print()
 
 
-        if epoch % 2 == 0 and epoch >= 2 and i == 0:
+        if i == 0 and epoch >= 1:
             train_loss()
 
-        if iterations % 10000 < BATCH_SIZE and write:
+        if iterations % 20000 < BATCH_SIZE and write:
             write_histogram(net, iterations)
 
 
@@ -361,7 +368,7 @@ def train_evaluator(epoch, yield_every):
 
 if __name__ == '__main__':
 
-    TRAIN_MODE = False
+    TRAIN_MODE = True
     TEST_MODE = not TRAIN_MODE
 
     ################
@@ -386,15 +393,18 @@ if __name__ == '__main__':
     #
     if TEST_MODE:
         # Load Net
-        MODEL_TO_LOAD = 'Best-.8-crop-width-.8-crop-height.pt'
+        MODEL_TO_LOAD = 'mnist_three_component/..../40-0.9831-0.9759-0.9961.pt'
 
         def load_net():
-            path = f'./checkpoints/{NET.__name__}/{MODEL_TO_LOAD}'
-            load_model(path)
+            model_path = os.path.join(path, MODEL_TO_LOAD)
+            load_model(model_path)
             net.eval()
 
         print("Loading Net")
         load_net()
+        #
+        # Make compatible with functions that  expect loaders to return 2 items
+        dataset_test.return_name = False
 
         # Test the evaluator
         print("Testing Net")
@@ -407,6 +417,9 @@ if __name__ == '__main__':
         stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
         stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
 
+        # Compatible with functions that expect 3 items (components, label, name)
+        dataset_test.return_name = True
+
         # Write CSV predictions
-        write_unknown_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+        write_named_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
         print("\nWrote csv")

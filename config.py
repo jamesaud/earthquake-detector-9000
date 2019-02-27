@@ -58,64 +58,68 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)  # left, right, top, bottom
+
         },
         'loader': 'direct',
-        'weigh_classes': [4, 1]
+        'weigh_classes': [1, 4]
     },
     benz_test_set={
         'train': {
             'path': f'Benz/spectrograms/test_set_benz_2',
-            'divide_test': .99,
+            'divide_test': .999,
         },
         'test': {
             'path': f'Benz/spectrograms/test_set_benz_2',
-            'divide_test': .99,
+            'divide_test': .999,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
           'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
+          'padding_test': (.05, .15, .2, 0)    # left, right, top, bottom
         },
-        'loader': 'direct',
-        'weigh_classes': [4, 1]
+        'loader': 'named',
+        'weigh_classes': [1, 1]
     },
     benz_experiment_set={
-        'train': {
-            'path': f'Benz/spectrograms-train',
+         'train': {
+            'path': f'Benz/spectrograms/train_set_benz',
             'divide_test': 0,
         },
         'test': {
-            'path': f'Benz/spectrograms-testset-benz/GK29-20-seconds',
-            'divide_test': 1,
+            'path': f'Benz/spectrograms/test_set_benz_2',
+            'divide_test': .25,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (1, .4),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)   # Centered
         },
         'loader': 'direct',
-        'weigh_classes': [2, 1]
+        'weigh_classes': [1, 4]
     },
     continuous_unlabeled_set={
         'train': {
-            'path': f'Benz/spectrograms-all-29',
-            'divide_test': 0,
+            'path': f'Benz/continuous_data_gs29',
+            'divide_test': 1,
         },
         'test': {
-            'path': f'Benz/spectrograms-all-29',
+            'path': f'Benz/continuous_data_gs29',
             'divide_test': 1,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (.8, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
-        'loader': 'direct',
+        'loader': 'named_timestamp',
     })
 
 # Path to configuration file
