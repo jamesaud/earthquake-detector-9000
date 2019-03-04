@@ -64,7 +64,7 @@ options = dict(
 
         },
         'loader': 'direct',
-        'weigh_classes': [1, 4]
+        'weigh_classes': [1, 3]
     },
     benz_test_set={
         'train': {
@@ -78,9 +78,9 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
-          'padding_test': (.05, .15, .2, 0)    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'named',
         'weigh_classes': [1, 1]
@@ -97,12 +97,12 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
-          'padding_test': (0, 0, 0, 0)   # Centered
+          'padding_test': (.05, .15, .2, 0)   # Centered
         },
         'loader': 'direct',
-        'weigh_classes': [1, 4]
+        'weigh_classes': [1, 3]
     },
     continuous_unlabeled_set={
         'train': {
@@ -126,3 +126,13 @@ options = dict(
 default_config_path = os.path.join(os.getcwd(), 'validator/config.json')
 configuration = os.environ.get('CONFIGURATION', default_config_path)
 options['environment'] = json.loads(open(configuration).read())
+
+
+
+
+top_runs = (                        # N   L
+    '76-0.9815-0.9727-0.9978.pt',   # 97, 97
+    '60-0.9905-0.992-0.9877.pt',    # 99, 93
+    '72-0.9273-0.8879-0.9997.pt',   # 88, 99
+    '48-0.966-0.9483-0.9985.pt',    # 95, 98
+)

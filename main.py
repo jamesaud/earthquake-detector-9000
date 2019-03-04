@@ -24,7 +24,7 @@ from pprint import pprint
 from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 
-configuration = 'benz_train_set'
+configuration = 'benz_test_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -46,7 +46,6 @@ WEIGH_CLASSES = settings.weigh_classes
 
 # Neural Net Model
 NET = models.mnist_three_component
-MODEL_PATH = f'checkpoints/{NET.__name__}'
 
 # Visualize
 path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/trial-{datetime.now()}'))
@@ -368,7 +367,7 @@ def train_evaluator(epoch, yield_every):
 
 if __name__ == '__main__':
 
-    TRAIN_MODE = True
+    TRAIN_MODE = False
     TEST_MODE = not TRAIN_MODE
 
     ################
@@ -393,11 +392,12 @@ if __name__ == '__main__':
     #
     if TEST_MODE:
         # Load Net
-        MODEL_TO_LOAD = 'mnist_three_component/..../40-0.9831-0.9759-0.9961.pt'
+        model_name = config.top_runs[3]
+        MODEL = f'train-set-ben/checkpoints/{model_name}'
+        MODEL_PATH = f'./visualize/runs/mnist_three_component/{MODEL}'
 
         def load_net():
-            model_path = os.path.join(path, MODEL_TO_LOAD)
-            load_model(model_path)
+            load_model(MODEL_PATH)
             net.eval()
 
         print("Loading Net")
@@ -421,5 +421,5 @@ if __name__ == '__main__':
         dataset_test.return_name = True
 
         # Write CSV predictions
-        write_named_predictions_to_csv(net, test_loader, 'evaluator/predictions.csv')
+        write_named_predictions_to_csv(net, test_loader, f'evaluator/predictions({model_name}).csv')
         print("\nWrote csv")

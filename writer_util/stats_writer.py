@@ -25,7 +25,7 @@ class StatsWriter:
         # Create directory if it doesn't exist
         pathlib.Path(path).mkdir(parents=True, exist_ok=True)
 
-        # Methods
+        # Methods, with a specific folder for writing
         self.write_roc = save_figure(skplt.metrics.plot_roc, pj(path, 'roc.png'))
         self.write_confusion_matrix = save_figure(skplt.metrics.plot_confusion_matrix, pj(path, 'confusion_matrix.png'))
         self.write_pr = save_figure(skplt.metrics.plot_precision_recall, pj(path, 'pr_curve.png'))

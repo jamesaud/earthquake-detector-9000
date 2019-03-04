@@ -14,12 +14,11 @@ class Evaluator:
         # Should be updated as arrays
         self.true_labels = true_labels         # True labels
         self.output_labels = output_labels     # Raw output classes of neural net
+        self.num_classes = num_classes
 
-        _, predicted_labels = torch.max(output_labels.data, 1)
-        predicted_labels = predicted_labels    # Labels projected to the nearest class
-        self.predicted_labels = predicted_labels
+        _, self.predicted_labels = torch.max(output_labels.data, 1)   # Label with the highest score
 
-        self.compute_accuracy(predicted_labels, true_labels, num_classes)
+        self.compute_accuracy(self.predicted_labels, self.true_labels, self.num_classes)
 
     def compute_accuracy(self, predicted_labels, true_labels, num_classes):
         """
@@ -71,7 +70,7 @@ class Evaluator:
         except ZeroDivisionError:
             return 0
     
-    # Can'at remmeber what I was doing with ths method
+    # Can'at remmeber what I was doing with this
     def normalized_percent_correct(self):
         return (self.percent_correct(0)*1.1 + self.percent_correct(1)) / 2.1
 
