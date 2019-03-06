@@ -32,6 +32,8 @@ class StatsWriter:
 
 
     def write_stats(self, true_labels, output_labels, predicted_labels):
+        print(true_labels)
+        print(output_labels)
         self.write_roc(true_labels, output_labels)
         self.write_confusion_matrix(true_labels, predicted_labels)
         self.write_pr(true_labels, output_labels)

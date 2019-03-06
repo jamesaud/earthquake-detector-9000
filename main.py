@@ -391,8 +391,9 @@ if __name__ == '__main__':
     #######################
     #
     if TEST_MODE:
+
         # Load Net
-        model_name = config.top_runs[3]
+        model_name = config.top_runs[0]
         MODEL = f'train-set-ben/checkpoints/{model_name}'
         MODEL_PATH = f'./visualize/runs/mnist_three_component/{MODEL}'
 
@@ -402,7 +403,7 @@ if __name__ == '__main__':
 
         print("Loading Net")
         load_net()
-        #
+
         # Make compatible with functions that  expect loaders to return 2 items
         dataset_test.return_name = False
 
@@ -414,7 +415,7 @@ if __name__ == '__main__':
 
         # Write figures
         print("Writing stats...")
-        stats_writer = StatsWriter(os.path.join(CWD, 'visualize/test_stats'))
+        stats_writer = StatsWriter(os.path.join(CWD, f'visualize/test_stats/{model_name}'))
         stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
 
         # Compatible with functions that expect 3 items (components, label, name)

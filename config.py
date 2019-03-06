@@ -127,9 +127,7 @@ default_config_path = os.path.join(os.getcwd(), 'validator/config.json')
 configuration = os.environ.get('CONFIGURATION', default_config_path)
 options['environment'] = json.loads(open(configuration).read())
 
-
-
-
+# Model names for the top runs
 top_runs = (                        # N   L
     '76-0.9815-0.9727-0.9978.pt',   # 97, 97
     '60-0.9905-0.992-0.9877.pt',    # 99, 93

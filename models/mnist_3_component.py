@@ -148,4 +148,5 @@ class mnist_three_component_exp(nn.Module):
         out = torch.cat((nout, zout, eout), 1)
         out = out.view(out.size(0), -1)
         out = self.classifier(out)
+
         return out
