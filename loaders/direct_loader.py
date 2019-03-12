@@ -2,6 +2,8 @@ from loaders.multiple_loader import SpectrogramMultipleDataset
 import glob
 import os
 from utils import lmap
+from pathlib import Path
+
 
 class SpectrogramDirectDataset(SpectrogramMultipleDataset):
 
@@ -13,16 +15,16 @@ class SpectrogramDirectDataset(SpectrogramMultipleDataset):
         super().__init__(*args, **kwargs)
 
     def get_spectrograms(self, path, folder_name, *args, **kwargs):
+
         folder = os.path.join(path, folder_name)
 
-        def get_components(paths_to_components):
-            return [glob.glob(os.path.join(path, "*.png")) for path in paths_to_components]
+        def get_components(path_to_components):
+            return [str(component) for component in Path(path_to_components).iterdir()]
 
         component_folders = glob.glob(os.path.join(folder, '*'))
 
-        file_paths = get_components(component_folders) 
-
-        # Maintain the same order each time, guaranteed with sorting
-        file_paths.sort()
-
+        ## ADDED
+        file_paths = list(map(get_components, component_folders))
+        file_paths.sort()  # Maintain the same order each time, guaranteed with sorting
         return file_paths
+

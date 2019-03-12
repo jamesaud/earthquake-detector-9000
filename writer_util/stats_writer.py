@@ -31,9 +31,8 @@ class StatsWriter:
         self.write_pr = save_figure(skplt.metrics.plot_precision_recall, pj(path, 'pr_curve.png'))
 
 
-    def write_stats(self, true_labels, output_labels, predicted_labels):
-        print(true_labels)
-        print(output_labels)
-        self.write_roc(true_labels, output_labels)
+    def write_stats(self, true_labels, output_probabilities, predicted_labels):
+        """ All numpy arrays work well as arguments """
+        self.write_roc(true_labels, output_probabilities)
         self.write_confusion_matrix(true_labels, predicted_labels)
-        self.write_pr(true_labels, output_labels)
+        self.write_pr(true_labels, output_probabilities)

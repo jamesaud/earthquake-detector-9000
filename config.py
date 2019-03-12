@@ -12,11 +12,11 @@ RGB_STD = [0.0001881388618665583, 0.0006368028766968671, 0.00028853512862149407]
 GRAY_MEAN = [0.0009710071717991548, 0.0009710071717991548, 0.0009710071717991548]
 GRAY_STD = [0.00037422115896262377, 0.00037422115896262377, 0.00037422115896262377]
 
-BORDER_COLOR_GRAY = 30   #
+BORDER_COLOR_GRAY = 77  # 30
+BORDER_COLOR_RGB = (68, 55, 129)  # R, G, B
 # Important to get right, for adding noise to spectrograms
 
 VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
-
 
 
 path = 'everywhere-97'
@@ -49,11 +49,11 @@ options = dict(
     benz_train_set={
         'train': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .15,
+            'divide_test': .999,
         },
         'test': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .15,
+            'divide_test': .999,
         },
         'image': {
           'height': int(258 * 1),
@@ -97,9 +97,9 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
-          'padding_test': (.05, .15, .2, 0)   # Centered
+          'padding_test': (0, 0, 0, 0)   # Centered
         },
         'loader': 'direct',
         'weigh_classes': [1, 3]

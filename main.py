@@ -24,7 +24,8 @@ from pprint import pprint
 from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 
-configuration = 'benz_test_set'
+
+configuration = 'benz_experiment_set'
 settings = config.options[configuration]
 print(f"Using config {configuration}")
 
@@ -45,7 +46,7 @@ iterations = 0
 WEIGH_CLASSES = settings.weigh_classes
 
 # Neural Net Model
-NET = models.mnist_three_component
+NET = models.mnist_three_component_exp
 
 # Visualize
 path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/trial-{datetime.now()}'))
@@ -132,7 +133,6 @@ test_loader = DataLoader(dataset_test,
 net = NET().cuda()
 optimizer = optim.Adam(net.parameters())
 criterion = nn.CrossEntropyLoss().cuda()
-
 
 def guess_labels(batches):
     """
@@ -367,7 +367,7 @@ def train_evaluator(epoch, yield_every):
 
 if __name__ == '__main__':
 
-    TRAIN_MODE = False
+    TRAIN_MODE = True
     TEST_MODE = not TRAIN_MODE
 
     ################
@@ -397,12 +397,10 @@ if __name__ == '__main__':
         MODEL = f'train-set-ben/checkpoints/{model_name}'
         MODEL_PATH = f'./visualize/runs/mnist_three_component/{MODEL}'
 
-        def load_net():
-            load_model(MODEL_PATH)
-            net.eval()
-
+        # Set model to evaluation mode
         print("Loading Net")
-        load_net()
+        load_model(MODEL_PATH)
+        net.eval()
 
         # Make compatible with functions that  expect loaders to return 2 items
         dataset_test.return_name = False
@@ -415,12 +413,15 @@ if __name__ == '__main__':
 
         # Write figures
         print("Writing stats...")
-        stats_writer = StatsWriter(os.path.join(CWD, f'visualize/test_stats/{model_name}'))
-        stats_writer.write_stats(test_evaluator.true_labels, test_evaluator.output_labels, test_evaluator.predicted_labels)
+        stats_writer = StatsWriter(os.path.join(CWD, f'visualize/test_stats/{model_name}-{configuration}'))
+        softmax_output_labels = nn.functional.softmax(test_evaluator.output_labels, dim=1)    # Make probabilities sum between 0 and 1
+        stats_writer.write_stats(test_evaluator.true_labels,
+                                 softmax_output_labels,
+                                 test_evaluator.predicted_labels)
 
         # Compatible with functions that expect 3 items (components, label, name)
         dataset_test.return_name = True
 
         # Write CSV predictions
-        write_named_predictions_to_csv(net, test_loader, f'evaluator/predictions({model_name}).csv')
+        write_named_predictions_to_csv(net, test_loader, f'evaluator/predictions({model_name}-{configuration}).csv')
         print("\nWrote csv")

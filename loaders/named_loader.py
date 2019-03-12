@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 
 class AbstractSpectrogramNamedDataset(ABC, SpectrogramBaseDataset):
 
-    def __init__(self, return_name=True, *args, **kwargs):
+    def __init__(self, return_name=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.return_name = return_name
 
