@@ -19,7 +19,7 @@ class SpectrogramDirectDataset(SpectrogramMultipleDataset):
         folder = os.path.join(path, folder_name)
 
         def get_components(path_to_components):
-            return [str(component) for component in Path(path_to_components).iterdir()]
+            return [str(component) for component in Path(path_to_components).iterdir() if component.suffix == '.png']
 
         component_folders = glob.glob(os.path.join(folder, '*'))
 

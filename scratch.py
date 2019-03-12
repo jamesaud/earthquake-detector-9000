@@ -10,6 +10,7 @@ import numpy as np
 from torchvision import transforms
 from collections import Counter
 import PIL
+from itertools import islice
 
 IMG_PATH = './data/Benz/spectrograms/test_set_benz_2'  # './data/Benz/spectrograms/train_set_benz'
 IMG_EXT = '.png'
@@ -110,21 +111,27 @@ def compute_mean_and_std_np(grayscale=False, samples=5000):
     print(means, stds)
 
 
-def img_border_color(img: PIL.Image):
+def bottom_left_pixel(img: PIL.Image):
     """
     Look at the 4 corner pixels of the image to determine the border color.
     They should all be the same to guarantee it's the correct color.
     """
     width, height = img.size
-    bottom_left = (height, 0)
-    return img.getpixel(bottom_left)
+    bottom_left = (height - 1, 0)
+    return img.getpixel(bottom_left
 
+
+def most_frequent_color(img: PIL.Image):
+    pass
 
 def find_border_colors(gray=False):
     """
-    Finds the RGB and Gray border colors
+    Finds the RGB and Gray border colors.
+    Loops through 10000 training images, and looks at the bottom left pixel.
     :return: int if grayscale, tuple (r: int, g: int, b: int) if rgb
+
     """
+
     transform = transforms.Grayscale(num_output_channels=3) if gray else None
 
     dataset_train = SpectrogramDirectDataset(img_path=IMG_PATH,
@@ -132,14 +139,17 @@ def find_border_colors(gray=False):
                                              transform=transform,
                                              shuffle=True)
 
-    iter_dataset = iter(dataset_train)
-    imgs, labels = next(iter_dataset)
 
-    for _ in iter_dataset:
-        colors = list(map(img_border_color, imgs))
-        print(colors)
+    rs, gs, bs = [], [], []
 
-    return colors[0]
+    for (imgs, label) in islice(dataset_train, 10000):
+        if label == 1:
+            r, g, b = map(bottom_left_pixel, imgs)
+            rs.append(r); gs.append(g); bs.append(b)
+
+    r, g, b = [Counter(x).most_common(1)[0][0] for x in [rs, gs, bs]]
+    assert r == g == b, f"Inconsistent border between the 3 components ({r}, {g}, {b})"
+    return r
 
 if __name__ == '__main__':
 
@@ -155,11 +165,11 @@ if __name__ == '__main__':
 
     ## BORDER COLOR CALCULATIONS
 
-    rgb_color = find_border_colors()
-    # gray_color = find_border_colors(gray=True)
+    #rgb_color = find_border_colors()
+    gray_color = find_border_colors(gray=True)
 
-    print("RGB border color", rgb_color)
-    # print("Gray border color", gray_color)
+    #print("RGB border color", rgb_color)
+    print("Gray border color", gray_color)
 
     #
     # ## VIEW IMAGES ##
