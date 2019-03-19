@@ -1,8 +1,9 @@
 import torch.nn as nn
-import torchvision.transforms as transforms
+import torchvision.transforms as tf
 import torch
 import config
 import mytransforms
+from mytransforms import Group
 from operator import mul
 
 class mnist_three_component(nn.Module):
@@ -13,14 +14,14 @@ class mnist_three_component(nn.Module):
     BLUR = 2              # 2
     F_DIM = 64              # 64
 
-    _transformations = [transforms.Grayscale(num_output_channels=3),
-                         transforms.Resize((DIM, DIM)),
-                         transforms.ToTensor(),
+    _transformations = [tf.Grayscale(num_output_channels=3),
+                        tf.Resize((DIM, DIM)),
+                        tf.ToTensor(),
                         #  mytransforms.NormalizeGray
-                         ]
+                        ]
 
     _train = [
-        transforms.Grayscale(num_output_channels=1),
+        tf.Grayscale(num_output_channels=1),
         mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_RGB_AMOUNT),
         mytransforms.Gaussian_Blur(BLUR),
     ]
@@ -28,8 +29,8 @@ class mnist_three_component(nn.Module):
     _test = [
              ]
 
-    transformations = {'train':  transforms.Compose(_train + _transformations),
-                       'test': transforms.Compose(_test + _transformations)
+    transformations = {'train':  tf.Compose(_train + _transformations),
+                       'test': tf.Compose(_test + _transformations)
                        }
 
     def __init__(self):
@@ -85,24 +86,24 @@ class mnist_three_component_rgb(nn.Module):
 
 
     DIM = 32               # 32
-    NOISE_RGB_AMOUNT = 100  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
-    BLUR = 10            # 2
+    NOISE_RGB_AMOUNT = 10  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
+    BLUR = 2            # 2
     F_DIM = 64              # 64
 
-    _transformations = [transforms.Resize((DIM, DIM)),
-                        transforms.ToTensor()]
+    _transformations = Group([tf.Resize((DIM, DIM)),
+                              tf.ToTensor()])
 
 
     _train = [
-            mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT),
-            mytransforms.Gaussian_Blur(BLUR)
+            tf.RandomApply(Group([mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT)]), p=.5),
+            tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
     ]
 
 
     _test = []
 
-    transformations = {'train':  transforms.Compose(_train + _transformations),
-                       'test': transforms.Compose(_test + _transformations)
+    transformations = {'train':  tf.Compose(_train + _transformations),
+                       'test': tf.Compose(_test + _transformations)
                        }
 
     def __init__(self):

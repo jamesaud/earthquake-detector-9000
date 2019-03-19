@@ -1,9 +1,10 @@
 import torchvision.transforms.functional as F
 from torchvision import transforms
 import random
+from functools import wraps
+from typing import List
 
-
-__all__ = ['RandomSameCrop', 'RandomSameCropWidth', 'RandomApplyConsistent']
+__all__ = ['RandomSameCrop', 'RandomSameCropWidth', 'transform_group', 'Group']
 
 class RandomSameCrop(transforms.RandomCrop):
     
@@ -94,31 +95,32 @@ class RandomSameCropWidth(transforms.RandomCrop):
         return F.crop(img, i, j, h, w)
 
 
-class RandomApplyConsistent(transforms.RandomApply):
+
+def transform_group(transform):
+    """ 
+    A wrapper that takes a normal transform, and allows it to take a list of images as the argument
+    The transform will then apply to all the images.
+    This allows normal transforms to be composed with custom ones that take multiple images as input
     """
-    Apply randomly a list of transformations with a given probability
+    @wraps(transform)
+    def apply_transform_to_group(imgs, *args, **kwargs):
+        imgs = list(map(transform, imgs))
+        return imgs
 
-    Args:
-        transforms (list or tuple): list of transformations
-        p (float): probability
+    return apply_transform_to_group
 
-    Applies randomly consistently, so if it was
+
+def Group(transforms: List):
+    """ Applies transform_group to a list of transforms"""
+    return [transform_group(transform) for transform in transforms]
+
+
+class ComposeGroup(transforms.Compose):
     """
-
-    def __init__(self, transforms, p=0.5):
-        super().__init__(transforms)
-        self.p = p
-        self.random_val = self.random_val()
-
-    def __call__(self, img):
-        if self.p < self.random_val:
-            return img
+    Same as transform group, but takes a list of normal transforms and applies them all together
+    """
+    def __call__(self, imgs):
         for t in self.transforms:
-            img = t(img)
-        return img
+            imgs = map(t, imgs)
+        return list(imgs)
 
-    def reset(self):
-        self.random_val = self.random_val()
-
-    def random_val(self):
-        return random.random()

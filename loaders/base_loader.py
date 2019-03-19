@@ -19,12 +19,13 @@ class SpectrogramBaseDataset(Dataset):
     """
     __SEED = 448   # For randomly splitting the traintest set consistantly
 
-    def __init__(self, img_path, divide_test, transform=None,  test=False, resize=False, ignore=None,
+    def __init__(self, img_path, divide_test, transform=None, test=False, resize=False, ignore=None,
         crop=False, crop_center=None, crop_padding=None, **kwargs):
         """
 
         :param img_path: path to the 'spectrograms' folder
-        :param transform: list of transforms to apply AFTER resize and crop
+        :param transform: list of transforms to apply AFTER resize and crop. Transforms must take a list of images as input
+                          wrap with mytansforms.group_transforms if necessary
         :param test: boolean, training or test
         :param resize:  height, width or False
         :param crop:   height, width or False
@@ -132,7 +133,8 @@ class SpectrogramBaseDataset(Dataset):
             components = self.apply_crop(components)
 
         if self.transform:
-            components = map(self.transform, components)
+            components = self.transform(components)
+
 
         n, z, e = components
         return n, z, e
