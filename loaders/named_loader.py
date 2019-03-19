@@ -6,7 +6,14 @@ from abc import ABC, abstractmethod
 
 
 class AbstractSpectrogramNamedDataset(ABC, SpectrogramBaseDataset):
+    """
+     Loads the names of the files as well (or instead) of the label, because you don't know the label!
+     This loader is when the name of the file is a timestamp.
+     Should be a folder all continuous spectrogram own folder
 
+     :param self.return_name: if True, iterating will return 3 items (components, label, name)
+                                                            instead of 2 (components, label)
+     """
     def __init__(self, return_name=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.return_name = return_name
@@ -29,11 +36,7 @@ class AbstractSpectrogramNamedDataset(ABC, SpectrogramBaseDataset):
 
 
 class SpectrogramNamedTimestampDataset(AbstractSpectrogramNamedDataset):
-    """
-     Loads the names of the files instead of the label, because you don't know the label!
-     This loader is when the name of the file is a timestamp.
-     Should be a folder all continuous spectrogrr own folder
-     """
+
 
     def get_spectrograms(self, path, *args, **kwargs):
         file_paths = glob.glob(os.path.join(path, '*'))

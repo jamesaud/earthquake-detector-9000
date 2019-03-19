@@ -46,7 +46,7 @@ iterations = 0
 WEIGH_CLASSES = settings.weigh_classes
 
 # Neural Net Model
-NET = models.mnist_three_component_exp
+NET = models.mnist_three_component_rgb
 
 # Visualize
 path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/trial-{datetime.now()}'))

@@ -5,6 +5,9 @@ from random import getrandbits
 from PIL import ImageFilter
 import config
 
+
+__all__ = ['Add1DNoise', 'Add3DNoise', 'Gaussian_Blur', 'NormalizeColor', 'NormalizeGray']
+
 def _print_state(img):
     print(img)
     return img
@@ -12,8 +15,6 @@ def _print_state(img):
 
 def _add_noise(img, border_color, noise_amount):
     """Add noise to a grayscaled 1 channel image"""
-    from scratch import img_border_color
-  #  print(img_border_color(img))
 
     img = np.array(img)
     condition = img != border_color
@@ -30,8 +31,6 @@ def _add_noise_3d(img, border_color, noise_amount):
     Add noise to a 3 channel image:
     :border_color: tuple(r, g, b)
     """
-    from scratch import img_border_color
-#    print(img_border_color(img))
 
     img = np.array(img)
 
@@ -39,6 +38,7 @@ def _add_noise_3d(img, border_color, noise_amount):
     condition = img != np.array(border_color)
 
     noise = np.random.normal(0, noise_amount, size=img[condition].shape).astype(int)
+
     img[condition] = noise + img[condition]
 
     # Convert array to Image
@@ -79,3 +79,6 @@ NormalizeGray = transforms.Normalize(mean=config.GRAY_MEAN,
 
 NormalizeColor = transforms.Normalize(mean=config.RGB_MEAN,
                                       std=config.RGB_STD)
+
+
+

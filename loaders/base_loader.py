@@ -6,7 +6,7 @@ import random
 import os
 from collections import namedtuple
 from PIL import ImageFile
-from mytransforms.RandomSameCrop import RandomSameCropWidth, RandomSameCrop
+from mytransforms import RandomSameCropWidth, RandomSameCrop
 from PIL import Image
 import config
 from utils import lmap
@@ -19,7 +19,7 @@ class SpectrogramBaseDataset(Dataset):
     """
     __SEED = 448   # For randomly splitting the traintest set consistantly
 
-    def __init__(self, img_path, divide_test, transform=None, test=False, resize=False, ignore=None,
+    def __init__(self, img_path, divide_test, transform=None,  test=False, resize=False, ignore=None,
         crop=False, crop_center=None, crop_padding=None, **kwargs):
         """
 
@@ -41,6 +41,7 @@ class SpectrogramBaseDataset(Dataset):
         self.img_path = img_path
         self.test = test
         self.crop_padding = crop_padding
+
         # Transforms
         self.transform = transform
 

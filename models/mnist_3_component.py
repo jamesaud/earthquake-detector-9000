@@ -2,14 +2,14 @@ import torch.nn as nn
 import torchvision.transforms as transforms
 import torch
 import config
-from mytransforms import transforms as mytransforms
+import mytransforms
 from operator import mul
 
 class mnist_three_component(nn.Module):
 
 
     DIM = 32               # 32
-    NOISE_RGB_AMOUNT = 150  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
+    NOISE_RGB_AMOUNT = 15  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
     BLUR = 2              # 2
     F_DIM = 64              # 64
 
@@ -78,13 +78,15 @@ class mnist_three_component(nn.Module):
         return out
 
 
-
 class mnist_three_component_exp(nn.Module):
+    pass
+
+class mnist_three_component_rgb(nn.Module):
 
 
     DIM = 32               # 32
     NOISE_RGB_AMOUNT = 100  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
-    BLUR = 2              # 2
+    BLUR = 10            # 2
     F_DIM = 64              # 64
 
     _transformations = [transforms.Resize((DIM, DIM)),
@@ -92,8 +94,9 @@ class mnist_three_component_exp(nn.Module):
 
 
     _train = [
-        mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT),
-        mytransforms.Gaussian_Blur(BLUR)]
+            mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT),
+            mytransforms.Gaussian_Blur(BLUR)
+    ]
 
 
     _test = []

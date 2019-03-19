@@ -11,6 +11,8 @@ from torchvision import transforms
 from collections import Counter
 import PIL
 from itertools import islice
+import sys
+
 
 IMG_PATH = './data/Benz/spectrograms/test_set_benz_2'  # './data/Benz/spectrograms/train_set_benz'
 IMG_EXT = '.png'
@@ -18,7 +20,7 @@ BATCH_SIZE = 256
 
 # variables
 NET = models.mnist_one_component
-NET_MULTIPLE = models.mnist_three_component_exp
+NET_MULTIPLE = models.mnist_three_component_rgb
 MODEL_PATH = f'checkpoints/{NET.__name__}'
 write_path = Path('visualize/scratch/')
 
@@ -42,11 +44,8 @@ def preview_multiple_dataset(index=None, label=None, raw=False, shuffle=False):
                                              transform=NET_MULTIPLE.transformations['train'],
                                              shuffle=shuffle)
 
-    print(next(dataset_train.get_next_index_with_label('noise')))
     if index is None:
         index = next(dataset_train.get_next_index_with_label(label))
-
-    print(index)
 
     if raw:
         return dataset_train.preview_raw(index=index, show=False)
@@ -84,33 +83,6 @@ def compute_mean_and_std(grayscale=False, samples=5000):
     print(means, stds)
 
 
-def compute_mean_and_std_np(grayscale=False, samples=5000):
-    dataset_train = SpectrogramSingleDataset(IMG_PATH,
-                                             divide_test=0,
-                                             shuffle=True)
-
-    # Computationally intense, so only use a subset
-    del dataset_train.file_paths[samples:]
-
-    to_pil = transforms.ToPILImage()
-    to_grayscale = transforms.Grayscale(num_output_channels=3)
-    to_tensor = transforms.ToTensor()
-
-    rgb = np.array([], dtype=int)
-
-    for img, label in dataset_train:
-        if grayscale:
-            img = to_grayscale(img)
-        img = to_tensor(img).numpy()
-        np.concat(rgb, img)
-
-    print(rgb)
-
-    means = [color.mean() / 255 for color in (r, g, b)]
-    stds = [color.std() / 255 for color in (r, g, b)]
-    print(means, stds)
-
-
 def bottom_left_pixel(img: PIL.Image):
     """
     Look at the 4 corner pixels of the image to determine the border color.
@@ -118,36 +90,48 @@ def bottom_left_pixel(img: PIL.Image):
     """
     width, height = img.size
     bottom_left = (height - 1, 0)
-    return img.getpixel(bottom_left
+    return img.getpixel(bottom_left)
 
 
 def most_frequent_color(img: PIL.Image):
-    pass
+    width, height = img.size
+    pixels = [img.getpixel((x, y)) for x in range(width) for y in range(height)]
+    return Counter(pixels).most_common(1)[0][0]
+
 
 def find_border_colors(gray=False):
     """
     Finds the RGB and Gray border colors.
-    Loops through 10000 training images, and looks at the bottom left pixel.
+    Loops through 1000 training images, and looks at the most frequent pixel value per component.
+    Only look at earthquakes, because they will contain more of the border color
     :return: int if grayscale, tuple (r: int, g: int, b: int) if rgb
 
     """
 
-    transform = transforms.Grayscale(num_output_channels=3) if gray else None
+    transform = transforms.Grayscale(num_output_channels=1) if gray else None
 
     dataset_train = SpectrogramDirectDataset(img_path=IMG_PATH,
                                              divide_test=0,
                                              transform=transform,
                                              shuffle=True)
 
+    n, z, e = [], [], []
+    TOTAL = 1000
+    i = 0
 
-    rs, gs, bs = [], [], []
-
-    for (imgs, label) in islice(dataset_train, 10000):
+    for imgs, label in dataset_train:
+        if i == TOTAL:
+            break
         if label == 1:
-            r, g, b = map(bottom_left_pixel, imgs)
-            rs.append(r); gs.append(g); bs.append(b)
+            sys.stdout.write(f"{i}/{TOTAL} \r"); sys.stdout.flush()
 
-    r, g, b = [Counter(x).most_common(1)[0][0] for x in [rs, gs, bs]]
+            _n, _z, _e = imgs
+            n.append(most_frequent_color(_n))
+            z.append(most_frequent_color(_z))
+            e.append(most_frequent_color(_e))
+            i += 1
+
+    r, g, b = [Counter(x).most_common(1)[0][0] for x in [n, z, e]]
     assert r == g == b, f"Inconsistent border between the 3 components ({r}, {g}, {b})"
     return r
 
@@ -165,17 +149,17 @@ if __name__ == '__main__':
 
     ## BORDER COLOR CALCULATIONS
 
-    #rgb_color = find_border_colors()
-    gray_color = find_border_colors(gray=True)
-
-    #print("RGB border color", rgb_color)
-    print("Gray border color", gray_color)
+    # rgb_color = find_border_colors()
+    # gray_color = find_border_colors(gray=True)
+    #
+    # print("RGB border color", rgb_color)
+    # print("Gray border color", gray_color)
 
     #
     # ## VIEW IMAGES ##
 
-    # fig = preview_multiple_dataset(label=0, raw=True)
-    # plt.savefig(write_path / 'fig_noise.png')
-    #
-    # fig = preview_multiple_dataset(label=1, raw=True)
-    # plt.savefig(write_path / 'fig_event.png')
+    fig = preview_multiple_dataset(label=0)
+    plt.savefig(write_path / 'fig_noise.png')
+
+    fig = preview_multiple_dataset(label=1)
+    plt.savefig(write_path / 'fig_event.png')

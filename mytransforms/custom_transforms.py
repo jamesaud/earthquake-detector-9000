@@ -3,6 +3,7 @@ from torchvision import transforms
 import random
 
 
+__all__ = ['RandomSameCrop', 'RandomSameCropWidth', 'RandomApplyConsistent']
 
 class RandomSameCrop(transforms.RandomCrop):
     
@@ -91,3 +92,33 @@ class RandomSameCropWidth(transforms.RandomCrop):
         i, j, h, w = self.params
 
         return F.crop(img, i, j, h, w)
+
+
+class RandomApplyConsistent(transforms.RandomApply):
+    """
+    Apply randomly a list of transformations with a given probability
+
+    Args:
+        transforms (list or tuple): list of transformations
+        p (float): probability
+
+    Applies randomly consistently, so if it was
+    """
+
+    def __init__(self, transforms, p=0.5):
+        super().__init__(transforms)
+        self.p = p
+        self.random_val = self.random_val()
+
+    def __call__(self, img):
+        if self.p < self.random_val:
+            return img
+        for t in self.transforms:
+            img = t(img)
+        return img
+
+    def reset(self):
+        self.random_val = self.random_val()
+
+    def random_val(self):
+        return random.random()
