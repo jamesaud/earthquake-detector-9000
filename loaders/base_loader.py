@@ -10,6 +10,7 @@ from mytransforms import RandomSameCropWidth, RandomSameCrop
 from PIL import Image
 import config
 from utils import lmap
+import copy
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 Components = namedtuple('Components', ('N', 'Z', 'E'))
@@ -103,6 +104,43 @@ class SpectrogramBaseDataset(Dataset):
 
 
     def get_spectrograms(self, path, folder_name,  pattern='', ignore_names=None):
+        """
+        The base_loader allows the most flexibility in structuring your files, though it is probably overly complicated
+        at the moment. Other loaders are designed simpler that inherit from base loader and modify this method.
+
+        :param path: Base path containing folders that can contain events and noise.
+                     Example:
+
+                     /path/California
+                     /path/Oklahoma
+                     /path/Hawaii
+
+        :param folder_name: Could be "noise" or "quakes" if following recommended file organization. Will return paths
+                            within this folder. Example:
+
+                            /path/California/noise
+                            /path/California/quakes
+                            ...
+
+        :param pattern: Pattern to access spectrogram folders within the folder_name. The default setting assumes the
+                        files set up as something like:
+
+                            /path/California/quakes/1/first_component.png
+                            /pathCalifornia/quakes/1/second_component.png
+                            /path/California/quakes/1/vertical_component.png
+                            ...
+
+                        where the names of the components can be anything there should be 3 components per folder.
+
+
+                        Custom patterns are passed as regex as a string and can allow specifying locations to the
+                        spectrograms within the subfolders of the path:
+
+                            /path/California/pattern/quakes/1/first_component.png
+
+        :param ignore_names:
+        :return:
+        """
         folders = lmap(os.path.basename, glob.glob(os.path.join(path, '*')))
         folders = [f for f in folders if f not in ignore_names]
 
@@ -113,12 +151,11 @@ class SpectrogramBaseDataset(Dataset):
             
         file_paths = [] 
         for folder in folders:
-            print(folder, path, end='\r')
             file_paths += get_file_paths(folder)
 
         # Maintain the same order each time, guaranteed with sorting
-        file_paths.sort()
 
+        file_paths.sort()
         return file_paths
 
 
@@ -134,7 +171,6 @@ class SpectrogramBaseDataset(Dataset):
 
         if self.transform:
             components = self.transform(components)
-
 
         n, z, e = components
         return n, z, e
@@ -159,6 +195,7 @@ class SpectrogramBaseDataset(Dataset):
         n, z, e = map(self.resize, components)
         return n, z, e
 
+    #@timing_msg("Getting item and applying transforms in data loader")
     def __getitem__(self, index, apply_transforms=True):
         n, z, e = self.file_paths[index]
         label = self.label_to_number(self.get_label(n))

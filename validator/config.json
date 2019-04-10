@@ -1,1 +1,1 @@
-{"train": {"path": "everywhere-untested/47.5751--122.417603", "divide_test": 0.2}, "test": {"path": "everywhere-untested/47.5751--122.417603", "divide_test": 0.2}, "image": {"height": 258, "width": 293, "crop": [1, 0.8]}, "loader": "direct"}
+{"train": {"path": "all-spectrograms/-20.7771-167.240204", "divide_test": 0.2}, "test": {"path": "all-spectrograms/-20.7771-167.240204", "divide_test": 0.2}, "image": {"height": 258, "width": 293, "crop": [1, 1]}, "loader": "direct", "weigh_classes": [1, 3]}

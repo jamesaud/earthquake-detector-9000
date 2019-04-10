@@ -14,17 +14,17 @@ class mnist_three_component(nn.Module):
     BLUR = 2              # 2
     F_DIM = 64              # 64
 
-    _transformations = [tf.Grayscale(num_output_channels=3),
+    _transformations = Group([tf.Grayscale(num_output_channels=3),
                         tf.Resize((DIM, DIM)),
                         tf.ToTensor(),
                         #  mytransforms.NormalizeGray
-                        ]
+                        ])
 
-    _train = [
+    _train = Group([
         tf.Grayscale(num_output_channels=1),
         mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_RGB_AMOUNT),
         mytransforms.Gaussian_Blur(BLUR),
-    ]
+    ])
 
     _test = [
              ]
@@ -93,12 +93,10 @@ class mnist_three_component_rgb(nn.Module):
     _transformations = Group([tf.Resize((DIM, DIM)),
                               tf.ToTensor()])
 
-
     _train = [
             tf.RandomApply(Group([mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT)]), p=.5),
             tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
     ]
-
 
     _test = []
 

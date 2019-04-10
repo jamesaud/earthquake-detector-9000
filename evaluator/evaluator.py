@@ -71,8 +71,8 @@ class Evaluator:
             return 0
     
     # Can'at remmeber what I was doing with this
-    def normalized_percent_correct(self):
-        return (self.percent_correct(0)*1.1 + self.percent_correct(1)) / 2.1
+    def normalized_percent_correct(self, weigh_events):
+        return (self.percent_correct(0) + self.percent_correct(1)*weigh_events) / (1 + weigh_events)
 
     def __str__(self):
         return 'Evaluator Object: ' + str(self.class_info)

@@ -9,7 +9,7 @@ class SpectrogramDirectDataset(SpectrogramMultipleDataset):
 
     def __init__(self, path_pattern='', *args, **kwargs):  
         """
-        :param pattern: str, the glob style pattern of how to get to the 'local' and 'noise' folders. 
+        :param path_pattern: str, the glob style pattern of how to get to the 'local' and 'noise' folders. 
         """
         self.pattern = path_pattern
         super().__init__(*args, **kwargs)

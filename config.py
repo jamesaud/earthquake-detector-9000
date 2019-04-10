@@ -19,10 +19,11 @@ BORDER_COLOR_RGB = (68, 2, 85)  # R, G, B
 VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
 
-path = 'everywhere-97'
+# Initialize Cross Validation Generalized Detection
+path = 'all-spectrograms-symlinks/99.5'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
-everywhere_folders = os.listdir(everywhere_path)
-test = 'AmatriceQuakes'
+everywhere_folders = os.listdir(everywhere_path) 
+test = 'AmatriceQuakes'                             # Initial folder for LOO cross validation
 everywhere_folders.remove(test)
 
 options = dict(
@@ -49,11 +50,11 @@ options = dict(
     benz_train_set={
         'train': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .999,
+            'divide_test': .2,
         },
         'test': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .999,
+            'divide_test': .2,
         },
         'image': {
           'height': int(258 * 1),
@@ -92,7 +93,7 @@ options = dict(
         },
         'test': {
             'path': f'Benz/spectrograms/test_set_benz_2',
-            'divide_test': .25,
+            'divide_test': .999,
         },
         'image': {
           'height': int(258 * 1),
@@ -116,21 +117,25 @@ options = dict(
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (.8, .8),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
         'loader': 'named_timestamp',
     })
 
 # Path to configuration file
-default_config_path = os.path.join(os.getcwd(), 'validator/config.json')
+default_config_path = os.path.join(os.getcwd(), 'validator/config_crossvalidation.json')
 configuration = os.environ.get('CONFIGURATION', default_config_path)
 options['environment'] = json.loads(open(configuration).read())
 
 # Model names for the top runs
-top_runs = (                        # N   L
-    '76-0.9815-0.9727-0.9978.pt',   # 97, 97
-    '60-0.9905-0.992-0.9877.pt',    # 99, 93
-    '72-0.9273-0.8879-0.9997.pt',   # 88, 99
-    '48-0.966-0.9483-0.9985.pt',    # 95, 98
+top_runs_gray = (                        # N   Quakes
+    '76-0.9815-0.9727-0.9978.pt',        # 97, 97
+    '60-0.9905-0.992-0.9877.pt',         # 99, 93
+    '72-0.9273-0.8879-0.9997.pt',        # 88, 99
+    '48-0.966-0.9483-0.9985.pt',         # 95, 98
+)
+
+top_runs_rgb = (
+    '92-0.9801-0.9702-0.9982.pt',
 )
