@@ -1,7 +1,9 @@
 import torch.nn as nn
 import torchvision.transforms as transforms
 import mytransforms.transforms as mytransforms
-
+from mytransforms import Group
+import torch
+import config
 
 class AlexNet(nn.Module):
 
@@ -9,15 +11,13 @@ class AlexNet(nn.Module):
     grayscale = transforms.Grayscale(num_output_channels=3)
 
 
-    _transformations = [
+    _transformations = Group([
             transforms.ToTensor(),
-        ]
+        ])
 
-    _train = [
-               ]
+    _train = []
 
-    _test = [
-              ]
+    _test = []
 
     transformations = {
         'train': transforms.Compose(_train + _transformations),
@@ -73,8 +73,7 @@ class AlexNet(nn.Module):
         return x
 
 
-import torch
-import config
+
 class AlexNetMultiple(nn.Module):
 
     normalize = transforms.Normalize(mean=config.RGB_MEAN,
@@ -82,16 +81,11 @@ class AlexNetMultiple(nn.Module):
 
     _train = []
     _test = []
-    _transformations = []
+    _transformations = Group([transforms.ToTensor()])
+
     transformations = {
-        'train': transforms.Compose(_train + [
-            transforms.ToTensor(),
-            normalize
-        ]),
-        'test': transforms.Compose(_test + [
-            transforms.ToTensor(),
-            normalize
-        ])
+        'train': transforms.Compose(_train + _transformations),
+        'test':  transforms.Compose(_test + _transformations)
     }
 
     def __init__(self, num_classes=2):

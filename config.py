@@ -30,21 +30,21 @@ options = dict(
     everywhere={
         'train': {
             'path': path,
-            'divide_test': 0,
-            'ignore': [test],
+            'divide_test': .1,
+            'ignore': [],           # [test]
         },
         'test': {
             'path': path,
-            'divide_test': 1.0,
-            'ignore': everywhere_folders
+            'divide_test': .1,
+            'ignore': [],           # everywhere_folders
         },
         'image': {
           'height': int(258 * 1),
-          'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
-          'crop':  (1, .7),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (.1, 0, 0, 0)    # left, right, top, bottom
+          'width': int(293 * 1),
+          'crop':  (1, 1),  # height, width
+          'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
-        'weigh_classes': [4, 1],
+        'weigh_classes': [1, 4],
         'loader': 'custom'
     },
     benz_train_set={

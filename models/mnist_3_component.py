@@ -4,26 +4,24 @@ import torch
 import config
 import mytransforms
 from mytransforms import Group
-from operator import mul
 
 class mnist_three_component(nn.Module):
 
-
-    DIM = 32               # 32
-    NOISE_RGB_AMOUNT = 15  # 15  # Centered around this value, How much to change the value of a color [Guassian distribution added to a grayscale color value [0-255]
-    BLUR = 2              # 2
-    F_DIM = 64              # 64
+    NOISE_RGB_AMOUNT = 15  # 15
+    BLUR = 2               # 2
+    DIM = 64
+    F_DIM = 64             # 64
 
     _transformations = Group([tf.Grayscale(num_output_channels=3),
-                        tf.Resize((DIM, DIM)),
-                        tf.ToTensor(),
-                        #  mytransforms.NormalizeGray
+                              tf.Resize((DIM, DIM)),
+                              tf.ToTensor(),
+                              #  mytransforms.NormalizeGray
                         ])
 
     _train = Group([
         tf.Grayscale(num_output_channels=1),
-        mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_RGB_AMOUNT),
-        mytransforms.Gaussian_Blur(BLUR),
+#        mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_RGB_AMOUNT),
+#        mytransforms.Gaussian_Blur(BLUR),
     ])
 
     _test = [
@@ -57,7 +55,7 @@ class mnist_three_component(nn.Module):
         )
 
         self.classifier = nn.Sequential(
-            nn.Linear(192*5*5, F_DIM, bias=False),
+            nn.Linear(32448, F_DIM, bias=False),
             nn.BatchNorm1d(F_DIM),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
@@ -74,13 +72,15 @@ class mnist_three_component(nn.Module):
         n, z, e = components
         nout, zout, eout = self.feats(n), self.feats(z), self.feats(e)
         out = torch.cat((nout, zout, eout), 1)
-        out = out.view(-1, 192*5*5)
+        #print(out)
+        out = out.view(out.size(0), -1)
         out = self.classifier(out)
         return out
 
 
 class mnist_three_component_exp(nn.Module):
     pass
+
 
 class mnist_three_component_rgb(nn.Module):
 
@@ -145,6 +145,6 @@ class mnist_three_component_rgb(nn.Module):
         n, z, e = components
         nout, zout, eout = self.feats(n), self.feats(z), self.feats(e)
         out = torch.cat((nout, zout, eout), 1)
-        out = out.view(-1, 192*5*5)
+        out = out.view(out.size(0), -1)
         out = self.classifier(out)
         return out

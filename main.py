@@ -24,8 +24,9 @@ import utils
 from pprint import pprint
 from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
+import copy
 
-configuration = 'environment'
+configuration = 'everywhere'
 settings = config.options[configuration]
 settings = dotdict(settings)
 
@@ -38,7 +39,7 @@ TRAIN_IMG_PATH = make_path(settings.train.path)
 TEST_IMG_PATH = make_path(settings.test.path)
 
 # Variables
-BATCH_SIZE = 512
+BATCH_SIZE = 256
 NUM_CLASSES = 2
 iterations = 0
 
@@ -102,9 +103,10 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
                        crop_padding=crop_padding_test,
                        **dataset_args)
 
-
-
 assert verify_dataset_integrity(dataset_train, dataset_test)
+
+del dataset_train.file_paths[350000:]   # TODO: Getting error Segmentation fault (core dumped) on 359168/364032 during trainig
+
 train_sampler = utils.make_weighted_sampler(dataset_train, NUM_CLASSES, weigh_classes=WEIGH_CLASSES) if WEIGH_CLASSES else None
 
 # Data Loaders
@@ -121,6 +123,11 @@ train_loader = DataLoader(dataset_train,
                           **loader_args)
 
 
+# Subsample to test train accuracy... because it has too many samples
+_dt = copy.deepcopy(dataset_train)
+del _dt.file_paths[40000:]   # 40000
+train_evaluation_loader = DataLoader(_dt, **loader_args)
+
 test_loader = DataLoader(dataset_test,
                          **loader_args)
 
@@ -136,6 +143,19 @@ def print_config():
     pprint(settings)
 
 
+def write_initial(writer, net, settings, resize, crop, datset_train):
+    print("\nWriting Info")
+    write_info(writer, net, settings, resize, crop)
+    write_images(writer, dataset_train)
+
+
+def write_stats(evaluator, name):
+    stats_writer = StatsWriter(os.path.join(CWD, f'visualize/test_stats/{name}'))
+    softmax_output_labels = nn.functional.softmax(evaluator.output_labels, dim=1)    # Make probabilities sum between 0 and 1
+    stats_writer.write_stats(evaluator.true_labels,
+                                softmax_output_labels,
+                                evaluator.predicted_labels)
+
 if __name__ == '__main__':
     print_config()
 
@@ -147,21 +167,24 @@ if __name__ == '__main__':
     #################
 
     if TRAIN_MODE:
-        print("\nWriting Info")
-        write_info(writer, net, settings, resize, crop)
-        write_images(writer, dataset_train)
+        write_initial(writer, net, settings, resize, crop, dataset_train)
 
         def train_net(epochs):
-            for epoch in range(1, epochs + 1):
-                train(epoch, train_loader, test_loader, optimizer, criterion, net, writer,
-                      write=True, checkpoint_path=checkpoint_path, print_test_evaluation_every=5000)
+            for epoch in range(epochs):
+                train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
+                      write=True,
+                      checkpoint_path=checkpoint_path,
+                      print_test_evaluation_every=100_000,  # 30,000
+                      #print_train_evaluation_every=300_000,
+                      train_evaluation_loader=train_evaluation_loader
+                      )
 
-        train_net(100)
+        train_net(10)
 
     ########################
     # TEST EXISTING MODEL
     #######################
-    #
+
     if TEST_MODE:
 
         # Load Net
@@ -185,11 +208,7 @@ if __name__ == '__main__':
 
         # Write figures
         print("Writing stats...")
-        stats_writer = StatsWriter(os.path.join(CWD, f'visualize/test_stats/{model_name}-{configuration}'))
-        softmax_output_labels = nn.functional.softmax(test_evaluator.output_labels, dim=1)    # Make probabilities sum between 0 and 1
-        stats_writer.write_stats(test_evaluator.true_labels,
-                                 softmax_output_labels,
-                                 test_evaluator.predicted_labels)
+        write_stats(test_evaluator, f'{model_name}-{configuration}')
 
         # Compatible with functions that expect 3 items (components, label, name)
         dataset_test.return_name = True

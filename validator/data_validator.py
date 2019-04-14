@@ -16,9 +16,11 @@ def test_dataset(epochs):
 
 def test_best_dataset(epochs, evaluate_every):
     best = None
+    write_initial(writer, net, settings, resize, crop, dataset_train)
 
     for epoch in range(epochs):
         # Will return evaluator every epoch
+
         trainer = train_epoch(epoch, train_loader, test_loader, optimizer, criterion, net, writer,
                               write=True, yield_every=evaluate_every)
 
