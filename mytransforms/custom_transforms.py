@@ -115,12 +115,4 @@ def Group(transforms: List):
     return [transform_group(transform) for transform in transforms]
 
 
-class ComposeGroup(transforms.Compose):
-    """
-    Same as transform group, but takes a list of normal transforms and applies them all together
-    """
-    def __call__(self, imgs):
-        for t in self.transforms:
-            imgs = map(t, imgs)
-        return list(imgs)
 

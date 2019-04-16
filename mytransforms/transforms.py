@@ -51,11 +51,14 @@ def PrintState():
 
 class Lambda(transforms.Lambda):
     """ Add docstring to transforms.Lambda """
-    def __init__(self, lambd, description=""):
+    def __init__(self, lambd, description=None):
         super().__init__(lambd)
-        self.description = description
+        self.description = description or str(lambd)
 
     def __repr__(self):
+        return self.__class__.__name__ + '(): ' + self.description
+
+    def __str__(self):
         return self.__class__.__name__ + '(): ' + self.description
 
 

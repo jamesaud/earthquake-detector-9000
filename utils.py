@@ -3,7 +3,7 @@ import sys
 from torch.autograd import Variable
 import torch.utils.data
 from functools import wraps
-
+ 
 class dotdict(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)

@@ -20,23 +20,23 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
 
 # Initialize Cross Validation Generalized Detection
-path = 'all-spectrograms-symlinks/99.5'
+path = 'all-spectrograms-symlinks/99'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path) 
-test = 'AmatriceQuakes'                             # Initial folder for LOO cross validation
+test = 'benz'                             # Initial folder for LOO cross validation
 everywhere_folders.remove(test)
 
 options = dict(
     everywhere={
         'train': {
             'path': path,
-            'divide_test': .1,
-            'ignore': [],           # [test]
+            'divide_test': 0,
+            'ignore': [test],           # [test]
         },
         'test': {
             'path': path,
             'divide_test': .1,
-            'ignore': [],           # everywhere_folders
+            'ignore': everywhere_folders,           # everywhere_folders
         },
         'image': {
           'height': int(258 * 1),
@@ -44,17 +44,17 @@ options = dict(
           'crop':  (1, 1),  # height, width
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },
-        'weigh_classes': [1, 4],
+        'weigh_classes': [1, 3],
         'loader': 'custom'
     },
     benz_train_set={
         'train': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .2,
+            'divide_test': .999,
         },
         'test': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .2,
+            'divide_test': .999,
         },
         'image': {
           'height': int(258 * 1),

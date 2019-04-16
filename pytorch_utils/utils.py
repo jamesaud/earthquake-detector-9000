@@ -137,7 +137,7 @@ def evaluation(net: nn.Module,
 
 def write_evaluator(writer, name, evaluator, iterations):
     writer.add_scalars('amount_correct',
-                       {f'{name}_amount_correct': evaluator.total_percent_correct() * 100},
+                       {f'{name}_amount_correct': evaluator.normalized_percent_correct()},
                        iterations)
 
     writer.add_scalars(f'{name}_class_correct',
@@ -206,11 +206,10 @@ def train_epoch(epoch: int,
                 print_loss_every=1000,
                 print_test_evaluation_every=float('inf'),
                 print_train_evaluation_every=float('inf'),
-                train_evaluation_num_samples=float('inf'),
                 train_evaluation_loader: DataLoader = None):
     """
 
-     param epoch: The epoch number
+    :param epoch: The epoch number
     :param train_loader: Pytorch train loader
     :param test_loader:  Pytorch test loader
     :param net: Pytorch Model
@@ -222,36 +221,45 @@ def train_epoch(epoch: int,
     :param print_loss_every: When to print and write loss
     :param print_test_evaluation_every:  when to print and write test evaluation
     :param print_train_evaluation_every:  when to print and write train_evaluation
-    :param train_evaluation_loader: Use a differen dataloader to test the train set (if you want to subsample to take less time)
+    :param train_evaluation_loader: Use a different dataloader to test the train set (if you want to subsample to take less time)
     :return: Evaluator
     """
+    assert epoch > 0, "Epoch should start at 1"
+
+    # Variables
     running_loss = 0.0
     iterations = 0
-    batch_size = train_loader.batch_size
-    rounded = lambda decimal: str(round(decimal, 4))
-    run_every = lambda i: iterations % i < batch_size
-    batches = train_batches(train_loader, net, optimizer, criterion)
 
+    # Constants
+    batch_size = train_loader.batch_size
+    total_samples = len(train_loader) * batch_size
+
+    # Helper functions
+    rounded = lambda decimal: str(round(decimal, 4) * 100)
+    run_every = lambda i: (iterations % i <= batch_size) and (iterations > batch_size)
+    global_iterations = lambda: iterations + (epoch - 1) * total_samples
+    
     def write_test_evaluator(evaluator):
-        write_evaluator(writer, "test", evaluator, iterations)
-        write_histogram(writer, net, iterations)
+        write_evaluator(writer, "test", evaluator, global_iterations())
+        write_histogram(writer, net, global_iterations())
         if checkpoint_path:
-            name = str(iterations // print_test_evaluation_every) + \
-                   '-' + rounded(evaluator.total_percent_correct()) + \
-                   '-' + rounded(evaluator.percent_correct(0)) + \
-                   '-' + rounded(evaluator.percent_correct(1))
+            name = f"iterations-{global_iterations()}" + \
+                   '-total-' + rounded(evaluator.total_percent_correct())+ \
+                   '-class0-' + rounded(evaluator.percent_correct(0)) + \
+                   '-class1-' + rounded(evaluator.percent_correct(1))
             path = os.path.join(checkpoint_path, name)
             print(f'Writing model: {os.path.basename(path)}')
             save_model(path, net)
 
-    for batch_num, stats in enumerate(batches, 1):
+    gen_batches = train_batches(train_loader, net, optimizer, criterion)
+    for batch_num, stats in enumerate(gen_batches, 1):
         loss = stats['loss']
         running_loss += loss
         iterations += batch_size
 
         if run_every(print_loss_every):
             print_loss(batch_num, loss, epoch, train_loader)
-            if write: write_loss(writer, loss, iterations)
+            if write: write_loss(writer, loss, global_iterations())
 
         if run_every(print_test_evaluation_every):
             evaluator = evaluation(net, test_loader, "test loader")
@@ -260,13 +268,13 @@ def train_epoch(epoch: int,
 
         if run_every(yield_every):
             evaluator = evaluation(net, test_loader, "test loader")
-            if write: write_test_evaluator(evaluator)
+            print_evaluation(evaluator, "test")
             yield evaluator
 
         if run_every(print_train_evaluation_every):
             loader = train_evaluation_loader or train_loader
             evaluator = evaluation(net, loader, "train loader")
-            if write: write_evaluator(writer, "train", evaluator, iterations)
+            if write: write_evaluator(writer, "train", evaluator, global_iterations())
 
     # Print test evaluation at end of epoch
     evaluator = evaluation(net, test_loader, "test loader")
