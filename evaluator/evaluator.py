@@ -16,7 +16,7 @@ class Evaluator:
         self.output_labels = output_labels     # Raw output classes of neural net
         self.num_classes = num_classes
 
-        _, self.predicted_labels = torch.max(output_labels.data, 1)   # Label with the highest score
+        _, self.predicted_labels = torch.max(output_labels, 1)   # Label with the highest score
 
         self.compute_accuracy(self.predicted_labels, self.true_labels, self.num_classes)
 
@@ -33,7 +33,7 @@ class Evaluator:
         guesses = (predicted_labels == true_labels).squeeze()
 
         for guess, label in zip(guesses, true_labels):
-            guess, label = guess.item(), label.item()
+            # guess, label = guess.item(), label.item()
             class_correct[label] += guess
             class_total[label] += 1
 
@@ -92,7 +92,7 @@ class NetEval:
         return predicted_labels
 
     def predicted_classes(self, outputs):
-        _, predicted = torch.max(outputs.data, 1)
+        _, predicted = torch.max(outputs, 1)
         return predicted
 
     def correct_predictions(self, true_labels, predicted_labels):

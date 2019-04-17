@@ -33,7 +33,7 @@ def evaluate(net: nn.Module,
 
     for (inputs, labels) in data_loader:
         inputs, labels = [Variable(input).cuda() for input in inputs], labels
-        output_labels = Net(inputs).cpu().detach()
+        output_labels = Net(inputs).cpu().detach().data
 
         all_output_labels = torch.cat((all_output_labels, output_labels))
         all_true_labels = torch.cat((all_true_labels, labels))
@@ -152,10 +152,10 @@ def print_loss(batch_num, loss, epoch, train_loader):
     ratio = batch_samples / total_samples
     msg = 'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
         epoch,
-        batch_samples,
-        total_samples,
-        ratio * 100,
-        loss)
+        int(batch_samples),
+        int(total_samples),
+        float(ratio) * 100,
+        float(loss))
 
     sys.stdout.write('\r' + msg)
     sys.stdout.flush()
@@ -190,7 +190,7 @@ def train_batches(train_loader: DataLoader,
         loss.backward()
         optimizer.step()
 
-        yield {"loss": loss.data.item()}
+        yield {"loss": loss.data}
 
 
 def train_epoch(epoch: int,

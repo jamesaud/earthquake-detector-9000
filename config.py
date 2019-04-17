@@ -20,7 +20,7 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
 
 # Initialize Cross Validation Generalized Detection
-path = 'all-spectrograms-symlinks/99'
+path = 'all-spectrograms-symlinks/97'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path) 
 test = 'benz'                             # Initial folder for LOO cross validation

@@ -107,6 +107,10 @@ def transform_group(transform):
         imgs = list(map(transform, imgs))
         return imgs
 
+    # Fix printing out
+    apply_transform_to_group.__str__ = transform.__str__
+    apply_transform_to_group.__repr__ = transform.__repr__
+
     return apply_transform_to_group
 
 
