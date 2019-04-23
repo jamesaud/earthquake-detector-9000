@@ -33,6 +33,8 @@ https://github.com/jamesaud/earthquake-detector-9000/blob/master/config.py
 
 In the 'main' code, if the configuration is set to 'environment', `configuration = 'environment'` , then it will read in the configuration from validator/config.json.
 
+`python main.py` runs the neural network.
+
 ## Performance
 
 Use this model for best performance and efficiency:
