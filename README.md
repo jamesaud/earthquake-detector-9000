@@ -68,11 +68,18 @@ Run `docker-compose up` to get Tensorboard running on localhost:6000
 
 The code in main is configured to write to the folder for visualization.
 
+
 ## Tests
 
 There are some tests written:
 
 https://github.com/jamesaud/earthquake-detector-9000/tree/master/tests
+
+## Installation 
+
+Install from requirements.txt. There's currently an issue that not everything is listed on Conda's servers, so some of the requirements will be needed to be installed via Pip. 
+
+Need to format the requirement.txt as an environment.yml file to make it easier to install the requirements.
 
 ## Notes
 
