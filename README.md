@@ -53,7 +53,7 @@ To run the conv net on every location, run:
 
 to produce results that tell you the detection accuracy for each location:
 
-https://github.com/jamesaud/earthquake-detector-9000/blob/master/validator/backup/results_everywhere_backup.csv
+https://github.com/jamesaud/earthquake-detector-9000/blob/master/validator/weighted_results_everywhere.csv
 
 
 ## Generalized Model
@@ -74,6 +74,4 @@ https://github.com/jamesaud/earthquake-detector-9000/tree/master/tests
 
 ## Notes
 
-This is a work in progress still. Some of the code (like data_validate.py) does some unconvential things (reloading modules, reading and writing config to a file). 
-
-Part of this is Pytorch seems to be structured for single runs, so when you need to run multiple nets multiple times, it is easier to just reset the module to ensure all weights are set to 0, etc. A big refactor would help my code. Ideally there will be some better wrapper libraries for Pytorch (like Skorch, but better..)
+This is a work in progress still. Some of the code (like data_validate.py) does some bad/unconvential things. A big refactor would help the code. 
