@@ -18,4 +18,4 @@ services:
    ports:
        - 6007:6006
    volumes:
-      - ./visualize/grid:/data
+      - ./visualize/saved:/data

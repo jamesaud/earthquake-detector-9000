@@ -5,33 +5,76 @@ from random import getrandbits
 from PIL import ImageFilter
 import config
 
+
+__all__ = ['Add1DNoise', 'Add3DNoise', 'Gaussian_Blur', 'NormalizeColor', 'NormalizeGray']
+
 def _print_state(img):
     print(img)
     return img
 
 
-def _add_noise(img, BORDER_COLOR, NOISE_RGB_AMOUNT):
+def _add_noise(img, border_color, noise_amount):
     """Add noise to a grayscaled 1 channel image"""
-    # Random boolean
-    if getrandbits(1):
-        img = np.array(img)
-        condition = img != BORDER_COLOR
-        noise = np.random.normal(0, NOISE_RGB_AMOUNT, size=img[condition].shape).astype(int)
-        img[condition] = noise + img[condition]
 
-        # Convert array to Image
-        img = PIL.Image.fromarray(img)
+    img = np.array(img)
+    condition = img != border_color
+    # print(img)
+    noise = np.random.normal(0, noise_amount, size=img[condition].shape).astype(int)
+    img[condition] = noise + img[condition]
 
+    # Convert array to Image
+    img = PIL.Image.fromarray(img)
+    return img
+
+def _add_noise_3d(img, border_color, noise_amount):
+    """
+    Add noise to a 3 channel image:
+    :border_color: tuple(r, g, b)
+    """
+
+    img = np.array(img)
+
+    # Modify pixels that aren't the border color
+    condition = img != np.array(border_color)
+
+    noise = np.random.normal(0, noise_amount, size=img[condition].shape).astype(int)
+
+    img[condition] = noise + img[condition]
+
+    # Convert array to Image
+    img = PIL.Image.fromarray(img)
     return img
 
 def PrintState():
     return transforms.Lambda(lambda img: _print_state(img))
 
-def Add1DNoise(IGNORE_COLOR, NOISE_RGB_AMOUNT):
-    return transforms.Lambda(lambda img: _add_noise(img, IGNORE_COLOR, NOISE_RGB_AMOUNT))
 
-def Gaussian_Blur(radius=2):
-    return transforms.Lambda(lambda img: img.filter(ImageFilter.GaussianBlur(radius=radius)))
+class Lambda(transforms.Lambda):
+    """ Add docstring to transforms.Lambda """
+    def __init__(self, lambd, description=None):
+        super().__init__(lambd)
+        self.description = description or str(lambd)
+
+    def __repr__(self):
+        return self.__class__.__name__ + '(): ' + self.description
+
+    def __str__(self):
+        return self.__class__.__name__ + '(): ' + self.description
+
+
+def Add1DNoise(IGNORE_COLOR, NOISE_RGB_AMOUNT):
+    """ Adds noise to every pixel except the 'ignore_color'. useful to not add noise to borders """
+    return Lambda(lambda img: _add_noise(img, IGNORE_COLOR, NOISE_RGB_AMOUNT),
+                  f"Add1DNoise(IGNORE_COLOR={IGNORE_COLOR}, NOISE_RGB_AMOUNT={NOISE_RGB_AMOUNT})")
+
+def Add3DNoise(IGNORE_COLOR, NOISE_RGB_AMOUNT):
+    """ Adds noise to every pixel except the 'ignore_color'. useful to not add noise to borders """
+    return Lambda(lambda img: _add_noise_3d(img, IGNORE_COLOR, NOISE_RGB_AMOUNT),
+                  f"Add1DNoise(IGNORE_COLOR={IGNORE_COLOR}, NOISE_RGB_AMOUNT={NOISE_RGB_AMOUNT})")
+
+def Gaussian_Blur(radius):
+    return Lambda(lambda img: img.filter(ImageFilter.GaussianBlur(radius=radius)),
+                  f"Gaussian_Blur(radius={radius})")
 
 
 NormalizeGray = transforms.Normalize(mean=config.GRAY_MEAN,
@@ -39,3 +82,6 @@ NormalizeGray = transforms.Normalize(mean=config.GRAY_MEAN,
 
 NormalizeColor = transforms.Normalize(mean=config.RGB_MEAN,
                                       std=config.RGB_STD)
+
+
+

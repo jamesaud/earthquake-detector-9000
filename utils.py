@@ -1,7 +1,9 @@
 import torch
 import sys
 from torch.autograd import Variable
-
+import torch.utils.data
+from functools import wraps
+ 
 class dotdict(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
@@ -80,7 +82,35 @@ def calculate_crop_padding_pixels(crop_padding_percent, img_height, img_width):
     left, right, top, bottom = crop_padding_percent
     left, right = width * left, width * right
     top, bottom = height * top, height * bottom
-    return (left, right, top, bottom)      # (padding_left, padding_right) in pixels
+    return (left, right, top, bottom)      # (padding_left, padding_right, top, bottom) in pixels
 
 
+from functools import wraps
+from time import time
+import sys
 
+def timing(f, msg=None):
+    i = 0
+
+    @wraps(f)
+    def wrap(*args, **kw):
+        nonlocal i
+        nonlocal msg
+        i += 1
+        ts = time()
+        result = f(*args, **kw)
+        te = time()
+        if msg is not None:
+            message = msg + f' | Progress({i})'
+        else:
+            message = 'func:%r args:[%r, %r] took: %2.4f sec | %r ' % (f.__name__, args, kw, te - ts, i)
+
+        sys.stdout.write(f"\r {message}")
+        sys.stdout.flush()
+        return result
+    return wrap
+
+def timing_msg(msg):
+    def timing_msg(fn):
+        return timing(fn, msg=msg)
+    return timing_msg

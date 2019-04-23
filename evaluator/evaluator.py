@@ -8,12 +8,38 @@ import copy
 
 class Evaluator:
 
-    def __init__(self, class_accuracy_dict=None):
+    def __init__(self, true_labels, output_labels, num_classes):
         self.class_info = dotdict()  # Javasript style item access
 
-        if class_accuracy_dict:
-            for key, value in class_accuracy_dict.items():
-                self.class_info[key] = value
+        # Should be updated as arrays
+        self.true_labels = true_labels         # True labels
+        self.output_labels = output_labels     # Raw output classes of neural net
+        self.num_classes = num_classes
+
+        _, self.predicted_labels = torch.max(output_labels, 1)   # Label with the highest score
+
+        self.compute_accuracy(self.predicted_labels, self.true_labels, self.num_classes)
+
+    def compute_accuracy(self, predicted_labels, true_labels, num_classes):
+        """
+        :param predicted: 1d Tensor: An array of predictions (probabilities for each label)
+        :param predicted: 1d Tensor: the predicted lab
+        :param class_labels: List: the class labels
+        :return:
+        """
+        class_correct = [0 for _ in range(num_classes)]
+        class_total = [0 for _ in range(num_classes)]
+
+        guesses = (predicted_labels == true_labels).squeeze()
+
+        for guess, label in zip(guesses, true_labels):
+            # guess, label = guess.item(), label.item()
+            class_correct[label] += guess
+            class_total[label] += 1
+
+        for i, (correct, total) in enumerate(zip(class_correct, class_total)):
+            self.update_accuracy(class_name=i, amount_correct=correct, amount_total=total)
+
 
     def update_accuracy(self, class_name: str, amount_correct: int, amount_total: int):
         self.class_info[class_name] = {
@@ -32,7 +58,6 @@ class Evaluator:
             return 0
 
     def total_percent_correct(self):
-
         amount_correct = 0
         amount_total = 0
 
@@ -45,8 +70,8 @@ class Evaluator:
         except ZeroDivisionError:
             return 0
     
-    def normalized_percent_correct(self):
-        return (self.percent_correct(0)*1.1 + self.percent_correct(1)) / 2.1
+    def normalized_percent_correct(self, weigh_events=1):
+        return (self.percent_correct(0) + self.percent_correct(1) * weigh_events) / (1 + weigh_events)
 
     def __str__(self):
         return 'Evaluator Object: ' + str(self.class_info)
@@ -67,7 +92,7 @@ class NetEval:
         return predicted_labels
 
     def predicted_classes(self, outputs):
-        _, predicted = torch.max(outputs.data, 1)
+        _, predicted = torch.max(outputs, 1)
         return predicted
 
     def correct_predictions(self, true_labels, predicted_labels):
@@ -76,42 +101,4 @@ class NetEval:
 
     def to_cuda(self, inputs):
         return [Variable(input).cuda() for input in inputs]
-
-
-def evaluate(net, data_loader, NUM_CLASSES, BATCH_SIZE):
-    """
-    Goes through entire loader one time
-    :param net: neural net
-    :param copy_net: boolean
-    :param data_loader: DataLoader
-    :return: Data structure of class Evaluator containing the amount correct for each class
-    """
-    Net = net
-    net_eval = NetEval(Net)
-    eval = Evaluator()
-
-    class_correct = [0 for _ in range(NUM_CLASSES)]
-    class_total = [0 for _ in range(NUM_CLASSES)]
-
-    i = 0 
-    size = BATCH_SIZE * len(data_loader)
-
-    for (inputs, labels) in data_loader:
-        inputs, labels = net_eval.to_cuda(inputs), labels.cuda()
-        guesses = net_eval.predict(inputs)
-
-        for guess, label in zip(guesses, labels):
-            class_correct[label] += guess
-            class_total[label] += 1
-
-        i += BATCH_SIZE
-        sys.stdout.write('\r' + str(i) + '/' + str(size))
-        sys.stdout.flush()
-
-    # Update the information in the Evaluator
-    for i, (correct, total) in enumerate(zip(class_correct, class_total)):
-        eval.update_accuracy(class_name=i, amount_correct=correct, amount_total=total)
-
-    return eval
-
 

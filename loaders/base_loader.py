@@ -6,10 +6,11 @@ import random
 import os
 from collections import namedtuple
 from PIL import ImageFile
-from mytransforms.RandomSameCrop import RandomSameCropWidth, RandomSameCrop
+from mytransforms import RandomSameCropWidth, RandomSameCrop
 from PIL import Image
 import config
 from utils import lmap
+import copy
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 Components = namedtuple('Components', ('N', 'Z', 'E'))
@@ -17,14 +18,15 @@ Components = namedtuple('Components', ('N', 'Z', 'E'))
 class SpectrogramBaseDataset(Dataset):
     """
     """
-    __SEED = 448
+    __SEED = 448   # For randomly splitting the traintest set consistantly
 
     def __init__(self, img_path, divide_test, transform=None, test=False, resize=False, ignore=None,
-        crop=False, crop_center=None, crop_padding=None,  **kwargs):
+        crop=False, crop_center=None, crop_padding=None, **kwargs):
         """
 
         :param img_path: path to the 'spectrograms' folder
-        :param transform: list of transforms to apply AFTER resize and crop
+        :param transform: list of transforms to apply AFTER resize and crop. Transforms must take a list of images as input
+                          wrap with mytansforms.group_transforms if necessary
         :param test: boolean, training or test
         :param resize:  height, width or False
         :param crop:   height, width or False
@@ -40,7 +42,8 @@ class SpectrogramBaseDataset(Dataset):
         ignore_names = ignore or []
         self.img_path = img_path
         self.test = test
-        self.crop_padding= crop_padding
+        self.crop_padding = crop_padding
+
         # Transforms
         self.transform = transform
 
@@ -74,7 +77,6 @@ class SpectrogramBaseDataset(Dataset):
             file_paths = train_local + train_noise
             self.local, self.noise = train_local, train_noise
 
-        
         self.file_paths = self.shuffle(file_paths)
         self.file_paths = self.clean_paths(file_paths)
 
@@ -102,6 +104,43 @@ class SpectrogramBaseDataset(Dataset):
 
 
     def get_spectrograms(self, path, folder_name,  pattern='', ignore_names=None):
+        """
+        The base_loader allows the most flexibility in structuring your files, though it is probably overly complicated
+        at the moment. Other loaders are designed simpler that inherit from base loader and modify this method.
+
+        :param path: Base path containing folders that can contain events and noise.
+                     Example:
+
+                     /path/California
+                     /path/Oklahoma
+                     /path/Hawaii
+
+        :param folder_name: Could be "noise" or "quakes" if following recommended file organization. Will return paths
+                            within this folder. Example:
+
+                            /path/California/noise
+                            /path/California/quakes
+                            ...
+
+        :param pattern: Pattern to access spectrogram folders within the folder_name. The default setting assumes the
+                        files set up as something like:
+
+                            /path/California/quakes/1/first_component.png
+                            /pathCalifornia/quakes/1/second_component.png
+                            /path/California/quakes/1/vertical_component.png
+                            ...
+
+                        where the names of the components can be anything there should be 3 components per folder.
+
+
+                        Custom patterns are passed as regex as a string and can allow specifying locations to the
+                        spectrograms within the subfolders of the path:
+
+                            /path/California/pattern/quakes/1/first_component.png
+
+        :param ignore_names:
+        :return:
+        """
         folders = lmap(os.path.basename, glob.glob(os.path.join(path, '*')))
         folders = [f for f in folders if f not in ignore_names]
 
@@ -112,12 +151,11 @@ class SpectrogramBaseDataset(Dataset):
             
         file_paths = [] 
         for folder in folders:
-            print(folder, path, end='\r')
             file_paths += get_file_paths(folder)
 
         # Maintain the same order each time, guaranteed with sorting
-        file_paths.sort()
 
+        file_paths.sort()
         return file_paths
 
 
@@ -132,7 +170,7 @@ class SpectrogramBaseDataset(Dataset):
             components = self.apply_crop(components)
 
         if self.transform:
-            components = map(self.transform, components)
+            components = self.transform(components)
 
         n, z, e = components
         return n, z, e
@@ -157,6 +195,7 @@ class SpectrogramBaseDataset(Dataset):
         n, z, e = map(self.resize, components)
         return n, z, e
 
+    #@timing_msg("Getting item and applying transforms in data loader")
     def __getitem__(self, index, apply_transforms=True):
         n, z, e = self.file_paths[index]
         label = self.label_to_number(self.get_label(n))
@@ -174,6 +213,7 @@ class SpectrogramBaseDataset(Dataset):
         return labels
         
     def _getitem_raw(self, index):
+        """ Returns the components without any trasnforms applied """
         n, z, e = self.file_paths[index]
         label = self.label_to_number(self.get_label(n))
         n, z, e = [self.open_image(component) for component in (n, z, e)]
@@ -206,7 +246,16 @@ class SpectrogramBaseDataset(Dataset):
             plt.tight_layout()
             ax.set_title(title)
             ax.axis('off')
-            self.show_img(transforms.ToPILImage()(components[i]))
+
+            # Sometimes need to convert to PIL Image, sometimes not dpeending on user settings
+            # TODO: Be explicit and check for conditions to run the write code rather than try/except
+            try:
+                self.show_img(transforms.ToPILImage()(components[i]))
+            except Exception as e:
+                try:
+                    self.show_img(components[i])
+                except Exception as f:
+                    raise
 
         if show:
             plt.show()

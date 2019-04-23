@@ -1,0 +1,7 @@
+Name,Amount Correct Noise,Amount Total Noise,Amount Correct Local,Amount Total Local,Total Percent Correct,Epochs
+
+AmatriceQuakes,0,3674,1958,1958,0.34765625,0
+AmatriceQuakes,0,3674,1958,1958,0.34765625,0
+AmatriceQuakes,3674,3674,0,1958,0.65234375,0
+18.468--67.111099,424,424,0,4184,0.0920138888888889,0
+33.210098--116.409103,7078,7078,0,5722,0.55296875,0
