@@ -25,6 +25,7 @@ Written in Pytorch.
 If you are familar with Pytorch, the main code will look familiar:
 
 https://github.com/jamesaud/earthquake-detector-9000/blob/master/main.py
+https://github.com/jamesaud/earthquake-detector-9000/blob/master/pytorch_utils/utils.py
 
 The configuration is in json (or dict in Python):
 
