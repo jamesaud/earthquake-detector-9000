@@ -75,3 +75,9 @@ https://github.com/jamesaud/earthquake-detector-9000/tree/master/tests
 This is a work in progress still. Some of the code (like data_validate.py) does some unconvential things (reloading modules, reading and writing config to a file). 
 
 Part of this is Pytorch seems to be structured for single runs, so when you need to run multiple nets multiple times, it is easier to just reset the module to ensure all weights are set to 0, etc. A big refactor would help my code. Ideally there will be some better wrapper libraries for Pytorch (like Skorch, but better..)
+
+# Installation
+Install from requirements.txt (TODO: needs to be updated as an anaconda environment.yml file)
+I was running on Cuda75 so I needed install pytorch 0.3.0; in version 0.4.0 there are breaking changes in the code (only took around 10 minutes to update though)
+
+`pip install cu75/torch-0.3.0.post4-cp36-cp36m-linux_x86_64.whl`

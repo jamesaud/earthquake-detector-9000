@@ -235,7 +235,7 @@ def train_epoch(epoch: int,
     total_samples = len(train_loader) * batch_size
 
     # Helper functions
-    rounded = lambda decimal: str(round(decimal, 4) * 100)
+    rounded = lambda decimal: str(round(decimal*100, 2))
     run_every = lambda i: (iterations % i <= batch_size) and (iterations > batch_size)
     global_iterations = lambda: iterations + (epoch - 1) * total_samples
     
@@ -246,7 +246,8 @@ def train_epoch(epoch: int,
             name = f"iterations-{global_iterations()}" + \
                    '-total-' + rounded(evaluator.total_percent_correct())+ \
                    '-class0-' + rounded(evaluator.percent_correct(0)) + \
-                   '-class1-' + rounded(evaluator.percent_correct(1))
+                   '-class1-' + rounded(evaluator.percent_correct(1)) + \
+                   '.pt'
             path = os.path.join(checkpoint_path, name)
             print(f'Writing model: {os.path.basename(path)}')
             save_model(path, net)

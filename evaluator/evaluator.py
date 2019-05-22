@@ -64,7 +64,6 @@ class Evaluator:
         for class_name, info in self.class_info.items():
             amount_correct += info.amount_correct
             amount_total += info.amount_total
-
         try:
             return amount_correct / amount_total
         except ZeroDivisionError:

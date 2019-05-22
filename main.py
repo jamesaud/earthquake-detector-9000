@@ -22,6 +22,9 @@ from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 import copy
  
+if not torch.__version__.startswith("0.3"):
+    print(f"PyTorch version should be 0.3.x, your version is {torch.__version__}")
+
 configuration = 'everywhere'
 settings = config.options[configuration]
 settings = dotdict(settings)
@@ -101,9 +104,6 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
 
 assert verify_dataset_integrity(dataset_train, dataset_test)
 
-#del dataset_train.file_paths[5000:]   # TODO: Getting error Segmentation fault (core dumped) on 359168/364032 during trainig
-#del dataset_test.file_paths[5000:]   # TODO: Getting error Segmentation fault (core dumped) on 359168/364032 during trainig
-
 train_sampler = utils.make_weighted_sampler(dataset_train, NUM_CLASSES, weigh_classes=WEIGH_CLASSES) if WEIGH_CLASSES else None
 
 # Data Loaders
@@ -152,15 +152,16 @@ def write_initial(writer, net, settings, resize, crop, datset_train):
 
 
 def write_stats(evaluator, name):
+    class_labels = {0: 'Noise', 1: "Event"}
     stats_writer = StatsWriter(os.path.join(CWD, f'visualize/test_stats/{name}'))
-    softmax_output_labels = nn.functional.softmax(evaluator.output_labels, dim=1)    # Make probabilities sum between 0 and 1
-    stats_writer.write_stats(evaluator.true_labels,
-                                softmax_output_labels,
-                                evaluator.predicted_labels)
+    softmax_output_labels = nn.functional.softmax(torch.autograd.Variable(evaluator.output_labels), dim=1).data   # Make probabilities sum between 0 and 1
+    stats_writer.write_stats(evaluator.true_labels.numpy(),
+                             softmax_output_labels.numpy(),
+                             evaluator.predicted_labels,
+                             class_labels)
 
 if __name__ == '__main__':
     print_config()
-
     TRAIN_MODE = True
     
     ################
@@ -175,12 +176,12 @@ if __name__ == '__main__':
                 train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
                       write=True,
                       checkpoint_path=checkpoint_path,
-                      print_test_evaluation_every=25_000,  # 30,000
-                      print_train_evaluation_every=50_000,
+                      print_test_evaluation_every=20_000,  # 30,000
+                      print_train_evaluation_every=40_000,
                       train_evaluation_loader=train_evaluation_loader
                       )
 
-        train_net(10)
+        train_net(20)
 
     ########################
     # TEST EXISTING MODEL
@@ -188,10 +189,9 @@ if __name__ == '__main__':
 
     # Test Mode
     else:
-
         # Load Net
-        model_name = "epoch-3-globaliterations-646944-0.9862-0.9799-0.9952.pt"
-        MODEL = f'99.5-everywhere/checkpoints'
+        MODEL = f'benz-training/checkpoints'
+        model_name = "iterations-780416-total-99.07-class0-98.91-class1-99.37.pt"
         MODEL_PATH = f'./visualize/runs/{NET.__name__}/{MODEL}/{model_name}'
 
         # Set model to evaluation mode
@@ -199,20 +199,20 @@ if __name__ == '__main__':
         load_model(net, MODEL_PATH)
         net.eval()
 
-        # Make compatible with functions that  expect loaders to return 2 items
+        # Make compatible with functions that  expect loaders to return 2 items (if using namedloader)
         dataset_test.return_name = False
 
         # Test the evaluator
-        print("Testing Net")
-        test_evaluator = evaluate(net, test_loader, copy_net=True)
+       # print("Testing Net")
+       # test_evaluator = evaluate(net, test_loader, copy_net=True)
         print()
-        print_evaluation(test_evaluator, 'test')
+       # print_evaluation(test_evaluator, 'test')
 
         # Write figures
-        print("Writing stats...")
-        write_stats(test_evaluator, f'{model_name}-{configuration}')
+      #  print("Writing stats...")
+      #  write_stats(test_evaluator, f'{model_name}-{configuration}')
 
-        # Compatible with functions that expect 3 items (components, label, name)
+        # Compatible with csv write functions that expect 3 items (components, label, name)
         dataset_test.return_name = True
 
         # Write CSV predictions

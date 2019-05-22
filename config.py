@@ -23,20 +23,20 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 path = 'all-spectrograms-symlinks/97'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path) 
-test = 'benz'                             # Initial folder for LOO cross validation
+test = 'benz'                             
 everywhere_folders.remove(test)
 
 options = dict(
     everywhere={
         'train': {
             'path': path,
-            'divide_test': 0,
+            'divide_test': .1,
             'ignore': [test],           # [test]
         },
         'test': {
             'path': path,
             'divide_test': .1,
-            'ignore': everywhere_folders,           # everywhere_folders
+            'ignore': [test],           # everywhere_folders
         },
         'image': {
           'height': int(258 * 1),
@@ -50,11 +50,11 @@ options = dict(
     benz_train_set={
         'train': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .999,
+            'divide_test': .2,
         },
         'test': {
             'path': f'Benz/spectrograms/train_set_benz',
-            'divide_test': .999,
+            'divide_test': .2,
         },
         'image': {
           'height': int(258 * 1),
@@ -116,7 +116,7 @@ options = dict(
         },
         'image': {
           'height': int(258 * 1),
-          'width': int(293 * 1), # * 1.5 stretch factor to make pixels light up more before the resize
+          'width': int(293 * 1), 
           'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
           'padding': (0, 0, 0, 0)    # left, right, top, bottom
         },

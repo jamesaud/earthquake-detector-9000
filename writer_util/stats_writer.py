@@ -31,8 +31,15 @@ class StatsWriter:
         self.write_pr = save_figure(skplt.metrics.plot_precision_recall, pj(path, 'pr_curve.png'))
 
 
-    def write_stats(self, true_labels, output_probabilities, predicted_labels):
-        """ All numpy arrays work well as arguments """
+    def write_stats(self, true_labels, output_probabilities, predicted_labels, class_names=None):
+        """ 
+        All numpy arrays work well as arguments 
+        :class_names: dictionary mapping the class number to a human readable name for the axis titles
+        """
+        if class_names:
+            true_labels = [class_names[val] for val in true_labels]
+            predicted_labels = [class_names[val] for val in predicted_labels]
+            
         self.write_roc(true_labels, output_probabilities)
         self.write_confusion_matrix(true_labels, predicted_labels)
         self.write_pr(true_labels, output_probabilities)
