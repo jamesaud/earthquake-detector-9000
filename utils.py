@@ -3,7 +3,9 @@ import sys
 from torch.autograd import Variable
 import torch.utils.data
 from functools import wraps
- 
+import copy
+import math
+
 class dotdict(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, *kwargs)
@@ -72,6 +74,20 @@ def verify_dataset_integrity(*args):
 
     return True
 
+def reduce_dataset(dataset: torch.utils.data.Dataset, num_samples, copy_dataset=True):
+    if copy_dataset: dataset = copy.deepcopy(dataset)
+    del dataset.file_paths[num_samples:]   
+    return dataset
+
+def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weights: dict, copy_dataset=True):
+    if copy_dataset: dataset = copy.deepcopy(dataset)
+    weight_sum = sum(class_weights.values())
+    num_local = math.ceil(class_weights[1] / weight_sum * num_samples)
+    num_noise = math.ceil(class_weights[0] / weight_sum * num_samples)
+    # dataset.local = dataset.local[:num_local]
+    # dataset.noise = dataset.noise[:num_noise]
+    dataset.file_paths = dataset.local[:num_local] + dataset.noise[:num_noise]
+    return dataset
 
 def lmap(*args, **kwargs):
     return list(map(*args, **kwargs))
@@ -114,3 +130,5 @@ def timing_msg(msg):
     def timing_msg(fn):
         return timing(fn, msg=msg)
     return timing_msg
+
+

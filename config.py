@@ -30,12 +30,12 @@ options = dict(
     everywhere={
         'train': {
             'path': path,
-            'divide_test': .1,
+            'divide_test': .05,
             'ignore': [test],           # [test]
         },
         'test': {
             'path': path,
-            'divide_test': .1,
+            'divide_test': .05,
             'ignore': [test],           # everywhere_folders
         },
         'image': {

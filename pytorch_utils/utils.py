@@ -79,6 +79,14 @@ def save_model(path, net):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     torch.save(net.state_dict(), path)
 
+def save_checkpoint(path, name, model, optimizer, loss):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    torch.save({
+                'name': name,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'loss': loss,
+                }, path)
 
 def load_model(net: nn.Module, path: str):
     return net.load_state_dict(torch.load(path))
@@ -250,7 +258,7 @@ def train_epoch(epoch: int,
                    '.pt'
             path = os.path.join(checkpoint_path, name)
             print(f'Writing model: {os.path.basename(path)}')
-            save_model(path, net)
+            save_checkpoint(path, name, net, optimizer, loss)
 
     gen_batches = train_batches(train_loader, net, optimizer, criterion)
     for batch_num, stats in enumerate(gen_batches, 1):

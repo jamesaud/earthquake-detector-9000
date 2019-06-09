@@ -70,6 +70,8 @@ class SpectrogramBaseDataset(Dataset):
         test_local, train_local = self.separate_paths(local_paths, divide_test)
         test_noise, train_noise = self.separate_paths(noise_paths, divide_test)
 
+        test_local, train_local, test_noise, train_noise = map(self.clean_paths, [test_local, train_local, test_noise, train_noise])
+
         if test:
             file_paths = test_local + test_noise
             self.local, self.noise = test_local, test_noise
@@ -78,7 +80,6 @@ class SpectrogramBaseDataset(Dataset):
             self.local, self.noise = train_local, train_noise
 
         self.file_paths = self.shuffle(file_paths)
-        self.file_paths = self.clean_paths(file_paths)
 
         self.labels = {
             0: 'noise',
