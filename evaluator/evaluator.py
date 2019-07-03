@@ -73,8 +73,9 @@ class Evaluator:
         return (self.percent_correct(0) + self.percent_correct(1) * weigh_events) / (1 + weigh_events)
 
     def __str__(self):
-        return 'Evaluator Object: ' + str(self.class_info)
+        return 'Evaluator Object(' + str(self.class_info) + ')'
 
+    __repr__ = __str__
 
 class NetEval:
 

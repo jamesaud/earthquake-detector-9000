@@ -20,7 +20,7 @@ VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
 
 # Initialize Cross Validation Generalized Detection
-path = 'all-spectrograms-symlinks/97'
+path = 'all-spectrograms-symlinks/99'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path) 
 test = 'benz'                             
@@ -29,12 +29,12 @@ everywhere_folders.remove(test)
 options = dict(
     everywhere={
         'train': {
-            'path': path,
+            'path': everywhere_path,
             'divide_test': .05,
             'ignore': [test],           # [test]
         },
         'test': {
-            'path': path,
+            'path': everywhere_path,
             'divide_test': .05,
             'ignore': [test],           # everywhere_folders
         },
@@ -42,7 +42,9 @@ options = dict(
           'height': int(258 * 1),
           'width': int(293 * 1),
           'crop':  (1, 1),  # height, width
-          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)  # left, right, top, bottom
+
         },
         'weigh_classes': [1, 3],
         'loader': 'custom'

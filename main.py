@@ -102,7 +102,7 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
                        divide_test=settings.test.divide_test,
                        test=True,
                        crop_padding=crop_padding_test,
-                       crop_center=True,
+                       crop_center=False,
                        **dataset_args)
 
 assert verify_dataset_integrity(dataset_train, dataset_test)
@@ -179,7 +179,7 @@ if __name__ == '__main__':
                       train_evaluation_loader=train_evaluation_loader
                       )
 
-        train_net(20)
+        train_net(60)
 
     ########################
     # TEST EXISTING MODEL

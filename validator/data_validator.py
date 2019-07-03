@@ -15,6 +15,9 @@ def test_dataset(epochs):
 
 
 def test_best_dataset(epochs, evaluate_every):
+    """
+    Returns evaluator for the best dataset
+    """
     best = None
     write_initial(writer, net, settings, resize, crop, dataset_train)
 
