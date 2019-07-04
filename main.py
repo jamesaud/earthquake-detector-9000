@@ -9,6 +9,7 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 from torch import nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
+from loaders.single_loader import SpectrogramSingleDataset
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
 from loaders.direct_loader import SpectrogramDirectDataset
 from loaders.named_loader import SpectrogramNamedDataset, SpectrogramNamedTimestampDataset
@@ -48,7 +49,7 @@ iterations = 0
 WEIGH_CLASSES = settings.weigh_classes
 
 # Neural Net Model
-NET = models.mnist_three_component_exp
+NET = models.mnist_one_component
 
 # Visualize
 path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/trial-{datetime.now()}'))
@@ -79,7 +80,7 @@ loaders = {
     'named': SpectrogramNamedDataset
 }
 
-Dataset = loaders[settings.loader]
+Dataset = SpectrogramSingleDataset#loaders[settings.loader]
 
 dataset_args = dict(
     path_pattern=settings.path_pattern or '',
@@ -95,6 +96,8 @@ dataset_train = Dataset(img_path=TRAIN_IMG_PATH,
                         crop_padding=crop_padding_train,
                         **dataset_args
                         )
+
+print(next(iter(dataset_train)))
 
 dataset_test = Dataset(img_path=TEST_IMG_PATH,
                        transform=NET.transformations['test'],

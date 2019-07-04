@@ -93,7 +93,7 @@ def train_net(epochs):
         elif evaluator.normalized_percent_correct(weigh_events=1.1) >= best.normalized_percent_correct(weigh_events=1.1):
             best = evaluator
 
-    return best
+    return best, epoch
 
 
 
@@ -105,14 +105,24 @@ def train_net(epochs):
 
 # Train it
 feed_forward_size = 64
-ratio = {0: 1, 1: 1}
-test_loader = make_loader(1000, ratio, test=True)
 
-samples = [1,   10,  50,  100, 200, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000]
-epochs =  [2000, 1000, 1000, 500,  500,  500,  200,   200,   200,   100,   100,    50,    20,    20]
+import math
+samples = [2,   10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000]
+epochs =  [100, 100,  100,  50,   50,   50,   30,     30,    20,    20,    10,     10,    10]
 results = {}
+
+# Create a final test loader where it has unseen data
+dataset_final = copy.deepcopy(dataset_train)
+del dataset_final.file_paths[10000:]
+del dataset_train.file_paths[:10000]
+assert verify_dataset_integrity(dataset_train, dataset_final)
+
+final_test_loader = DataLoader(dataset_final, **loader_args)
+
 for sample, epoch in zip(samples, epochs):
-    train_loader = make_loader(sample, ratio, test=False)
+    test_loader = make_loader(math.ceil(sample*.2), {0: 1, 1: 1}, test=True)
+    train_loader = make_loader(math.floor(sample*.8), {0: 1, 1: 1}, test=False)
+
 
     net = load_net(CHECKPOINT_PATH)
     replace_model(net, feed_forward_size)
@@ -121,9 +131,16 @@ for sample, epoch in zip(samples, epochs):
     criterion = nn.CrossEntropyLoss().cuda()
     freeze_parameters(net)
 
-    evaluator = train_net(epoch)
-    results[sample] = evaluator
+    evaluator, best_epoch = train_net(epoch)
+
+    # TODO: Measure accuracy using a third big test dataset, and use the best model from training
+    final = evaluate(net, final_test_loader, copy_net=True)
+
+
+    results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final, final.total_percent_correct()) # Validation results, epoch, final results
+
 
 from pprint import pprint
+print("The format is: Validation Results, epoch, validation percent correct, Test results, test percent correct")
 pprint(results)
 
