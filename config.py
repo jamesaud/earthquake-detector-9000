@@ -129,15 +129,3 @@ options = dict(
 default_config_path = os.path.join(os.getcwd(), 'validator/config_crossvalidation.json')
 configuration = os.environ.get('CONFIGURATION', default_config_path)
 options['environment'] = json.loads(open(configuration).read())
-
-# Model names for the top runs
-top_runs_gray = (                        # N   Quakes
-    '76-0.9815-0.9727-0.9978.pt',        # 97, 97
-    '60-0.9905-0.992-0.9877.pt',         # 99, 93
-    '72-0.9273-0.8879-0.9997.pt',        # 88, 99
-    '48-0.966-0.9483-0.9985.pt',         # 95, 98
-)
-
-top_runs_rgb = (
-    '92-0.9801-0.9702-0.9982.pt',
-)

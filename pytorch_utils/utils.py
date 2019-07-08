@@ -297,5 +297,5 @@ def train(*args, **kwargs):
     """
     for evaluator in train_epoch(*args, **kwargs):
         pass
-
+    
     return evaluator

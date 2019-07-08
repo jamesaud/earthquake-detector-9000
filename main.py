@@ -35,7 +35,7 @@ settings = dotdict(settings)
 
 CWD = os.getcwd()
 
-# Train and test
+# Train and test paths
 make_path = lambda path: os.path.join(CWD, os.path.join('data', path))
 
 TRAIN_IMG_PATH = make_path(settings.train.path)
