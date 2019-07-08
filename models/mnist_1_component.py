@@ -1,15 +1,16 @@
 import torch.nn as nn
 import torchvision.transforms as transforms
 import mytransforms.transforms as mytransforms
+from mytransforms import Group, transform_group 
 
 
 class mnist_one_component(nn.Module):
-    _transformations = [
+    _transformations = Group([
                          transforms.Grayscale(num_output_channels=3),
                          transforms.Resize((32, 32)),
                          transforms.ToTensor(),
                          mytransforms.NormalizeGray
-                        ]
+                        ])
 
     _train = []
 
@@ -61,7 +62,7 @@ class mnist_one_component(nn.Module):
         )
 
     def forward(self, components):
-        inputs = components[0]  # the z component, I think
+        inputs = components
         out = self.feats(inputs)
         out = self.dropout(out)
         out = self.classifier(out)
@@ -69,7 +70,6 @@ class mnist_one_component(nn.Module):
         out = out.view(-1, 3 * 2 * 2)
         out = self.linear(out)
         return out
-
 
 
 
