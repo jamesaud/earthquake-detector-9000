@@ -79,7 +79,7 @@ https://github.com/jamesaud/earthquake-detector-9000/tree/master/tests
 
 # Installation
 
-This works with cuda 7.5, because that's what my workstation ran.
+This works with cuda 7.5, because that's what my workstation ran, and required PyTorch version 0.3.x. Now, if you upgrade to PyTorch 0.4 or 1.x there are some breaking changes. It took around 10 minutes to refactor the code after trying to run on version 0.4.x to work again. 
 
 Have anaconda installed and run the following command:
 
