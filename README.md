@@ -76,9 +76,6 @@ There are some tests written:
 https://github.com/jamesaud/earthquake-detector-9000/tree/master/tests
 
 
-## Notes
-
-Part of this is Pytorch seems to be structured for single runs, so when you need to run multiple nets multiple times, it is easier to just reset the module to ensure all weights are set to 0, etc. A big refactor would help my code. Ideally there will be some better wrapper libraries for Pytorch (like Skorch, but better..)
 
 # Installation
 
