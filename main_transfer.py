@@ -107,8 +107,8 @@ def train_net(epochs):
 feed_forward_size = 64
 
 import math
-samples = [2,   10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000]
-epochs =  [100, 100,  100,  50,   50,   50,   30,     30,    20,    20,    10,     10,    10]
+samples = [10,   10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000, 256000]
+epochs =  [100, 100,  100,  50,   50,   50,   30,     30,    20,    20,    10,     10,    10,    5,      5]
 results = {}
 
 # Create a final test loader where it has unseen data
@@ -121,8 +121,7 @@ final_test_loader = DataLoader(dataset_final, **loader_args)
 
 for sample, epoch in zip(samples, epochs):
     test_loader = make_loader(math.ceil(sample*.2), {0: 1, 1: 1}, test=True)
-    train_loader = make_loader(math.floor(sample*.8), {0: 1, 1: 1}, test=False)
-
+    train_loader = make_loader(math.floor(sample*.8), {0: 10, 1: 1}, test=False)
 
     net = load_net(CHECKPOINT_PATH)
     replace_model(net, feed_forward_size)
@@ -133,7 +132,6 @@ for sample, epoch in zip(samples, epochs):
 
     evaluator, best_epoch = train_net(epoch)
 
-    # TODO: Measure accuracy using a third big test dataset, and use the best model from training
     final = evaluate(net, final_test_loader, copy_net=True)
 
 

@@ -9,9 +9,9 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 from torch import nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from loaders.single_loader import SpectrogramSingleDataset
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
 from loaders.direct_loader import SpectrogramDirectDataset
+from loaders.single_loader import SpectrogramSingleDataset
 from loaders.named_loader import SpectrogramNamedDataset, SpectrogramNamedTimestampDataset
 import models
 import os
@@ -83,9 +83,10 @@ loaders = {
 Dataset = SpectrogramSingleDataset#loaders[settings.loader]
 
 dataset_args = dict(
-    path_pattern=settings.path_pattern or '',
+    #path_pattern=settings.path_pattern or '',
     crop=crop,
-    resize=resize
+    resize=resize,
+    drop_last=True
     )
 
 
@@ -97,8 +98,6 @@ dataset_train = Dataset(img_path=TRAIN_IMG_PATH,
                         **dataset_args
                         )
 
-print(next(iter(dataset_train)))
-
 dataset_test = Dataset(img_path=TEST_IMG_PATH,
                        transform=NET.transformations['test'],
                        ignore=settings.test.get('ignore'),
@@ -108,8 +107,8 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
                        crop_center=False,
                        **dataset_args)
 
-assert verify_dataset_integrity(dataset_train, dataset_test)
 
+assert verify_dataset_integrity(dataset_train, dataset_test)
 train_sampler = utils.make_weighted_sampler(dataset_train, NUM_CLASSES, weigh_classes=WEIGH_CLASSES) if WEIGH_CLASSES else None
 
 # Data Loaders
@@ -122,7 +121,6 @@ loader_args = dict(
 train_loader = DataLoader(dataset_train,
                           shuffle=not train_sampler,
                           sampler=train_sampler,
-                          drop_last=False,
                           **loader_args)
 
 
@@ -177,8 +175,8 @@ if __name__ == '__main__':
                 train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
                       write=True,
                       checkpoint_path=checkpoint_path,
-                      print_test_evaluation_every=60_000,  # 30,000
-                      print_train_evaluation_every=100_000,
+                      print_test_evaluation_every=10_000,  # 30,000
+                      print_train_evaluation_every=50_000,
                       train_evaluation_loader=train_evaluation_loader
                       )
 

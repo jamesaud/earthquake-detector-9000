@@ -1,21 +1,29 @@
 from loaders.base_loader import SpectrogramBaseDataset
+from loaders.direct_loader import SpectrogramDirectDataset
 from matplotlib import pyplot as plt
 from torchvision import transforms
 
-class SpectrogramSingleDataset(SpectrogramBaseDataset):
+class SpectrogramSingleDataset(SpectrogramDirectDataset):
     """
     """
+    component_index = {"N": 0, "Z": 1, "E": 2}
+    def __init__(self, component='E', *args, **kwargs):   # 30%
+        if component not in self.component_index:
+            raise ValueError(f"Component should be one of {component_index.keys()}")
+        self.component = component
+        super().__init__(*args, **kwargs)
 
-    def __init__(self, img_path, divide_test, transform=None, test=False, **kwargs):   # 30%
-        super().__init__(img_path, divide_test, transform, test, **kwargs)
+    @property
+    def index(self):
+        return self.component_index[self.component]
 
-    def __getitem__(self, index):
-        components, label = super().__getitem__(index)
-        return components.Z, label
+    def __getitem__(self, *args, **kwargs):
+        components, label = super().__getitem__(*args, **kwargs)
+        return components[self.index], label
 
-    def _getitem_raw(self, index):
-        components, label = super()._getitem_raw(index)
-        return components.Z, label
+    def _getitem_raw(self, *args, **kwargs):
+        components, label = super()._getitem_raw(*args, **kwargs)
+        return components[self.index], label
 
     def preview(self, index=0, show=True):
         image, label = self.__getitem__(index)
@@ -24,7 +32,7 @@ class SpectrogramSingleDataset(SpectrogramBaseDataset):
         plt.suptitle(self.labels[label])
         ax = plt.subplot(1, 1, 1)
         plt.tight_layout()
-        ax.set_title("Z Component")
+        ax.set_title(self.component + " Component")
         ax.axis('off')
         self.show_img(transforms.ToPILImage()(image))
 
@@ -41,7 +49,7 @@ class SpectrogramSingleDataset(SpectrogramBaseDataset):
         plt.suptitle(self.labels[label])
         ax = plt.subplot(1, 1, 1)
         plt.tight_layout()
-        ax.set_title("Z Component")
+        ax.set_title(self.component + " Component")
         ax.axis('off')
         self.show_img(transforms.ToPILImage()(image))
 
