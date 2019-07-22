@@ -32,7 +32,7 @@ def evaluate(net: nn.Module,
     all_true_labels = torch.LongTensor()
 
     for (inputs, labels) in data_loader:
-        inputs, labels = [Variable(input).cuda() for input in inputs], labels
+        inputs, labels = Variable(inputs).cuda(), labels
         output_labels = Net(inputs).cpu().detach().data
 
         all_output_labels = torch.cat((all_output_labels, output_labels))
@@ -183,8 +183,7 @@ def train_batches(train_loader: DataLoader,
     """
     for i, (true_inputs, true_labels) in enumerate(train_loader):
         # wrap them in Variable
-        inputs, labels = [Variable(input).cuda() for input in true_inputs], Variable(true_labels).cuda()
-
+        inputs, labels = Variable(true_inputs).cuda(), Variable(true_labels).cuda()
         # zero the parameter gradients
         optimizer.zero_grad()
 
@@ -297,5 +296,5 @@ def train(*args, **kwargs):
     """
     for evaluator in train_epoch(*args, **kwargs):
         pass
-
+    
     return evaluator

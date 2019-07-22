@@ -11,6 +11,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from loaders.custom_path_loader import SpectrogramCustomPathDataset
 from loaders.direct_loader import SpectrogramDirectDataset
+from loaders.single_loader import SpectrogramSingleDataset
 from loaders.named_loader import SpectrogramNamedDataset, SpectrogramNamedTimestampDataset
 import models
 import os
@@ -34,7 +35,7 @@ settings = dotdict(settings)
 
 CWD = os.getcwd()
 
-# Train and test
+# Train and test paths
 make_path = lambda path: os.path.join(CWD, os.path.join('data', path))
 
 TRAIN_IMG_PATH = make_path(settings.train.path)
@@ -48,7 +49,7 @@ iterations = 0
 WEIGH_CLASSES = settings.weigh_classes
 
 # Neural Net Model
-NET = models.mnist_three_component_exp
+NET = models.mnist_one_component
 
 # Visualize
 path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/trial-{datetime.now()}'))
@@ -79,12 +80,13 @@ loaders = {
     'named': SpectrogramNamedDataset
 }
 
-Dataset = loaders[settings.loader]
+Dataset = SpectrogramSingleDataset#loaders[settings.loader]
 
 dataset_args = dict(
-    path_pattern=settings.path_pattern or '',
+    #path_pattern=settings.path_pattern or '',
     crop=crop,
-    resize=resize
+    resize=resize,
+    drop_last=True
     )
 
 
@@ -105,8 +107,8 @@ dataset_test = Dataset(img_path=TEST_IMG_PATH,
                        crop_center=False,
                        **dataset_args)
 
-assert verify_dataset_integrity(dataset_train, dataset_test)
 
+assert verify_dataset_integrity(dataset_train, dataset_test)
 train_sampler = utils.make_weighted_sampler(dataset_train, NUM_CLASSES, weigh_classes=WEIGH_CLASSES) if WEIGH_CLASSES else None
 
 # Data Loaders
@@ -119,7 +121,6 @@ loader_args = dict(
 train_loader = DataLoader(dataset_train,
                           shuffle=not train_sampler,
                           sampler=train_sampler,
-                          drop_last=False,
                           **loader_args)
 
 
@@ -174,8 +175,8 @@ if __name__ == '__main__':
                 train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
                       write=True,
                       checkpoint_path=checkpoint_path,
-                      print_test_evaluation_every=60_000,  # 30,000
-                      print_train_evaluation_every=100_000,
+                      print_test_evaluation_every=10_000,  # 30,000
+                      print_train_evaluation_every=50_000,
                       train_evaluation_loader=train_evaluation_loader
                       )
 
