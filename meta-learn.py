@@ -46,9 +46,9 @@ SAMPLES_PER_TASK = 50    # Samples for each station: 50
 
 LR, META_LR = 0.02, 0.1  # Copy OpenAI's hyperparameters.
 BATCH_SIZE, META_BATCH_SIZE = 10, 3
-EPOCHS, META_EPOCHS, TEST_EPOCHS = 1, 30000, 1
-TEST_GRAD_STEPS = 2 ** 3
-PLOT_EVERY = 3000
+EPOCHS, META_EPOCHS = 1, 30000
+TEST_EPOCHS = 2 ** 3
+PLOT_EVERY = 10  # 3000
 
 class WeightsModel(nn.Module):
     def __init__(self, weights=None, *args, **kwargs):
@@ -172,6 +172,8 @@ def station_loader(station_path: str, num_samples=SAMPLES_PER_TASK) -> DataLoade
 
 
 if __name__ == "__main__":
+    #TODO: Test on the full dataset at the end after meta-learning 
+
     num_to_use = 5
     station_paths = glob.glob(pj(settings.train.path, '*'))
     test_path = station_paths.pop()
@@ -184,19 +186,20 @@ if __name__ == "__main__":
 
     for iteration in range(1, META_EPOCHS + 1):
         sys.stdout.flush()
-        sys.stdout.write(f"\rTraining meta epoch {iteration}")
+        sys.stdout.write(f"\rTraining meta-epoch: {iteration}")
         
         meta_weights = REPTILE(ParamDict(meta_weights), gen_task)
 
         if iteration == 1 or iteration % PLOT_EVERY == 0:
-
             model = Model(meta_weights).cuda()
             model.train()  # set train mode
             opt = SGD(model.parameters(), lr=LR)
 
-            for e in range(TEST_GRAD_STEPS):
+            for e in range(TEST_EPOCHS):
                 loss = train_epoch(test_task, model, opt)
-                print(f"Loss in test task ({e}): {loss}")
+                sys.stdout.flush()
+                sys.stdout.write(f"\rLoss in test task (epoch {e}): {loss}")
 
             evaluation(model, test_task, "Test Task")
+            print("\n")
             # print(f"Iteration: {iteration}\tLoss: {evaluate(model, plot_task):.3f}")
