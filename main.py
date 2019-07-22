@@ -79,57 +79,87 @@ loaders = {
     'named': SpectrogramNamedDataset
 }
 
-Dataset = loaders[settings.loader]
+# Added
+def create_dataset(settings: dict, transformations, train: bool):
+    TRAIN_IMG_PATH = make_path(settings.train.path)
+    TEST_IMG_PATH = make_path(settings.test.path)
 
-dataset_args = dict(
-    path_pattern=settings.path_pattern or '',
-    crop=crop,
-    resize=resize
+    Dataset = loaders[settings.loader]
+
+    height_percent, width_percent = settings.image.crop or (1, 1)  # 0.5 to 1.0
+    height, width = settings.image.height, settings.image.width
+
+    resize = (height, width)
+    crop = (int(height * height_percent), int(width * width_percent))
+
+    crop_padding_train = settings.image.padding_train
+    crop_padding_test = settings.image.padding_test
+
+    dataset_args = dict(
+        path_pattern=settings.path_pattern or '',
+        crop=crop,
+        resize=resize
     )
 
-
-dataset_train = Dataset(img_path=TRAIN_IMG_PATH,
-                        transform=NET.transformations['train'],
+    if train:
+        dataset_train = Dataset(img_path=TRAIN_IMG_PATH,
+                        transform=transformations,
                         ignore=settings.train.get('ignore'),
                         divide_test=settings.train.divide_test,
                         crop_padding=crop_padding_train,
                         **dataset_args
                         )
+        return dataset_train
 
-dataset_test = Dataset(img_path=TEST_IMG_PATH,
-                       transform=NET.transformations['test'],
+    else:
+        dataset_test = Dataset(img_path=TEST_IMG_PATH,
+                       transform=transformations,
                        ignore=settings.test.get('ignore'),
                        divide_test=settings.test.divide_test,
                        test=True,
                        crop_padding=crop_padding_test,
                        crop_center=False,
                        **dataset_args)
+        return dataset_test
+
+
+
+dataset_train = create_dataset(settings, NET.transformations['train'], train=True)
+dataset_test = create_dataset(settings, NET.transformations['test'], train=False)
 
 assert verify_dataset_integrity(dataset_train, dataset_test)
 
-train_sampler = utils.make_weighted_sampler(dataset_train, NUM_CLASSES, weigh_classes=WEIGH_CLASSES) if WEIGH_CLASSES else None
-
-# Data Loaders
+# ADDED
 loader_args = dict(
                    batch_size=BATCH_SIZE,
                    num_workers=8,
                    pin_memory=True,
                    )
 
-train_loader = DataLoader(dataset_train,
+def create_loader(dataset, train: bool, batch_size = BATCH_SIZE, weigh_classes = None):
+    num_classes = dataset.num_classes
+    if train:
+        train_sampler = utils.make_weighted_sampler(dataset, num_classes, weigh_classes=weigh_classes) if weigh_classes else None
+        train_loader = DataLoader(dataset,
                           shuffle=not train_sampler,
                           sampler=train_sampler,
                           drop_last=False,
                           **loader_args)
+        return train_loader
+    else:
+        test_loader = DataLoader(dataset,
+                         drop_last=False,
+                         **loader_args)
+        return test_loader
 
+
+
+train_loader = create_loader(dataset_train, train=True, weigh_classes=WEIGH_CLASSES)
+test_loader = create_loader(dataset_test, train=False)
 
 # Subsample to evaluate train accuracy... because it has too many samples and will take too long
 num_train_evaluation_samples = 20000
 train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
-
-test_loader = DataLoader(dataset_test,
-                         drop_last=False,
-                         **loader_args)
 
 
 # Setup Net
@@ -174,8 +204,8 @@ if __name__ == '__main__':
                 train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
                       write=True,
                       checkpoint_path=checkpoint_path,
-                      print_test_evaluation_every=60_000,  # 30,000
-                      print_train_evaluation_every=100_000,
+                      print_test_evaluation_every=2_000,  # 30,000
+                      print_train_evaluation_every=3_000,
                       train_evaluation_loader=train_evaluation_loader
                       )
 

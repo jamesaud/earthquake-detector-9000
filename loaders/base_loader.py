@@ -99,6 +99,10 @@ class SpectrogramBaseDataset(Dataset):
         random.shuffle(paths)
         return paths
 
+    @property
+    def num_classes(self):
+        return len(self.labels) // 2   # Should always be divisble by 2 evenly
+
     @staticmethod
     def get_components(paths_to_components):
         return [glob.glob(os.path.join(path, "*.png")) for path in paths_to_components]
