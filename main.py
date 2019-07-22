@@ -36,9 +36,6 @@ CWD = os.getcwd()
 
 # Train and test
 make_path = lambda path: os.path.join(CWD, os.path.join('data', path))
-
-TRAIN_IMG_PATH = make_path(settings.train.path)
-TEST_IMG_PATH = make_path(settings.test.path)
  
 # Variables
 BATCH_SIZE = 128

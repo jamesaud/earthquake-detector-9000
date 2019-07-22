@@ -45,7 +45,7 @@ options = dict(
           'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
           'padding_test': (0, 0, 0, 0)  # left, right, top, bottom
         },
-        'weigh_classes': [1, 3],
+        'weigh_classes': [1, 1],
         'loader': 'direct'
     },
     everywhere={
