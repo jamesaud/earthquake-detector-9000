@@ -55,21 +55,6 @@ path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/{NET.__name__}/tr
 checkpoint_path = os.path.join(path, 'checkpoints')
 writer = SummaryWriter(path)
 
-# Dimentional Transforms
-height_percent, width_percent = settings.image.crop or (1, 1)  # 0.5 to 1.0
-height, width = settings.image.height, settings.image.width
-
-resize = (height, width)
-crop = (int(height * height_percent), int(width * width_percent))
-
-crop_padding_train = settings.image.padding_train
-crop_padding_test = settings.image.padding_test
-
-if crop_padding_train:
-    crop_padding_train = utils.calculate_crop_padding_pixels(crop_padding_train, height, width)
-
-if crop_padding_test:
-    crop_padding_test = utils.calculate_crop_padding_pixels(crop_padding_test, height, width)
 
 # DATASET
 loaders = {
@@ -78,6 +63,13 @@ loaders = {
     'named_timestamp': SpectrogramNamedTimestampDataset,
     'named': SpectrogramNamedDataset
 }
+
+
+loader_args = dict(
+                   batch_size=BATCH_SIZE,
+                   num_workers=8,
+                   pin_memory=True,
+                   )
 
 # Added
 def create_dataset(settings: dict, transformations, train: bool):
@@ -94,6 +86,13 @@ def create_dataset(settings: dict, transformations, train: bool):
 
     crop_padding_train = settings.image.padding_train
     crop_padding_test = settings.image.padding_test
+
+    if crop_padding_train:
+        crop_padding_train = utils.calculate_crop_padding_pixels(crop_padding_train, height, width)
+
+    if crop_padding_test:
+        crop_padding_test = utils.calculate_crop_padding_pixels(crop_padding_test, height, width)
+
 
     dataset_args = dict(
         path_pattern=settings.path_pattern or '',
@@ -122,20 +121,6 @@ def create_dataset(settings: dict, transformations, train: bool):
                        **dataset_args)
         return dataset_test
 
-
-
-dataset_train = create_dataset(settings, NET.transformations['train'], train=True)
-dataset_test = create_dataset(settings, NET.transformations['test'], train=False)
-
-assert verify_dataset_integrity(dataset_train, dataset_test)
-
-# ADDED
-loader_args = dict(
-                   batch_size=BATCH_SIZE,
-                   num_workers=8,
-                   pin_memory=True,
-                   )
-
 def create_loader(dataset, train: bool, batch_size = BATCH_SIZE, weigh_classes = None):
     num_classes = dataset.num_classes
     if train:
@@ -153,13 +138,18 @@ def create_loader(dataset, train: bool, batch_size = BATCH_SIZE, weigh_classes =
         return test_loader
 
 
+# ADDED
+# dataset_train = create_dataset(settings, NET.transformations['train'], train=True)
+# dataset_test = create_dataset(settings, NET.transformations['test'], train=False)
 
-train_loader = create_loader(dataset_train, train=True, weigh_classes=WEIGH_CLASSES)
-test_loader = create_loader(dataset_test, train=False)
+# assert verify_dataset_integrity(dataset_train, dataset_test)
 
-# Subsample to evaluate train accuracy... because it has too many samples and will take too long
-num_train_evaluation_samples = 20000
-train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
+# train_loader = create_loader(dataset_train, train=True, weigh_classes=WEIGH_CLASSES)
+# test_loader = create_loader(dataset_test, train=False)
+
+# # Subsample to evaluate train accuracy... because it has too many samples and will take too long
+# num_train_evaluation_samples = 20000
+# train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
 
 
 # Setup Net
@@ -173,8 +163,13 @@ def print_config():
     pprint(settings)
 
 
-def write_initial(writer, net, settings, resize, crop, datset_train):
+def write_initial(writer, net, settings, datset_train):
     print("\nWriting Info")
+    height_percent, width_percent = settings.image.crop or (1, 1)  # 0.5 to 1.0
+    height, width = settings.image.height, settings.image.width
+    resize = (height, width)
+    crop = (int(height * height_percent), int(width * width_percent))
+
     write_info(writer, net, settings, resize, crop)
     write_images(writer, dataset_train)
 
@@ -197,7 +192,8 @@ if __name__ == '__main__':
     #################
 
     if TRAIN_MODE:
-        write_initial(writer, net, settings, resize, crop, dataset_train)
+
+        write_initial(writer, net, settings, dataset_train)
 
         def train_net(epochs):
             for epoch in range(epochs):

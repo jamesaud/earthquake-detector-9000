@@ -27,6 +27,27 @@ test = 'benz'
 everywhere_folders.remove(test)
 
 options = dict(
+    meta_learning={
+        'train': {
+            'path': everywhere_path,
+            'divide_test': .01,
+            'ignore': [test],           # [test]
+        },
+        'test': {
+            'path': everywhere_path,
+            'divide_test': .2,
+            'ignore': everywhere_folders,           # everywhere_folders
+        },
+        'image': {
+          'height': int(258 * 1),
+          'width': int(293 * 1),
+          'crop':  (1, 1),  # height, width
+          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)  # left, right, top, bottom
+        },
+        'weigh_classes': [1, 3],
+        'loader': 'direct'
+    },
     everywhere={
         'train': {
             'path': everywhere_path,

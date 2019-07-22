@@ -5,7 +5,6 @@ from typing import NamedTuple
 
 import numpy as np
 import torch
-from torch.autograd import Tensor
 from numbers import Number
 
 

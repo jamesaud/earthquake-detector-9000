@@ -6,7 +6,6 @@ from copy import deepcopy
 
 import matplotlib.pyplot as plt
 import numpy as np
-import ray
 import torch
 import torch.nn.functional as F
 from torch import Tensor, linspace, nn, randperm, sin
@@ -14,8 +13,20 @@ from torch.autograd import Variable
 from torch.nn import Linear
 from torch.optim import SGD
 from torch.utils.data import DataLoader, TensorDataset
-from utils import ParamDict
-from ..models import mnist_three_component_exp
+from reptile.utils import ParamDict
+from models import mnist_three_component_exp
+from main import create_dataset, create_loader
+from config import options
+from utils import dotdict
+import glob 
+import os 
+import copy
+pj = os.path.join
+
+configuration = 'meta_learning'
+_settings = options[configuration]
+_new_settings = lambda: dotdict(copy.deepcopy(_settings))
+settings = _new_settings()
 
 
 MODEL = mnist_three_component_exp
@@ -23,7 +34,6 @@ MODEL = mnist_three_component_exp
 Weights = ParamDict
 criterion = F.l1_loss
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 PLOT = True
 INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE = 1, 64, 1
@@ -57,8 +67,10 @@ def _gen_task(num_pts=N) -> DataLoader:
     x = linspace(start=-5, end=5, steps=num_pts, dtype=torch.float)[:, None]
     y = a * sin(x + b)
 
-    dataset = TensorDataset(x.to(device), y.to(device))
-    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, pin_memory=device.type == "cuda")
+    x.cuda()
+    y.cuda()
+    dataset = TensorDataset(x, y)
+    loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, pin_memory=True)
     return loader
 
 
@@ -90,7 +102,7 @@ def evaluate(model: Model, task: DataLoader, criterion=criterion) -> float:
 def sgd(meta_weights: Weights, epochs: int) -> Weights:
     """Run SGD on a randomly generated task."""
 
-    model = Model(meta_weights).to(device)
+    model = Model(meta_weights).cuda()
     model.train()  # Ensure model is in train mode.
 
     task = gen_task()
@@ -120,28 +132,39 @@ def REPTILE(
     return meta_weights
 
 
+def station_loader(station_path: str) -> DataLoader:
+    station_settings = _new_settings()
+    station_settings.train.path = station_path
+    dataset = create_dataset(station_settings, Model.transformations['train'], train=True)
+    train_loader = create_loader(dataset, train=True, weigh_classes = station_settings.weigh_classes) 
+
+
 if __name__ == "__main__":
-    try:
-        ray.init()
-    except Exception as e:
-        print(e)
+    import copy
 
-    # Need to put model on GPU first for tensors to have the right type.
-    meta_weights = Model().to(device).state_dict()
-    # meta_weights = meta_weights_.state_dict()
+    num_to_use = 5
+    station_paths = glob.glob(pj(settings.train.path, '*'))[:num_to_use]
+    loaders = [station_loader(path) for path in station_paths]
+    
+    
 
 
-    for iteration in range(1, META_EPOCHS + 1):
+    # # Need to put model on GPU first for tensors to have the right type.
+    # meta_weights = Model().to(device).state_dict()
+    # # meta_weights = meta_weights_.state_dict()
 
-        meta_weights = REPTILE(ParamDict(meta_weights))
 
-        if iteration == 1 or iteration % PLOT_EVERY == 0:
+    # for iteration in range(1, META_EPOCHS + 1):
 
-            model = Model(meta_weights).to(device)
-            model.train()  # set train mode
-            opt = SGD(model.parameters(), lr=LR)
+    #     meta_weights = REPTILE(ParamDict(meta_weights))
 
-            for _ in range(TEST_GRAD_STEPS):
-                train_batch(x_plot, y_plot, model, opt)
+    #     if iteration == 1 or iteration % PLOT_EVERY == 0:
 
-            print(f"Iteration: {iteration}\tLoss: {evaluate(model, plot_task):.3f}")
+    #         model = Model(meta_weights).to(device)
+    #         model.train()  # set train mode
+    #         opt = SGD(model.parameters(), lr=LR)
+
+    #         for _ in range(TEST_GRAD_STEPS):
+    #             train_batch(x_plot, y_plot, model, opt)
+
+    #         print(f"Iteration: {iteration}\tLoss: {evaluate(model, plot_task):.3f}")
