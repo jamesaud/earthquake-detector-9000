@@ -29,6 +29,7 @@ everywhere_folders.remove(test)
 options = dict(
     everywhere={
         'train': {
+<<<<<<< HEAD
             'path': everywhere_path,
             'divide_test': .05,
             'ignore': [test],           # [test]
@@ -36,6 +37,15 @@ options = dict(
         'test': {
             'path': everywhere_path,
             'divide_test': .05,
+=======
+            'path': path,
+            'divide_test': .1,
+            'ignore': [test],           # [test]
+        },
+        'test': {
+            'path': path,
+            'divide_test': .1,
+>>>>>>> parent of 036c4cd... working transfer learning
             'ignore': [test],           # everywhere_folders
         },
         'image': {

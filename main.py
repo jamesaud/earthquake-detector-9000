@@ -2,10 +2,8 @@ import matplotlib
 from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train
 matplotlib.use('agg')
 matplotlib.interactive(False)
-
 import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
-
 from torch import nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
@@ -17,7 +15,7 @@ import os
 from datetime import datetime
 import config
 from writer_util import MySummaryWriter as SummaryWriter
-from utils import dotdict, verify_dataset_integrity, reduce_dataset, subsample_dataset
+from utils import dotdict, verify_dataset_integrity
 import utils
 from pprint import pprint
 from evaluator.csv_write import write_named_predictions_to_csv
@@ -25,10 +23,9 @@ from writer_util.stats_writer import StatsWriter
 import copy
  
 if not torch.__version__.startswith("0.3"):
-    print(f"PyTorch version should be 0.3.x, your version is {torch.__version__}.")
-    exit()
+    print(f"PyTorch version should be 0.3.x, your version is {torch.__version__}")
 
-configuration = 'benz_train_set'
+configuration = 'everywhere'
 settings = config.options[configuration]
 settings = dotdict(settings)
 
@@ -114,13 +111,19 @@ loader_args = dict(
                    batch_size=BATCH_SIZE,
                    num_workers=8,
                    pin_memory=True,
+                   drop_last=True
                    )
 
 train_loader = DataLoader(dataset_train,
                           shuffle=not train_sampler,
                           sampler=train_sampler,
-                          drop_last=False,
                           **loader_args)
+
+
+def reduce_dataset(dataset: Dataset, num_samples, copy_dataset=True):
+    if copy_dataset: dataset = copy.deepcopy(dataset)
+    del dataset.file_paths[num_samples:]   
+    return dataset
 
 
 # Subsample to evaluate train accuracy... because it has too many samples and will take too long
@@ -128,7 +131,6 @@ num_train_evaluation_samples = 20000
 train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
 
 test_loader = DataLoader(dataset_test,
-                         drop_last=False,
                          **loader_args)
 
 
@@ -174,8 +176,8 @@ if __name__ == '__main__':
                 train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
                       write=True,
                       checkpoint_path=checkpoint_path,
-                      print_test_evaluation_every=60_000,  # 30,000
-                      print_train_evaluation_every=100_000,
+                      print_test_evaluation_every=20_000,  # 30,000
+                      print_train_evaluation_every=40_000,
                       train_evaluation_loader=train_evaluation_loader
                       )
 
@@ -200,15 +202,15 @@ if __name__ == '__main__':
         # Make compatible with functions that  expect loaders to return 2 items (if using namedloader)
         dataset_test.return_name = False
 
-        # Test the evaluator (to see results output)
-        print("Testing Net")
-        test_evaluator = evaluate(net, test_loader, copy_net=True)
+        # Test the evaluator
+       # print("Testing Net")
+       # test_evaluator = evaluate(net, test_loader, copy_net=True)
         print()
-        print_evaluation(test_evaluator, 'test')
+       # print_evaluation(test_evaluator, 'test')
 
         # Write figures
-        print("Writing stats...")
-        write_stats(test_evaluator, f'{model_name}-{configuration}')
+      #  print("Writing stats...")
+      #  write_stats(test_evaluator, f'{model_name}-{configuration}')
 
         # Compatible with csv write functions that expect 3 items (components, label, name)
         dataset_test.return_name = True

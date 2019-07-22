@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Loading Net
 Loaded iterations-17336960-total-98.95-class0-98.75-class1-99.31.pt
 
@@ -43104,3 +43105,21 @@ Accuracy of the network on test loader class  1: [488 / 500] 97 %
  32000: Evaluator Object({0: {'amount_correct': 470, 'amount_total': 500}, 1: {'amount_correct': 487, 'amount_total': 500}}),
  64000: Evaluator Object({0: {'amount_correct': 479, 'amount_total': 500}, 1: {'amount_correct': 483, 'amount_total': 500}}),
  128000: Evaluator Object({0: {'amount_correct': 482, 'amount_total': 500}, 1: {'amount_correct': 481, 'amount_total': 500}})}
+=======
+Using config everywhere
+{'image': {'crop': (1, 1),
+           'height': 258,
+           'padding': (0, 0, 0, 0),
+           'width': 293},
+ 'loader': 'custom',
+ 'test': {'divide_test': 0.1,
+          'ignore': ['benz'],
+          'path': 'all-spectrograms-symlinks/97'},
+ 'train': {'divide_test': 0.1,
+           'ignore': ['benz'],
+           'path': 'all-spectrograms-symlinks/97'},
+ 'weigh_classes': [1, 3]}
+
+Writing Info
+Train Epoch: 1 [1024/516224 (0%)]	Loss: 0.692870Train Epoch: 1 [2048/516224 (0%)]	Loss: 0.660200Train Epoch: 1 [3072/516224 (1%)]	Loss: 0.628253Train Epoch: 1 [4096/516224 (1%)]	Loss: 0.601704Train Epoch: 1 [5120/516224 (1%)]	Loss: 0.574981Train Epoch: 1 [6016/516224 (1%)]	Loss: 0.550116Train Epoch: 1 [7040/516224 (1%)]	Loss: 0.517880Train Epoch: 1 [8064/516224 (2%)]	Loss: 0.508930Train Epoch: 1 [9088/516224 (2%)]	Loss: 0.500930Train Epoch: 1 [10112/516224 (2%)]	Loss: 0.457974Train Epoch: 1 [11008/516224 (2%)]	Loss: 0.433255Train Epoch: 1 [12032/516224 (2%)]	Loss: 0.471577Train Epoch: 1 [13056/516224 (3%)]	Loss: 0.434123Train Epoch: 1 [14080/516224 (3%)]	Loss: 0.453437
+>>>>>>> parent of 036c4cd... working transfer learning
