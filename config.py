@@ -30,13 +30,12 @@ options = dict(
     meta_learning={
         'train': {
             'path': everywhere_path,
-            'divide_test': .01,
+            'divide_test': .2,
             'ignore': [test],           # [test]
         },
         'test': {
-            'path': everywhere_path,
+            'path': os.path.join(everywhere_path, test),
             'divide_test': .2,
-            'ignore': everywhere_folders,           # everywhere_folders
         },
         'image': {
           'height': int(258 * 1),

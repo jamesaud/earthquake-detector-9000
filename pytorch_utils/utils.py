@@ -91,6 +91,12 @@ def save_checkpoint(path, name, model, optimizer, loss):
 def load_model(net: nn.Module, path: str):
     return net.load_state_dict(torch.load(path))
 
+def load_checkpoint(net, checkpoint_path, optimizer):
+    checkpoint = torch.load(checkpoint_path)
+    net.load_state_dict(checkpoint['model_state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+    print("Loaded", checkpoint['name'])
+    return net
 
 def print_evaluation(evaluator, description):
     correct = 100 * evaluator.total_percent_correct()
@@ -167,6 +173,7 @@ def print_loss(batch_num, loss, epoch, train_loader):
 
     sys.stdout.write('\r' + msg)
     sys.stdout.flush()
+
 
 
 def train_batches(train_loader: DataLoader,
