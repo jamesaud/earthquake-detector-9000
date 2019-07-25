@@ -136,14 +136,15 @@ def write_loss(writer, loss, iterations):
 
 def evaluation(net: nn.Module,
               loader: DataLoader,
-              name: str):
+              name: str,
+              copy_net: bool = True):
     """
     :param net: Torch Model
     :param loader: Dataloader
     :return: Evaluator containing the stats for this evaluation
     """
     print(f"\nTesting for {name}...")
-    evaluator = evaluate(net, loader, copy_net=True)
+    evaluator = evaluate(net, loader, copy_net=copy_net)
     print()
     print_evaluation(evaluator, name)
     return evaluator

@@ -5,6 +5,9 @@ import torch.utils.data
 from functools import wraps
 import copy
 import math
+from torch.utils.data import Dataset
+#from loaders import SpectrogramBaseDataset
+from typing import Sequence
 
 class dotdict(dict):
     def __init__(self, *args, **kwargs):
@@ -77,6 +80,12 @@ def verify_dataset_integrity(*args):
 def reduce_dataset(dataset: torch.utils.data.Dataset, num_samples, copy_dataset=True):
     if copy_dataset: dataset = copy.deepcopy(dataset)
     del dataset.file_paths[num_samples:]   
+    return dataset
+
+# dataset: SpectrogramBaseDataset
+def subset(dataset, indices: Sequence, copy_dataset=True):
+    if copy_dataset: dataset = copy.deepcopy(dataset)
+    dataset.file_paths = [dataset.file_paths[i] for i in indices]
     return dataset
 
 def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weights: dict, copy_dataset=True):
