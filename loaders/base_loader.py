@@ -206,7 +206,9 @@ class SpectrogramBaseDataset(Dataset):
 
     #@timing_msg("Getting item and applying transforms in data loader")
     def __getitem__(self, index, apply_transforms=True):
+        
         n, z, e = self.file_paths[index]
+
         label = self.label_to_number(self.get_label(n))
         if apply_transforms:
             n, z, e = self.apply_transforms((n, z, e))

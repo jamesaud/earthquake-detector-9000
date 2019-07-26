@@ -25,6 +25,7 @@ CHECKPOINT_PATH = f'./visualize/saved/2019/{NET.__name__}/{model_path}/checkpoin
 
 
 dataset_train, dataset_test = _main_make_datasets()
+
 net, optimizer, criterion = create_model()
 
 
@@ -58,22 +59,7 @@ def freeze_parameters(net):
         param.requires_grad = False
 
 
-# Set up loaders
-def make_loader(samples, ratio, test=False):
-    dataset = dataset_test if test else dataset_train
-    dataset = subsample_dataset(dataset, samples, ratio)
 
-    if test:
-        loader = DataLoader(dataset,
-                            **loader_args)
-
-    else:
-        train_sampler = utils.make_weighted_sampler(dataset, NUM_CLASSES, weigh_classes=[1, 4])
-        loader = DataLoader(dataset,
-                            shuffle=not train_sampler,
-                            sampler=train_sampler,
-                            **loader_args)
-    return loader
 
 
 
@@ -89,37 +75,60 @@ feed_forward_size = 64
 
 import math
 samples = [10,   10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000, 256000]
-epochs =  [100, 100,  100,  50,   50,   50,   30,     30,    20,    20,    10,     10,    10,    5,      5]
+epochs =  [30,   30,   30,   30,   30,   30,   30,     30,    30,    30,    30,     20,    5,    3,      1]
 results = {}
+
+
 
 # Create a final test loader where it has unseen data
 dataset_final = copy.deepcopy(dataset_train)
 del dataset_final.file_paths[10000:]
 del dataset_train.file_paths[:10000]
+
 assert verify_dataset_integrity(dataset_train, dataset_final)
 
+# IMPORTANT - CAN NOT USE WEIGHTED SAMPLER HERE
+train_loader = create_loader(dataset_train, train=True)
+test_loader = create_loader(dataset_test, train=False)
 final_test_loader = DataLoader(dataset_final, **loader_args)
 
-for sample, epoch in zip(samples, epochs):
-    test_loader = make_loader(math.ceil(sample*.2), {0: 1, 1: 1}, test=True)
-    train_loader = make_loader(math.floor(sample*.8), {0: 4, 1: 1}, test=False)
+net = load_net(CHECKPOINT_PATH)
+replace_model(net, feed_forward_size)
+net.cuda()
+optimizer = optim.Adam(net.parameters())
+criterion = nn.CrossEntropyLoss().cuda()
+freeze_parameters(net)
 
-    net = load_net(CHECKPOINT_PATH)
-    replace_model(net, feed_forward_size)
-    net.cuda()
-    optimizer = optim.Adam(net.parameters())
-    criterion = nn.CrossEntropyLoss().cuda()
-    freeze_parameters(net)
+hyper_params = zip(samples, epochs)
 
-    evaluator, best_epoch = train_best_model(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
-              write=True,
-              checkpoint_path=checkpoint_path,
-              print_loss_every=1000,
-              print_test_evaluation_every=10000)
+results = train_sample_sizes(hyper_params, train_loader, test_loader, final_test_loader,
+                             net, optimizer, criterion, 
+                             writer=writer,
+                             write=False,
+                             print_loss_every=1000,
+                             print_test_evaluation_every=10_000,
+                             yield_every = 10_000)
 
-    final = evaluate(net, final_test_loader, copy_net=True)
+# for sample, epoch in zip(samples, epochs):
+#     test_loader = make_loader(math.ceil(sample*.2), {0: 1, 1: 1}, test=True)
+#     train_loader = make_loader(math.floor(sample*.8), {0: 4, 1: 1}, test=False)
 
-    results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final, final.total_percent_correct()) # Validation results, epoch, final results
+#     net = load_net(CHECKPOINT_PATH)
+#     replace_model(net, feed_forward_size)
+#     net.cuda()
+#     optimizer = optim.Adam(net.parameters())
+#     criterion = nn.CrossEntropyLoss().cuda()
+#     freeze_parameters(net)
+
+#     evaluator, best_epoch = train_best_model(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
+#               write=True,
+#               checkpoint_path=checkpoint_path,
+#               print_loss_every=1000,
+#               print_test_evaluation_every=10000)
+
+#     final = evaluate(net, final_test_loader, copy_net=True)
+
+#     results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final, final.total_percent_correct()) # Validation results, epoch, final results
 
 
 from pprint import pprint

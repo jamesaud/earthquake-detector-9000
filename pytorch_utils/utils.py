@@ -11,6 +11,9 @@ from torch.utils.data import DataLoader
 from evaluator.evaluator import Evaluator
 from writer_util import MySummaryWriter as SummaryWriter
 from itertools import islice
+import math
+from .data_utils import subsample_dataset, replace_loader_dataset
+
 
 def evaluate(net: nn.Module,
              data_loader: DataLoader,
@@ -229,7 +232,8 @@ def train_epoch(epoch: int,
                 print_loss_every=1000,
                 print_test_evaluation_every=float('inf'),
                 print_train_evaluation_every=float('inf'),
-                train_evaluation_loader: DataLoader = None):
+                train_evaluation_loader: DataLoader = None,
+                evaluate_at_end=True):
     """
 
     :param epoch: The epoch number
@@ -300,9 +304,13 @@ def train_epoch(epoch: int,
             evaluator = evaluation(net, loader, "train loader")
             if write: write_evaluator(writer, "train", evaluator, global_iterations())
 
+
     # Print test evaluation at end of epoch
-    evaluator = evaluation(net, test_loader, "test loader")
-    yield evaluator
+    if evaluate_at_end:
+        evaluator = evaluation(net, test_loader, "test loader")
+        yield evaluator
+    else:
+        yield
 
 
 @wraps(train_epoch)
@@ -316,19 +324,21 @@ def train(*args, **kwargs):
     return evaluator
 
 @wraps(train_epoch)
-def train_best_model(*args, **kwargs):
+def train_best_model(epochs, *args, **kwargs):
     best = None
-    for epoch, evaluator in enumerate(train_epoch(*args, **kwargs)):
-        if best is None:
-            best = evaluator
-        elif evaluator.normalized_percent_correct(weigh_events=1.1) >= best.normalized_percent_correct(weigh_events=1.1):
-            best = evaluator
-
-    return best, epoch + 1
+    best_epoch = 1
+    for epoch in range(epochs):
+        for evaluator in train_epoch(epoch+1, *args, **kwargs):
+            if best is None:
+                best = evaluator
+            elif evaluator.normalized_percent_correct(weigh_events=1.1) >= best.normalized_percent_correct(weigh_events=1.1):
+                best = evaluator
+                best_epoch = epoch
+    return best, best_epoch
 
 
 @wraps(train_best_model)
-def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion copy_loaders=True, **kwargs):
+def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion, copy_loaders=True, **kwargs):
     """
     :hyper_params: should be a list of list, each sublist containing the samples and epochs. Example:
                    samples = [10,   10,   50,   100,  200]
@@ -337,6 +347,7 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
 
     Have to pass parameters to train_best_model as **kwargs
     """
+    results = {}
     _net, _optimizer, _criterion = net, optimizer, criterion
 
     if copy_loaders:
@@ -345,23 +356,25 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
     dataset_train = train_loader.dataset
     dataset_test = train_loader.dataset
 
-    for sample, epoch in hyper_params:
+    for samples, epochs in hyper_params:
         net, optimizer, criterion = copy.deepcopy(_net), copy.deepcopy(_optimizer), copy.deepcopy(_criterion)
 
-        _train_dataset = subsample_dataset(dataset_train, math.floor(sample*.8), {0: 1, 1: 1})
-        _test_dataset = subsample_dataset(dataset_test, math.floor(sample*.2), {0: 1, 1: 1})
+        _train_dataset = subsample_dataset(dataset_train, math.floor(samples*.8), {0: 1, 1: 1})
+        _test_dataset = subsample_dataset(dataset_test, math.floor(samples*.2), {0: 1, 1: 1})
 
-        train_loader.dataset = _train_dataset
-        test_loader.dataset = _test_dataset
+        replace_loader_dataset(train_loader, _train_dataset)
+        replace_loader_dataset(test_loader, _test_dataset)
 
         evaluator, best_epoch = train_best_model(
-                epoch=epoch,
+                epochs=epochs,
                 train_loader=train_loader, 
                 test_loader=test_loader, 
                 net=net,
+                optimizer=optimizer,
+                criterion=criterion,
                 **kwargs)
 
         final_evaluator = evaluate(net, final_loader, copy_net=True)
-        results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final_evaluator, final.total_percent_correct()) # Validation results, epoch, final results
-        return results
+        results[samples] = (best_epoch, evaluator, final_evaluator) # epoch, validation results, final results
+    return results
 
