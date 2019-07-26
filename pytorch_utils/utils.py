@@ -88,15 +88,22 @@ def save_checkpoint(path, name, model, optimizer, loss):
                 'loss': loss,
                 }, path)
 
+# Use existing model
+def load_checkpoint(checkpoint_path, model, optimizer, copy=False):
+        checkpoint = torch.load(checkpoint_path)
+
+        if copy:
+            model = copy.deepcopy(model)
+            optimizer = copy.deepcopy(optimizer)
+            
+        model.load_state_dict(checkpoint['model_state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+
+        return model, optimizer
+
 def load_model(net: nn.Module, path: str):
     return net.load_state_dict(torch.load(path))
 
-def load_checkpoint(net, checkpoint_path, optimizer):
-    checkpoint = torch.load(checkpoint_path)
-    net.load_state_dict(checkpoint['model_state_dict'])
-    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-    print("Loaded", checkpoint['name'])
-    return net
 
 def print_evaluation(evaluator, description):
     correct = 100 * evaluator.total_percent_correct()
@@ -307,3 +314,51 @@ def train(*args, **kwargs):
         pass
 
     return evaluator
+
+@wraps(train_epoch)
+def train_best_model(*args, **kwargs):
+    best = None
+    for epoch, evaluator in enumerate(train_epoch(*args, **kwargs)):
+        if best is None:
+            best = evaluator
+        elif evaluator.normalized_percent_correct(weigh_events=1.1) >= best.normalized_percent_correct(weigh_events=1.1):
+            best = evaluator
+
+    return best, epoch + 1
+
+
+@wraps(train_best_model)
+def train_sizes(hyper_params, train_loader, test_loader, final_loader, net, copy_loaders=true, **kwargs):
+    """
+    :hyper_params: should be a list of list, each sublist containing the samples and epochs. Example:
+                   samples = [10,   10,   50,   100,  200]
+                   epochs =  [100, 100,  100,  50,   50]
+                   hyper_params = zip(samples, epochs)
+
+    Have to pass parameters to train_best_model as **kwargs
+    """
+
+    if copy_loaders:
+        train_loader, test_loader = copy.deepcopy(train_loader), copy.deepcopy(test_loader)
+
+    dataset_train = train_loader.dataset
+    dataset_test = train_loader.dataset
+
+    for sample, epoch in hyper_params:
+        _train_dataset = subsample_dataset(dataset_train, math.floor(sample*.8), {0: 1, 1: 1})
+        _test_dataset = subsample_dataset(dataset_test, math.floor(sample*.2), {0: 1, 1: 1})
+
+        train_loader.dataset = _train_dataset
+        test_loader.dataset = _test_dataset
+
+        evaluator, best_epoch = train_best_model(
+                epoch=epoch,
+                train_loader=train_loader, 
+                test_loader=test_loader, 
+                net=net,
+                **kwargs)
+
+        evaluator = evaluate(net, final_loader, copy_net=True)
+        results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final, final.total_percent_correct()) # Validation results, epoch, final results
+
+

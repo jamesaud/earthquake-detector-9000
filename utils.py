@@ -93,8 +93,6 @@ def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weig
     weight_sum = sum(class_weights.values())
     num_local = math.ceil(class_weights[1] / weight_sum * num_samples)
     num_noise = math.ceil(class_weights[0] / weight_sum * num_samples)
-    # dataset.local = dataset.local[:num_local]
-    # dataset.noise = dataset.noise[:num_noise]
     dataset.file_paths = dataset.local[:num_local] + dataset.noise[:num_noise]
     return dataset
 

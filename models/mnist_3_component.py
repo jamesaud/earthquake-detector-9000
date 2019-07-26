@@ -92,7 +92,7 @@ class mnist_three_component_exp(nn.Module):
                         ])
  
     # Random Apply should not be in Group, so that the same random apply is applied to all 3 images
-    _train = [transform_group(tf.Grayscale(num_output_channels=1)), 
+    _train = [ #transform_group(tf.Grayscale(num_output_channels=1)), 
         #      tf.RandomApply(Group([mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT)]), p=.5),
         #      tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
              ]

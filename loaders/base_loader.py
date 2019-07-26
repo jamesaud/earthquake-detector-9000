@@ -63,8 +63,8 @@ class SpectrogramBaseDataset(Dataset):
         noise_paths = self.get_spectrograms(img_path, 'noise', ignore_names=ignore_names)
 
         # Randomly shuffle the files the same way each time, to keep the test and train dataset the same
-        self.shuffle(local_paths)
-        self.shuffle(noise_paths)
+        self._shuffle(local_paths)
+        self._shuffle(noise_paths)
 
         # Divide into training and test set
         test_local, train_local = self.separate_paths(local_paths, divide_test)
@@ -79,7 +79,7 @@ class SpectrogramBaseDataset(Dataset):
             file_paths = train_local + train_noise
             self.local, self.noise = train_local, train_noise
 
-        self.file_paths = self.shuffle(file_paths)
+        self.file_paths = self._shuffle(file_paths)
 
         self.labels = {
             0: 'noise',
@@ -94,10 +94,14 @@ class SpectrogramBaseDataset(Dataset):
         separate_index = int(len(paths) * amount)
         return paths[:separate_index], paths[separate_index:]
 
-    def shuffle(self, paths):
+    def _shuffle(self, paths):
         random.seed(self.__SEED)
         random.shuffle(paths)
         return paths
+
+    def shuffle(self):
+        random.seed(self.__SEED)
+        random.shuffle(self.file_paths)
 
     @property
     def num_classes(self):

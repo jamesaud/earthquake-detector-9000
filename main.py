@@ -136,23 +136,28 @@ def create_loader(dataset, train: bool, batch_size = BATCH_SIZE, weigh_classes =
 
 
 # ADDED
-# dataset_train = create_dataset(settings, NET.transformations['train'], train=True)
-# dataset_test = create_dataset(settings, NET.transformations['test'], train=False)
+def _main_make_datasets():
+    dataset_train = create_dataset(settings, NET.transformations['train'], train=True)
+    dataset_test = create_dataset(settings, NET.transformations['test'], train=False)
+    assert verify_dataset_integrity(dataset_train, dataset_test)
+    return dataset_train, dataset_test
 
-# assert verify_dataset_integrity(dataset_train, dataset_test)
 
-# train_loader = create_loader(dataset_train, train=True, weigh_classes=WEIGH_CLASSES)
-# test_loader = create_loader(dataset_test, train=False)
+def _main_make_loaders():
+    dataset_train, dataset_test = _main_make_datasets()
+    train_loader = create_loader(dataset_train, train=True, weigh_classes=WEIGH_CLASSES)
+    test_loader = create_loader(dataset_test, train=False)
+    return train_loader, test_loader
 
-# # Subsample to evaluate train accuracy... because it has too many samples and will take too long
-# num_train_evaluation_samples = 20000
-# train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
 
 
 # Setup Net
-net = NET().cuda()
-optimizer = optim.Adam(net.parameters())
-criterion = nn.CrossEntropyLoss().cuda()
+
+def create_model():
+    net = NET().cuda()
+    optimizer = optim.Adam(net.parameters())
+    criterion = nn.CrossEntropyLoss().cuda()
+    return net, optimizer, criterion
 
 
 def print_config():
@@ -183,10 +188,20 @@ def write_stats(evaluator, name):
 if __name__ == '__main__':
     print_config()
     TRAIN_MODE = True
+
+    net, optimizer, criterion = create_model()
     
     ################
     # TRAINING NEW MODEL
     #################
+
+    dataset_train, dataset_test = _main_make_datasets()
+    train_loader, test_loader = _main_make_loaders()
+
+    # Subsample to evaluate train accuracy... because it has too many samples and will take too long
+    num_train_evaluation_samples = 20000
+    train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
+
 
     if TRAIN_MODE:
 

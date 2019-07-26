@@ -24,7 +24,9 @@ import glob
 import os 
 import copy
 from typing import List, Callable
-from pytorch_utils.utils import evaluation, save_checkpoint, write_evaluator
+from pytorch_utils.utils import evaluation, save_checkpoint, load_checkpoint, write_evaluator
+from pytorch_utils.utils import train as train_model
+
 import sys
 from datetime import datetime
 from itertools import cycle
@@ -53,7 +55,7 @@ LR, META_LR = 0.02, 0.1  # Copy OpenAI's hyperparameters.
 
 # Training 
 SAMPLES_PER_TASK = 100    # Samples for each station: 50
-BATCH_SIZE, META_BATCH_SIZE = 50, 3
+BATCH_SIZE, META_BATCH_SIZE = 10, 3
 EPOCHS, META_EPOCHS = 1, 30000
 
 # Evaluation
@@ -68,7 +70,7 @@ TEST_EVALUATION_SAMPLES = 1000
 TEST_EPOCHS = 20
 TEST_EVERY = 30
 
-path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/meta-learning/trial-{datetime.now()}'))
+path = os.path.join(os.path.join(config.VISUALIZE_PATH, f'runs/meta-learning/train/trial-{datetime.now()}'))
 CHECKPOINT_PATH = os.path.join(path, 'checkpoints')
 writer = SummaryWriter(path)
 
@@ -94,13 +96,21 @@ class TaskCreator:
     Tasks are dataloaders, with references kept in self.station_loaders
     """
 
-    def __init__(self, station_paths: List[str], task_samples:int, batch_size:int, train:bool=True):
+    def __init__(self, station_paths: List[str], task_samples:int, batch_size:int, train:bool=True, shuffle:bool=False, station_settings:dict=None):
+        """
+        :station_paths: 
+        :task_samples:
+        :batch_size:
+        :train:
+        :shuffle: randomly shuffles samples in each dataset (note, will be the same every time because random seed is set)
+        """
         self.station_paths = station_paths
         self.train = train
         self.task_samples = task_samples
         self.batch_size = batch_size
+        self.shuffle = shuffle
 
-        self.station_settings = _new_settings()
+        self.station_settings = station_settings or _new_settings()
 
         # Set up the datasets
         self._datasets = self._station_datasets(self.station_paths)
@@ -135,6 +145,7 @@ class TaskCreator:
 
     def _create_dataset(self, station_path: str) -> Dataset:
         station_settings = _new_settings()
+
         if self.train:
             station_settings.train.path = station_path
         else:
@@ -142,6 +153,10 @@ class TaskCreator:
 
         dataset = create_dataset(station_settings, Model.transformations['train' if self.train else 'test'], train=self.train)
         dataset.station_path = station_path 
+        
+        if self.shuffle:
+            dataset.shuffle()
+
         return dataset
 
     def _station_datasets(self, station_paths: List[str]):
@@ -285,82 +300,138 @@ def write_info(writer):
     for step, (name, val) in enumerate(eval_info.items()):
         writer.add_text('Evaluation Settings', f"{name} = {val}", global_step=step)
 
+    for step, (name, val) in enumerate(test_info.items()):
+        writer.add_text('Test Settings', f"{name} = {val}", global_step=step)
+
+
 if __name__ == "__main__":
-    write_info(writer)
+    TRAIN = False
+    TEST = not TRAIN
 
     station_paths = glob.glob(pj(settings.train.path, '*'))
     test_path = settings.test.path                   # Benz station
     station_paths.remove(test_path)
-    
-    if NUM_OF_TRAIN_STATIONS is None:
-        NUM_OF_TRAIN_STATIONS = len(station_paths)
 
-    print(f"Generating training tasks from {NUM_OF_TRAIN_STATIONS} stations:")
-    gen_task = TaskCreator(station_paths[:NUM_OF_TRAIN_STATIONS], 
-                           task_samples=SAMPLES_PER_TASK, 
-                           batch_size=BATCH_SIZE, 
-                           train=True)     # Training task callable
+    if TRAIN:
+        write_info(writer)
 
-    print("Generating evaluation (train and eval) tasks...")
-    evaluation_train_task = TaskCreator([test_path], 
-                                        task_samples=EVALUATION_TRAIN_SAMPLES, 
-                                        batch_size=BATCH_SIZE,
-                                        train=True)()   # Evaluation task
+        if NUM_OF_TRAIN_STATIONS is None:
+            NUM_OF_TRAIN_STATIONS = len(station_paths)
 
-    evaluation_eval_task = TaskCreator([test_path], 
-                                        task_samples=EVALUATION_EVAL_SAMPLES, 
-                                        batch_size=BATCH_SIZE,
-                                        train=False)()
+        print(f"Generating training tasks from {NUM_OF_TRAIN_STATIONS} stations:")
+        gen_task = TaskCreator(station_paths[:NUM_OF_TRAIN_STATIONS], 
+                            task_samples=SAMPLES_PER_TASK, 
+                            batch_size=BATCH_SIZE, 
+                            train=True)     # Training task callable
 
-    print("Generating test (train and eval) tasks...")
+        print("Generating evaluation (train and eval) tasks...")
+        evaluation_train_task = TaskCreator([test_path], 
+                                            task_samples=EVALUATION_TRAIN_SAMPLES, 
+                                            batch_size=BATCH_SIZE,
+                                            train=True)()   # Evaluation task
 
-    # Skip to be different than evaluation   
-    test_train_task = TaskCreator([test_path], 
-                            task_samples=TEST_TRAIN_SAMPLES, 
-                            batch_size=BATCH_SIZE,
-                            train=True).skip(3)()
+        evaluation_eval_task = TaskCreator([test_path], 
+                                            task_samples=EVALUATION_EVAL_SAMPLES, 
+                                            batch_size=BATCH_SIZE,
+                                            train=False)()
 
-    
-    test_eval_task = TaskCreator([test_path], 
-                            task_samples=TEST_EVALUATION_SAMPLES, 
-                            batch_size=BATCH_SIZE,
-                            train=False).skip(3)()
+        print("Generating test (train and eval) tasks...")
 
+        # Skip to be different than evaluation   
+        test_train_task = TaskCreator([test_path], 
+                                task_samples=TEST_TRAIN_SAMPLES, 
+                                batch_size=BATCH_SIZE,
+                                train=True).skip(3)()
 
-    # Need to put model on GPU first for tensors to have the right type.
-    meta_weights = Model().cuda().state_dict()
-
-    for iteration in range(1, META_EPOCHS + 1):
-        sys.stdout.flush()
-        sys.stdout.write(f"\rTraining meta-epoch: {iteration}")
         
-        meta_weights, avg_loss = REPTILE(ParamDict(meta_weights), gen_task)
-        writer.add_scalar('train_loss', avg_loss, iteration)  # Average train loss of the last epoch per task
+        test_eval_task = TaskCreator([test_path], 
+                                task_samples=TEST_EVALUATION_SAMPLES, 
+                                batch_size=BATCH_SIZE,
+                                train=False).skip(3)()
 
-        def new_meta_model():
-            model = Model(meta_weights).cuda()
-            model.train()
-            opt = SGD(model.parameters(), lr=LR)
-            return model, opt
 
-        if iteration == 1 or iteration % EVALUATE_EVERY == 0:
-            print()
-            model, opt = new_meta_model()
+        # Need to put model on GPU first for tensors to have the right type.
+        meta_weights = Model().cuda().state_dict()
 
-            evaluator = evaluate_task(EVALUATION_EPOCHS, evaluation_train_task, evaluation_eval_task, model, opt, "Eval Task", copy=False, writer=writer, iteration=iteration)            
+        for iteration in range(1, META_EPOCHS + 1):
+            sys.stdout.flush()
+            sys.stdout.write(f"\rTraining meta-epoch: {iteration}")
+            
+            meta_weights, avg_loss = REPTILE(ParamDict(meta_weights), gen_task)
+            writer.add_scalar('train_loss', avg_loss, iteration)  # Average train loss of the last epoch per task
 
-            name = make_checkpoint_name(evaluator, f"metaepoch-{iteration}")
-            checkpoint_path = pj(CHECKPOINT_PATH, name)
-            print(f"Saving checkpoint: {name}")
-            save_checkpoint(checkpoint_path, name, model, opt, loss=0)   
+            def new_meta_model():
+                model = Model(meta_weights).cuda()
+                model.train()
+                opt = SGD(model.parameters(), lr=LR)
+                return model, opt
 
-            write_evaluator(writer, f'Evaluation Task', evaluator, iteration)            
-            print('\n')
+            if iteration == 1 or iteration % EVALUATE_EVERY == 0:
+                print()
+                model, opt = new_meta_model()
 
-        if iteration == 1 or iteration % TEST_EVERY == 0:
-            print()
-            model, opt = new_meta_model()
-            evaluator = evaluate_task(TEST_EPOCHS, test_train_task, test_eval_task, model, opt, "Test Task", copy=False, writer=writer, iteration=iteration)
+                evaluator = evaluate_task(EVALUATION_EPOCHS, evaluation_train_task, evaluation_eval_task, model, opt, "Eval Task", copy=False, writer=writer, iteration=iteration)            
 
-            write_evaluator(writer, f'Test Task', evaluator, iteration)            
-            print('\n')
+                name = make_checkpoint_name(evaluator, f"metaepoch-{iteration}")
+                checkpoint_path = pj(CHECKPOINT_PATH, name)
+                print(f"Saving checkpoint: {name}")
+                save_checkpoint(checkpoint_path, name, model, opt, loss=0)   
+
+                write_evaluator(writer, f'Evaluation Task', evaluator, iteration)            
+                print('\n')
+
+            if iteration == 1 or iteration % TEST_EVERY == 0:
+                print()
+                model, opt = new_meta_model()
+                evaluator = evaluate_task(TEST_EPOCHS, test_train_task, test_eval_task, model, opt, "Test Task", copy=False, writer=writer, iteration=iteration)
+
+                write_evaluator(writer, f'Test Task', evaluator, iteration)            
+                print('\n')
+
+
+    if TEST:
+        model_name = 'metaepoch-670-total-92.0-class0-92.51-class1-91.15.pt'
+        checkpoint_path = pj(config.VISUALIZE_PATH, f'runs/meta-learning/train/long_run/checkpoints/{model_name}')
+
+        test_train_samples = 800
+        test_eval_samples = 1000
+        writer = SummaryWriter(path.replace('train', 'test'))
+        
+        test_station_settings = _new_settings()
+        test_station_settings.weigh_classes = {0: 1, 1: 3}
+
+        print("Creating Train and Test Loaders")
+        test_train_loader = TaskCreator([test_path], 
+                            task_samples=test_train_samples, 
+                            batch_size=BATCH_SIZE,
+                            train=True,
+                            shuffle=True)()
+
+    
+        test_eval_loader = TaskCreator([test_path], 
+                            task_samples=test_eval_samples, 
+                            batch_size=BATCH_SIZE,
+                            train=False,
+                            shuffle=True)()
+
+        model = Model().cuda()
+        opt = SGD(model.parameters(), lr=LR)
+
+        model, opt = load_checkpoint(checkpoint_path, model, opt, copy=False)
+        model.train()
+
+        def train_net(epochs):
+            for i in range(epochs):
+                train_model(i+1,
+                            test_train_loader,
+                            test_eval_loader,
+                            opt,
+                            criterion,
+                            model,
+                            writer,
+                            write=True,
+                            print_test_evaluation_every=90,
+                            print_loss_every=10)
+
+        train_net(100)
+
