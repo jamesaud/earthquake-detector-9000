@@ -338,7 +338,7 @@ def train_best_model(epochs, *args, **kwargs):
 
 
 @wraps(train_best_model)
-def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion, copy_loaders=True, **kwargs):
+def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion, copy_loaders=True, train_split=.8, subsample_ratio={0: 1, 1: 1}, **kwargs):
     """
     :hyper_params: should be a list of list, each sublist containing the samples and epochs. Example:
                    samples = [10,   10,   50,   100,  200]
@@ -347,6 +347,9 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
 
     Have to pass parameters to train_best_model as **kwargs
     """
+    if not (0 <= train_split <= 1):
+        raise ValueError("train_split should be between 0 and 1")
+        
     results = {}
     _net, _optimizer, _criterion = net, optimizer, criterion
 
@@ -359,8 +362,8 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
     for samples, epochs in hyper_params:
         net, optimizer, criterion = copy.deepcopy(_net), copy.deepcopy(_optimizer), copy.deepcopy(_criterion)
 
-        _train_dataset = subsample_dataset(dataset_train, math.floor(samples*.8), {0: 1, 1: 1})
-        _test_dataset = subsample_dataset(dataset_test, math.floor(samples*.2), {0: 1, 1: 1})
+        _train_dataset = subsample_dataset(dataset_train, math.floor(samples * train_split), subsample_ratio)
+        _test_dataset = subsample_dataset(dataset_test, math.floor(samples * (1 - train_split)), subsample_ratio)
 
         replace_loader_dataset(train_loader, _train_dataset)
         replace_loader_dataset(test_loader, _test_dataset)

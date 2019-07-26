@@ -1,0 +1,2264 @@
+Loading Net
+* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  1]  0 %
+Accuracy of the network on test loader class  1: [ 1 /  1] 100 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 5 /  5] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 40 %
+Accuracy of the network on test loader class  0: [ 0 /  5]  0 %
+Accuracy of the network on test loader class  1: [ 4 /  5] 80 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 10]  0 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 1 / 10] 10 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 60 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 60 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 60 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [10 / 10] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 10] 20 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 60 %
+Accuracy of the network on test loader class  0: [ 3 / 10] 30 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 60 %
+Accuracy of the network on test loader class  0: [ 3 / 10] 30 %
+Accuracy of the network on test loader class  1: [ 9 / 10] 90 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 0 / 20]  0 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 1 / 20]  5 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 20] 10 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 20] 10 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 20] 10 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 2 / 20] 10 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 57 %
+Accuracy of the network on test loader class  0: [ 3 / 20] 15 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 57 %
+Accuracy of the network on test loader class  0: [ 3 / 20] 15 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 57 %
+Accuracy of the network on test loader class  0: [ 3 / 20] 15 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 57 %
+Accuracy of the network on test loader class  0: [ 3 / 20] 15 %
+Accuracy of the network on test loader class  1: [20 / 20] 100 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 57 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [19 / 20] 95 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [16 / 20] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 5 / 20] 25 %
+Accuracy of the network on test loader class  1: [16 / 20] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 5 / 20] 25 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 5 / 20] 25 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 5 / 20] 25 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [16 / 20] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [17 / 20] 85 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [16 / 20] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 4 / 20] 20 %
+Accuracy of the network on test loader class  1: [16 / 20] 80 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [ 0 / 50]  0 %
+Accuracy of the network on test loader class  1: [49 / 50] 98 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 48 %
+Accuracy of the network on test loader class  0: [ 0 / 50]  0 %
+Accuracy of the network on test loader class  1: [48 / 50] 96 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [ 1 / 50]  2 %
+Accuracy of the network on test loader class  1: [48 / 50] 96 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 2 / 50]  4 %
+Accuracy of the network on test loader class  1: [48 / 50] 96 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [ 4 / 50]  8 %
+Accuracy of the network on test loader class  1: [48 / 50] 96 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [ 5 / 50] 10 %
+Accuracy of the network on test loader class  1: [46 / 50] 92 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 54 %
+Accuracy of the network on test loader class  0: [ 8 / 50] 16 %
+Accuracy of the network on test loader class  1: [46 / 50] 92 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 9 / 50] 18 %
+Accuracy of the network on test loader class  1: [46 / 50] 92 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [ 9 / 50] 18 %
+Accuracy of the network on test loader class  1: [46 / 50] 92 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 56 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [45 / 50] 90 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 54 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [43 / 50] 86 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [44 / 50] 88 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [44 / 50] 88 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [39 / 50] 78 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 54 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [43 / 50] 86 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [44 / 50] 88 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [12 / 50] 24 %
+Accuracy of the network on test loader class  1: [43 / 50] 86 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 55 %
+Accuracy of the network on test loader class  0: [12 / 50] 24 %
+Accuracy of the network on test loader class  1: [43 / 50] 86 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [12 / 50] 24 %
+Accuracy of the network on test loader class  1: [40 / 50] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 54 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [43 / 50] 86 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [41 / 50] 82 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [12 / 50] 24 %
+Accuracy of the network on test loader class  1: [40 / 50] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [12 / 50] 24 %
+Accuracy of the network on test loader class  1: [40 / 50] 80 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [41 / 50] 82 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [13 / 50] 26 %
+Accuracy of the network on test loader class  1: [39 / 50] 78 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [13 / 50] 26 %
+Accuracy of the network on test loader class  1: [39 / 50] 78 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [41 / 50] 82 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [13 / 50] 26 %
+Accuracy of the network on test loader class  1: [39 / 50] 78 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [13 / 50] 26 %
+Accuracy of the network on test loader class  1: [38 / 50] 76 %
+
+Testing for test loader...
+128/128
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [11 / 50] 22 %
+Accuracy of the network on test loader class  1: [39 / 50] 78 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [ 0 / 100]  0 %
+Accuracy of the network on test loader class  1: [98 / 100] 98 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [ 3 / 100]  3 %
+Accuracy of the network on test loader class  1: [95 / 100] 95 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [ 9 / 100]  9 %
+Accuracy of the network on test loader class  1: [91 / 100] 91 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [17 / 100] 17 %
+Accuracy of the network on test loader class  1: [87 / 100] 87 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [18 / 100] 18 %
+Accuracy of the network on test loader class  1: [86 / 100] 86 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [19 / 100] 19 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [23 / 100] 23 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [84 / 100] 84 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [81 / 100] 81 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [83 / 100] 83 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [81 / 100] 81 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [82 / 100] 82 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [21 / 100] 21 %
+Accuracy of the network on test loader class  1: [81 / 100] 81 %
+
+Testing for test loader...
+128/256256/256
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [20 / 100] 20 %
+Accuracy of the network on test loader class  1: [81 / 100] 81 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+Train Epoch: 1 [1024/1664 (62%)]	Loss: 0.805124
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [ 2 / 200]  1 %
+Accuracy of the network on test loader class  1: [197 / 200] 98 %
+Train Epoch: 2 [1024/1664 (62%)]	Loss: 0.815004
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [18 / 200]  9 %
+Accuracy of the network on test loader class  1: [184 / 200] 92 %
+Train Epoch: 3 [1024/1664 (62%)]	Loss: 0.808237
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [25 / 200] 12 %
+Accuracy of the network on test loader class  1: [174 / 200] 87 %
+Train Epoch: 4 [1024/1664 (62%)]	Loss: 0.774466
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [26 / 200] 13 %
+Accuracy of the network on test loader class  1: [173 / 200] 86 %
+Train Epoch: 5 [1024/1664 (62%)]	Loss: 0.821806
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [28 / 200] 14 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 6 [1024/1664 (62%)]	Loss: 0.830217
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 7 [1024/1664 (62%)]	Loss: 0.787943
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [28 / 200] 14 %
+Accuracy of the network on test loader class  1: [172 / 200] 86 %
+Train Epoch: 8 [1024/1664 (62%)]	Loss: 0.808525
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 9 [1024/1664 (62%)]	Loss: 0.834352
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [35 / 200] 17 %
+Accuracy of the network on test loader class  1: [169 / 200] 84 %
+Train Epoch: 10 [1024/1664 (62%)]	Loss: 0.783911
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [31 / 200] 15 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 11 [1024/1664 (62%)]	Loss: 0.812123
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [30 / 200] 15 %
+Accuracy of the network on test loader class  1: [172 / 200] 86 %
+Train Epoch: 12 [1024/1664 (62%)]	Loss: 0.830088
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [31 / 200] 15 %
+Accuracy of the network on test loader class  1: [172 / 200] 86 %
+Train Epoch: 13 [1024/1664 (62%)]	Loss: 0.839279
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [31 / 200] 15 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 14 [1024/1664 (62%)]	Loss: 0.800809
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [31 / 200] 15 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 15 [1024/1664 (62%)]	Loss: 0.792412
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [27 / 200] 13 %
+Accuracy of the network on test loader class  1: [172 / 200] 86 %
+Train Epoch: 16 [1024/1664 (62%)]	Loss: 0.830779
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 17 [1024/1664 (62%)]	Loss: 0.796554
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [31 / 200] 15 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 18 [1024/1664 (62%)]	Loss: 0.816744
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [36 / 200] 18 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 19 [1024/1664 (62%)]	Loss: 0.768789
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [33 / 200] 16 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 20 [1024/1664 (62%)]	Loss: 0.800595
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 21 [1024/1664 (62%)]	Loss: 0.810545
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [34 / 200] 17 %
+Accuracy of the network on test loader class  1: [169 / 200] 84 %
+Train Epoch: 22 [1024/1664 (62%)]	Loss: 0.817310
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [33 / 200] 16 %
+Accuracy of the network on test loader class  1: [169 / 200] 84 %
+Train Epoch: 23 [1024/1664 (62%)]	Loss: 0.814077
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [34 / 200] 17 %
+Accuracy of the network on test loader class  1: [169 / 200] 84 %
+Train Epoch: 24 [1024/1664 (62%)]	Loss: 0.810781
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [34 / 200] 17 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 25 [1024/1664 (62%)]	Loss: 0.794632
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 26 [1024/1664 (62%)]	Loss: 0.813437
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+Train Epoch: 27 [1024/1664 (62%)]	Loss: 0.822821
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [28 / 200] 14 %
+Accuracy of the network on test loader class  1: [173 / 200] 86 %
+Train Epoch: 28 [1024/1664 (62%)]	Loss: 0.811638
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [29 / 200] 14 %
+Accuracy of the network on test loader class  1: [171 / 200] 85 %
+Train Epoch: 29 [1024/1664 (62%)]	Loss: 0.813832
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [36 / 200] 18 %
+Accuracy of the network on test loader class  1: [169 / 200] 84 %
+Train Epoch: 30 [1024/1664 (62%)]	Loss: 0.792725
+Testing for test loader...
+128/512256/512384/512512/512
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [33 / 200] 16 %
+Accuracy of the network on test loader class  1: [170 / 200] 85 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+Train Epoch: 1 [1024/3200 (32%)]	Loss: 0.641429Train Epoch: 1 [2048/3200 (64%)]	Loss: 0.813248Train Epoch: 1 [3072/3200 (96%)]	Loss: 0.820878
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [31 / 400]  7 %
+Accuracy of the network on test loader class  1: [362 / 400] 90 %
+Train Epoch: 2 [1024/3200 (32%)]	Loss: 0.627127Train Epoch: 2 [2048/3200 (64%)]	Loss: 0.824691Train Epoch: 2 [3072/3200 (96%)]	Loss: 0.808372
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [58 / 400] 14 %
+Accuracy of the network on test loader class  1: [338 / 400] 84 %
+Train Epoch: 3 [1024/3200 (32%)]	Loss: 0.634970Train Epoch: 3 [2048/3200 (64%)]	Loss: 0.824415Train Epoch: 3 [3072/3200 (96%)]	Loss: 0.822675
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [59 / 400] 14 %
+Accuracy of the network on test loader class  1: [335 / 400] 83 %
+Train Epoch: 4 [1024/3200 (32%)]	Loss: 0.626468Train Epoch: 4 [2048/3200 (64%)]	Loss: 0.830834Train Epoch: 4 [3072/3200 (96%)]	Loss: 0.807178
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [61 / 400] 15 %
+Accuracy of the network on test loader class  1: [333 / 400] 83 %
+Train Epoch: 5 [1024/3200 (32%)]	Loss: 0.653810Train Epoch: 5 [2048/3200 (64%)]	Loss: 0.812388Train Epoch: 5 [3072/3200 (96%)]	Loss: 0.808935
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [56 / 400] 14 %
+Accuracy of the network on test loader class  1: [338 / 400] 84 %
+Train Epoch: 6 [1024/3200 (32%)]	Loss: 0.649277Train Epoch: 6 [2048/3200 (64%)]	Loss: 0.810710Train Epoch: 6 [3072/3200 (96%)]	Loss: 0.796445
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [61 / 400] 15 %
+Accuracy of the network on test loader class  1: [333 / 400] 83 %
+Train Epoch: 7 [1024/3200 (32%)]	Loss: 0.644353Train Epoch: 7 [2048/3200 (64%)]	Loss: 0.801874Train Epoch: 7 [3072/3200 (96%)]	Loss: 0.858007
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [59 / 400] 14 %
+Accuracy of the network on test loader class  1: [338 / 400] 84 %
+Train Epoch: 8 [1024/3200 (32%)]	Loss: 0.646494Train Epoch: 8 [2048/3200 (64%)]	Loss: 0.774351Train Epoch: 8 [3072/3200 (96%)]	Loss: 0.809992
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [57 / 400] 14 %
+Accuracy of the network on test loader class  1: [341 / 400] 85 %
+Train Epoch: 9 [1024/3200 (32%)]	Loss: 0.627807Train Epoch: 9 [2048/3200 (64%)]	Loss: 0.805518Train Epoch: 9 [3072/3200 (96%)]	Loss: 0.771652
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [60 / 400] 15 %
+Accuracy of the network on test loader class  1: [335 / 400] 83 %
+Train Epoch: 10 [1024/3200 (32%)]	Loss: 0.617748Train Epoch: 10 [2048/3200 (64%)]	Loss: 0.800074Train Epoch: 10 [3072/3200 (96%)]	Loss: 0.825527
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [58 / 400] 14 %
+Accuracy of the network on test loader class  1: [336 / 400] 84 %
+Train Epoch: 11 [1024/3200 (32%)]	Loss: 0.616961Train Epoch: 11 [2048/3200 (64%)]	Loss: 0.823629Train Epoch: 11 [3072/3200 (96%)]	Loss: 0.830066
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [59 / 400] 14 %
+Accuracy of the network on test loader class  1: [339 / 400] 84 %
+Train Epoch: 12 [1024/3200 (32%)]	Loss: 0.634255Train Epoch: 12 [2048/3200 (64%)]	Loss: 0.825100Train Epoch: 12 [3072/3200 (96%)]	Loss: 0.803018
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [57 / 400] 14 %
+Accuracy of the network on test loader class  1: [341 / 400] 85 %
+Train Epoch: 13 [1024/3200 (32%)]	Loss: 0.637643Train Epoch: 13 [2048/3200 (64%)]	Loss: 0.837176Train Epoch: 13 [3072/3200 (96%)]	Loss: 0.815948
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [56 / 400] 14 %
+Accuracy of the network on test loader class  1: [341 / 400] 85 %
+Train Epoch: 14 [1024/3200 (32%)]	Loss: 0.635031Train Epoch: 14 [2048/3200 (64%)]	Loss: 0.814445Train Epoch: 14 [3072/3200 (96%)]	Loss: 0.826773
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [57 / 400] 14 %
+Accuracy of the network on test loader class  1: [340 / 400] 85 %
+Train Epoch: 15 [1024/3200 (32%)]	Loss: 0.638690Train Epoch: 15 [2048/3200 (64%)]	Loss: 0.839391Train Epoch: 15 [3072/3200 (96%)]	Loss: 0.819282
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [60 / 400] 15 %
+Accuracy of the network on test loader class  1: [337 / 400] 84 %
+Train Epoch: 16 [1024/3200 (32%)]	Loss: 0.633047Train Epoch: 16 [2048/3200 (64%)]	Loss: 0.823525Train Epoch: 16 [3072/3200 (96%)]	Loss: 0.795629
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [58 / 400] 14 %
+Accuracy of the network on test loader class  1: [339 / 400] 84 %
+Train Epoch: 17 [1024/3200 (32%)]	Loss: 0.634639Train Epoch: 17 [2048/3200 (64%)]	Loss: 0.827100Train Epoch: 17 [3072/3200 (96%)]	Loss: 0.816690
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [54 / 400] 13 %
+Accuracy of the network on test loader class  1: [341 / 400] 85 %
+Train Epoch: 18 [1024/3200 (32%)]	Loss: 0.638571Train Epoch: 18 [2048/3200 (64%)]	Loss: 0.817857Train Epoch: 18 [3072/3200 (96%)]	Loss: 0.821554
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [54 / 400] 13 %
+Accuracy of the network on test loader class  1: [339 / 400] 84 %
+Train Epoch: 19 [1024/3200 (32%)]	Loss: 0.632440Train Epoch: 19 [2048/3200 (64%)]	Loss: 0.799856Train Epoch: 19 [3072/3200 (96%)]	Loss: 0.829528
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [59 / 400] 14 %
+Accuracy of the network on test loader class  1: [336 / 400] 84 %
+Train Epoch: 20 [1024/3200 (32%)]	Loss: 0.633039Train Epoch: 20 [2048/3200 (64%)]	Loss: 0.822950Train Epoch: 20 [3072/3200 (96%)]	Loss: 0.824024
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [58 / 400] 14 %
+Accuracy of the network on test loader class  1: [335 / 400] 83 %
+Train Epoch: 21 [1024/3200 (32%)]	Loss: 0.644616Train Epoch: 21 [2048/3200 (64%)]	Loss: 0.816280Train Epoch: 21 [3072/3200 (96%)]	Loss: 0.809764
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [59 / 400] 14 %
+Accuracy of the network on test loader class  1: [335 / 400] 83 %
+Train Epoch: 22 [1024/3200 (32%)]	Loss: 0.618948Train Epoch: 22 [2048/3200 (64%)]	Loss: 0.830462Train Epoch: 22 [3072/3200 (96%)]	Loss: 0.826761
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [60 / 400] 15 %
+Accuracy of the network on test loader class  1: [334 / 400] 83 %
+Train Epoch: 23 [1024/3200 (32%)]	Loss: 0.658309Train Epoch: 23 [2048/3200 (64%)]	Loss: 0.816460Train Epoch: 23 [3072/3200 (96%)]	Loss: 0.818675
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [63 / 400] 15 %
+Accuracy of the network on test loader class  1: [334 / 400] 83 %
+Train Epoch: 24 [1024/3200 (32%)]	Loss: 0.632138Train Epoch: 24 [2048/3200 (64%)]	Loss: 0.800206Train Epoch: 24 [3072/3200 (96%)]	Loss: 0.827184
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [58 / 400] 14 %
+Accuracy of the network on test loader class  1: [337 / 400] 84 %
+Train Epoch: 25 [1024/3200 (32%)]	Loss: 0.637623Train Epoch: 25 [2048/3200 (64%)]	Loss: 0.812210Train Epoch: 25 [3072/3200 (96%)]	Loss: 0.789431
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [61 / 400] 15 %
+Accuracy of the network on test loader class  1: [332 / 400] 83 %
+Train Epoch: 26 [1024/3200 (32%)]	Loss: 0.642299Train Epoch: 26 [2048/3200 (64%)]	Loss: 0.788484Train Epoch: 26 [3072/3200 (96%)]	Loss: 0.814325
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [60 / 400] 15 %
+Accuracy of the network on test loader class  1: [336 / 400] 84 %
+Train Epoch: 27 [1024/3200 (32%)]	Loss: 0.612086Train Epoch: 27 [2048/3200 (64%)]	Loss: 0.842226Train Epoch: 27 [3072/3200 (96%)]	Loss: 0.803893
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [60 / 400] 15 %
+Accuracy of the network on test loader class  1: [338 / 400] 84 %
+Train Epoch: 28 [1024/3200 (32%)]	Loss: 0.645821Train Epoch: 28 [2048/3200 (64%)]	Loss: 0.817931Train Epoch: 28 [3072/3200 (96%)]	Loss: 0.806304
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [57 / 400] 14 %
+Accuracy of the network on test loader class  1: [336 / 400] 84 %
+Train Epoch: 29 [1024/3200 (32%)]	Loss: 0.647972Train Epoch: 29 [2048/3200 (64%)]	Loss: 0.795836Train Epoch: 29 [3072/3200 (96%)]	Loss: 0.837420
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [59 / 400] 14 %
+Accuracy of the network on test loader class  1: [333 / 400] 83 %
+Train Epoch: 30 [1024/3200 (32%)]	Loss: 0.633080Train Epoch: 30 [2048/3200 (64%)]	Loss: 0.830163Train Epoch: 30 [3072/3200 (96%)]	Loss: 0.808405
+Testing for test loader...
+128/896256/896384/896512/896640/896768/896896/896
+Accuracy of the network on test loader images: 49 %
+Accuracy of the network on test loader class  0: [57 / 400] 14 %
+Accuracy of the network on test loader class  1: [338 / 400] 84 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+Train Epoch: 1 [1024/6400 (16%)]	Loss: 0.660584Train Epoch: 1 [2048/6400 (32%)]	Loss: 0.623580Train Epoch: 1 [3072/6400 (48%)]	Loss: 0.639229Train Epoch: 1 [4096/6400 (64%)]	Loss: 0.808522Train Epoch: 1 [5120/6400 (80%)]	Loss: 0.838966Train Epoch: 1 [6016/6400 (94%)]	Loss: 0.798676
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [129 / 800] 16 %
+Accuracy of the network on test loader class  1: [688 / 800] 86 %
+Train Epoch: 2 [1024/6400 (16%)]	Loss: 0.645669Train Epoch: 2 [2048/6400 (32%)]	Loss: 0.644482Train Epoch: 2 [3072/6400 (48%)]	Loss: 0.662448Train Epoch: 2 [4096/6400 (64%)]	Loss: 0.833198Train Epoch: 2 [5120/6400 (80%)]	Loss: 0.799692Train Epoch: 2 [6016/6400 (94%)]	Loss: 0.820782
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [136 / 800] 17 %
+Accuracy of the network on test loader class  1: [683 / 800] 85 %
+Train Epoch: 3 [1024/6400 (16%)]	Loss: 0.628550Train Epoch: 3 [2048/6400 (32%)]	Loss: 0.629783Train Epoch: 3 [3072/6400 (48%)]	Loss: 0.628457Train Epoch: 3 [4096/6400 (64%)]	Loss: 0.812646Train Epoch: 3 [5120/6400 (80%)]	Loss: 0.809776Train Epoch: 3 [6016/6400 (94%)]	Loss: 0.784485
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [139 / 800] 17 %
+Accuracy of the network on test loader class  1: [678 / 800] 84 %
+Train Epoch: 4 [1024/6400 (16%)]	Loss: 0.609012Train Epoch: 4 [2048/6400 (32%)]	Loss: 0.621148Train Epoch: 4 [3072/6400 (48%)]	Loss: 0.624711Train Epoch: 4 [4096/6400 (64%)]	Loss: 0.828256Train Epoch: 4 [5120/6400 (80%)]	Loss: 0.791148Train Epoch: 4 [6016/6400 (94%)]	Loss: 0.811051
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [145 / 800] 18 %
+Accuracy of the network on test loader class  1: [671 / 800] 83 %
+Train Epoch: 5 [1024/6400 (16%)]	Loss: 0.626135Train Epoch: 5 [2048/6400 (32%)]	Loss: 0.609802Train Epoch: 5 [3072/6400 (48%)]	Loss: 0.635111Train Epoch: 5 [4096/6400 (64%)]	Loss: 0.839671Train Epoch: 5 [5120/6400 (80%)]	Loss: 0.792763Train Epoch: 5 [6016/6400 (94%)]	Loss: 0.797898
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [134 / 800] 16 %
+Accuracy of the network on test loader class  1: [682 / 800] 85 %
+Train Epoch: 6 [1024/6400 (16%)]	Loss: 0.649431Train Epoch: 6 [2048/6400 (32%)]	Loss: 0.643521Train Epoch: 6 [3072/6400 (48%)]	Loss: 0.623675Train Epoch: 6 [4096/6400 (64%)]	Loss: 0.808457Train Epoch: 6 [5120/6400 (80%)]	Loss: 0.818265Train Epoch: 6 [6016/6400 (94%)]	Loss: 0.810940
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [140 / 800] 17 %
+Accuracy of the network on test loader class  1: [677 / 800] 84 %
+Train Epoch: 7 [1024/6400 (16%)]	Loss: 0.649411Train Epoch: 7 [2048/6400 (32%)]	Loss: 0.634031Train Epoch: 7 [3072/6400 (48%)]	Loss: 0.626565Train Epoch: 7 [4096/6400 (64%)]	Loss: 0.791984Train Epoch: 7 [5120/6400 (80%)]	Loss: 0.806768Train Epoch: 7 [6016/6400 (94%)]	Loss: 0.785233
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [130 / 800] 16 %
+Accuracy of the network on test loader class  1: [686 / 800] 85 %
+Train Epoch: 8 [1024/6400 (16%)]	Loss: 0.650640Train Epoch: 8 [2048/6400 (32%)]	Loss: 0.616635Train Epoch: 8 [3072/6400 (48%)]	Loss: 0.607669Train Epoch: 8 [4096/6400 (64%)]	Loss: 0.797892Train Epoch: 8 [5120/6400 (80%)]	Loss: 0.812407Train Epoch: 8 [6016/6400 (94%)]	Loss: 0.795991
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [135 / 800] 16 %
+Accuracy of the network on test loader class  1: [682 / 800] 85 %
+Train Epoch: 9 [1024/6400 (16%)]	Loss: 0.625886Train Epoch: 9 [2048/6400 (32%)]	Loss: 0.633727Train Epoch: 9 [3072/6400 (48%)]	Loss: 0.624561Train Epoch: 9 [4096/6400 (64%)]	Loss: 0.818514Train Epoch: 9 [5120/6400 (80%)]	Loss: 0.824702Train Epoch: 9 [6016/6400 (94%)]	Loss: 0.815984
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [140 / 800] 17 %
+Accuracy of the network on test loader class  1: [679 / 800] 84 %
+Train Epoch: 10 [1024/6400 (16%)]	Loss: 0.638609Train Epoch: 10 [2048/6400 (32%)]	Loss: 0.622835Train Epoch: 10 [3072/6400 (48%)]	Loss: 0.645294Train Epoch: 10 [4096/6400 (64%)]	Loss: 0.824677Train Epoch: 10 [5120/6400 (80%)]	Loss: 0.810365Train Epoch: 10 [6016/6400 (94%)]	Loss: 0.802550
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [133 / 800] 16 %
+Accuracy of the network on test loader class  1: [686 / 800] 85 %
+Train Epoch: 11 [1024/6400 (16%)]	Loss: 0.649411Train Epoch: 11 [2048/6400 (32%)]	Loss: 0.641901Train Epoch: 11 [3072/6400 (48%)]	Loss: 0.621241Train Epoch: 11 [4096/6400 (64%)]	Loss: 0.824180Train Epoch: 11 [5120/6400 (80%)]	Loss: 0.846202Train Epoch: 11 [6016/6400 (94%)]	Loss: 0.781836
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [139 / 800] 17 %
+Accuracy of the network on test loader class  1: [682 / 800] 85 %
+Train Epoch: 12 [1024/6400 (16%)]	Loss: 0.648299Train Epoch: 12 [2048/6400 (32%)]	Loss: 0.649219Train Epoch: 12 [3072/6400 (48%)]	Loss: 0.649243Train Epoch: 12 [4096/6400 (64%)]	Loss: 0.794383Train Epoch: 12 [5120/6400 (80%)]	Loss: 0.808731Train Epoch: 12 [6016/6400 (94%)]	Loss: 0.830428
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [155 / 800] 19 %
+Accuracy of the network on test loader class  1: [667 / 800] 83 %
+Train Epoch: 13 [1024/6400 (16%)]	Loss: 0.633082Train Epoch: 13 [2048/6400 (32%)]	Loss: 0.633448Train Epoch: 13 [3072/6400 (48%)]	Loss: 0.637763Train Epoch: 13 [4096/6400 (64%)]	Loss: 0.831363Train Epoch: 13 [5120/6400 (80%)]	Loss: 0.788132Train Epoch: 13 [6016/6400 (94%)]	Loss: 0.812951
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [146 / 800] 18 %
+Accuracy of the network on test loader class  1: [676 / 800] 84 %
+Train Epoch: 14 [1024/6400 (16%)]	Loss: 0.630169Train Epoch: 14 [2048/6400 (32%)]	Loss: 0.652233Train Epoch: 14 [3072/6400 (48%)]	Loss: 0.617019Train Epoch: 14 [4096/6400 (64%)]	Loss: 0.801545Train Epoch: 14 [5120/6400 (80%)]	Loss: 0.820745Train Epoch: 14 [6016/6400 (94%)]	Loss: 0.798049
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [137 / 800] 17 %
+Accuracy of the network on test loader class  1: [684 / 800] 85 %
+Train Epoch: 15 [1024/6400 (16%)]	Loss: 0.630218Train Epoch: 15 [2048/6400 (32%)]	Loss: 0.614033Train Epoch: 15 [3072/6400 (48%)]	Loss: 0.634673Train Epoch: 15 [4096/6400 (64%)]	Loss: 0.808929Train Epoch: 15 [5120/6400 (80%)]	Loss: 0.783899Train Epoch: 15 [6016/6400 (94%)]	Loss: 0.818052
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [137 / 800] 17 %
+Accuracy of the network on test loader class  1: [677 / 800] 84 %
+Train Epoch: 16 [1024/6400 (16%)]	Loss: 0.627159Train Epoch: 16 [2048/6400 (32%)]	Loss: 0.623436Train Epoch: 16 [3072/6400 (48%)]	Loss: 0.624257Train Epoch: 16 [4096/6400 (64%)]	Loss: 0.800013Train Epoch: 16 [5120/6400 (80%)]	Loss: 0.815612Train Epoch: 16 [6016/6400 (94%)]	Loss: 0.800229
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [133 / 800] 16 %
+Accuracy of the network on test loader class  1: [684 / 800] 85 %
+Train Epoch: 17 [1024/6400 (16%)]	Loss: 0.625684Train Epoch: 17 [2048/6400 (32%)]	Loss: 0.607312Train Epoch: 17 [3072/6400 (48%)]	Loss: 0.622968Train Epoch: 17 [4096/6400 (64%)]	Loss: 0.815741Train Epoch: 17 [5120/6400 (80%)]	Loss: 0.816112Train Epoch: 17 [6016/6400 (94%)]	Loss: 0.787977
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 50 %
+Accuracy of the network on test loader class  0: [140 / 800] 17 %
+Accuracy of the network on test loader class  1: [673 / 800] 84 %
+Train Epoch: 18 [1024/6400 (16%)]	Loss: 0.671336Train Epoch: 18 [2048/6400 (32%)]	Loss: 0.640918Train Epoch: 18 [3072/6400 (48%)]	Loss: 0.636802Train Epoch: 18 [4096/6400 (64%)]	Loss: 0.801024Train Epoch: 18 [5120/6400 (80%)]	Loss: 0.818502Train Epoch: 18 [6016/6400 (94%)]	Loss: 0.814846
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [132 / 800] 16 %
+Accuracy of the network on test loader class  1: [685 / 800] 85 %
+Train Epoch: 19 [1024/6400 (16%)]	Loss: 0.638275Train Epoch: 19 [2048/6400 (32%)]	Loss: 0.621857Train Epoch: 19 [3072/6400 (48%)]	Loss: 0.618255Train Epoch: 19 [4096/6400 (64%)]	Loss: 0.798879Train Epoch: 19 [5120/6400 (80%)]	Loss: 0.790706Train Epoch: 19 [6016/6400 (94%)]	Loss: 0.771318
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [138 / 800] 17 %
+Accuracy of the network on test loader class  1: [678 / 800] 84 %
+Train Epoch: 20 [1024/6400 (16%)]	Loss: 0.583301Train Epoch: 20 [2048/6400 (32%)]	Loss: 0.648088Train Epoch: 20 [3072/6400 (48%)]	Loss: 0.643316Train Epoch: 20 [4096/6400 (64%)]	Loss: 0.792743Train Epoch: 20 [5120/6400 (80%)]	Loss: 0.822274Train Epoch: 20 [6016/6400 (94%)]	Loss: 0.796601
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [136 / 800] 17 %
+Accuracy of the network on test loader class  1: [684 / 800] 85 %
+Train Epoch: 21 [1024/6400 (16%)]	Loss: 0.618605Train Epoch: 21 [2048/6400 (32%)]	Loss: 0.630687Train Epoch: 21 [3072/6400 (48%)]	Loss: 0.650614Train Epoch: 21 [4096/6400 (64%)]	Loss: 0.783709Train Epoch: 21 [5120/6400 (80%)]	Loss: 0.829845Train Epoch: 21 [6016/6400 (94%)]	Loss: 0.805968
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [144 / 800] 18 %
+Accuracy of the network on test loader class  1: [677 / 800] 84 %
+Train Epoch: 22 [1024/6400 (16%)]	Loss: 0.652516Train Epoch: 22 [2048/6400 (32%)]	Loss: 0.638935Train Epoch: 22 [3072/6400 (48%)]	Loss: 0.652771Train Epoch: 22 [4096/6400 (64%)]	Loss: 0.819553Train Epoch: 22 [5120/6400 (80%)]	Loss: 0.811113Train Epoch: 22 [6016/6400 (94%)]	Loss: 0.831307
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [130 / 800] 16 %
+Accuracy of the network on test loader class  1: [687 / 800] 85 %
+Train Epoch: 23 [1024/6400 (16%)]	Loss: 0.642205Train Epoch: 23 [2048/6400 (32%)]	Loss: 0.622629Train Epoch: 23 [3072/6400 (48%)]	Loss: 0.642998Train Epoch: 23 [4096/6400 (64%)]	Loss: 0.833525Train Epoch: 23 [5120/6400 (80%)]	Loss: 0.807282Train Epoch: 23 [6016/6400 (94%)]	Loss: 0.781561
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [135 / 800] 16 %
+Accuracy of the network on test loader class  1: [683 / 800] 85 %
+Train Epoch: 24 [1024/6400 (16%)]	Loss: 0.636956Train Epoch: 24 [2048/6400 (32%)]	Loss: 0.643999Train Epoch: 24 [3072/6400 (48%)]	Loss: 0.624095Train Epoch: 24 [4096/6400 (64%)]	Loss: 0.830278Train Epoch: 24 [5120/6400 (80%)]	Loss: 0.787422Train Epoch: 24 [6016/6400 (94%)]	Loss: 0.789555
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [135 / 800] 16 %
+Accuracy of the network on test loader class  1: [685 / 800] 85 %
+Train Epoch: 25 [1024/6400 (16%)]	Loss: 0.610050Train Epoch: 25 [2048/6400 (32%)]	Loss: 0.621946Train Epoch: 25 [3072/6400 (48%)]	Loss: 0.654590Train Epoch: 25 [4096/6400 (64%)]	Loss: 0.820033Train Epoch: 25 [5120/6400 (80%)]	Loss: 0.797510Train Epoch: 25 [6016/6400 (94%)]	Loss: 0.814809
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [135 / 800] 16 %
+Accuracy of the network on test loader class  1: [685 / 800] 85 %
+Train Epoch: 26 [1024/6400 (16%)]	Loss: 0.622195Train Epoch: 26 [2048/6400 (32%)]	Loss: 0.636482Train Epoch: 26 [3072/6400 (48%)]	Loss: 0.633376Train Epoch: 26 [4096/6400 (64%)]	Loss: 0.809830Train Epoch: 26 [5120/6400 (80%)]	Loss: 0.789702Train Epoch: 26 [6016/6400 (94%)]	Loss: 0.819796
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [138 / 800] 17 %
+Accuracy of the network on test loader class  1: [680 / 800] 85 %
+Train Epoch: 27 [1024/6400 (16%)]	Loss: 0.629087Train Epoch: 27 [2048/6400 (32%)]	Loss: 0.611100Train Epoch: 27 [3072/6400 (48%)]	Loss: 0.641540Train Epoch: 27 [4096/6400 (64%)]	Loss: 0.806544Train Epoch: 27 [5120/6400 (80%)]	Loss: 0.831658Train Epoch: 27 [6016/6400 (94%)]	Loss: 0.775154
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [149 / 800] 18 %
+Accuracy of the network on test loader class  1: [668 / 800] 83 %
+Train Epoch: 28 [1024/6400 (16%)]	Loss: 0.640022Train Epoch: 28 [2048/6400 (32%)]	Loss: 0.630891Train Epoch: 28 [3072/6400 (48%)]	Loss: 0.627545Train Epoch: 28 [4096/6400 (64%)]	Loss: 0.805892Train Epoch: 28 [5120/6400 (80%)]	Loss: 0.808328Train Epoch: 28 [6016/6400 (94%)]	Loss: 0.810638
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [135 / 800] 16 %
+Accuracy of the network on test loader class  1: [683 / 800] 85 %
+Train Epoch: 29 [1024/6400 (16%)]	Loss: 0.649761Train Epoch: 29 [2048/6400 (32%)]	Loss: 0.661242Train Epoch: 29 [3072/6400 (48%)]	Loss: 0.629537Train Epoch: 29 [4096/6400 (64%)]	Loss: 0.799416Train Epoch: 29 [5120/6400 (80%)]	Loss: 0.812370Train Epoch: 29 [6016/6400 (94%)]	Loss: 0.807301
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [137 / 800] 17 %
+Accuracy of the network on test loader class  1: [685 / 800] 85 %
+Train Epoch: 30 [1024/6400 (16%)]	Loss: 0.616984Train Epoch: 30 [2048/6400 (32%)]	Loss: 0.636241Train Epoch: 30 [3072/6400 (48%)]	Loss: 0.621329Train Epoch: 30 [4096/6400 (64%)]	Loss: 0.825659Train Epoch: 30 [5120/6400 (80%)]	Loss: 0.802922Train Epoch: 30 [6016/6400 (94%)]	Loss: 0.798341
+Testing for test loader...
+128/1664256/1664384/1664512/1664640/1664768/1664896/16641024/16641152/16641280/16641408/16641536/16641664/1664
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [136 / 800] 17 %
+Accuracy of the network on test loader class  1: [680 / 800] 85 %
+128/10112256/10112384/10112512/10112640/10112768/10112896/101121024/101121152/101121280/101121408/101121536/101121664/101121792/101121920/101122048/101122176/101122304/101122432/101122560/101122688/101122816/101122944/101123072/101123200/101123328/101123456/101123584/101123712/101123840/101123968/101124096/101124224/101124352/101124480/101124608/101124736/101124864/101124992/101125120/101125248/101125376/101125504/101125632/101125760/101125888/101126016/101126144/101126272/101126400/101126528/101126656/101126784/101126912/101127040/101127168/101127296/101127424/101127552/101127680/101127808/101127936/101128064/101128192/101128320/101128448/101128576/101128704/101128832/101128960/101129088/101129216/101129344/101129472/101129600/101129728/101129856/101129984/1011210112/10112* Warning - sampler RandomSampler is being replaced by SequentialSampler *
+* Warning - sampler SequentialSampler is being replaced by SequentialSampler *
+Train Epoch: 1 [1024/12800 (8%)]	Loss: 0.622795Train Epoch: 1 [2048/12800 (16%)]	Loss: 0.648120Train Epoch: 1 [3072/12800 (24%)]	Loss: 0.640859Train Epoch: 1 [4096/12800 (32%)]	Loss: 0.614613Train Epoch: 1 [5120/12800 (40%)]	Loss: 0.659207Train Epoch: 1 [6016/12800 (47%)]	Loss: 0.641498Train Epoch: 1 [7040/12800 (55%)]	Loss: 0.794277Train Epoch: 1 [8064/12800 (63%)]	Loss: 0.850874Train Epoch: 1 [9088/12800 (71%)]	Loss: 0.776229Train Epoch: 1 [10112/12800 (79%)]	Loss: 0.832749
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1372 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1372 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [304 / 1600] 19 %
+Accuracy of the network on test class  1: [1372 / 1600] 85 %
+Train Epoch: 1 [11008/12800 (86%)]	Loss: 0.808721Train Epoch: 1 [12032/12800 (94%)]	Loss: 0.808895
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [313 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1369 / 1600] 85 %
+Train Epoch: 2 [1024/12800 (8%)]	Loss: 0.660170Train Epoch: 2 [2048/12800 (16%)]	Loss: 0.653241Train Epoch: 2 [3072/12800 (24%)]	Loss: 0.635974Train Epoch: 2 [4096/12800 (32%)]	Loss: 0.647691Train Epoch: 2 [5120/12800 (40%)]	Loss: 0.634222Train Epoch: 2 [6016/12800 (47%)]	Loss: 0.632208Train Epoch: 2 [7040/12800 (55%)]	Loss: 0.807368Train Epoch: 2 [8064/12800 (63%)]	Loss: 0.816806Train Epoch: 2 [9088/12800 (71%)]	Loss: 0.811397Train Epoch: 2 [10112/12800 (79%)]	Loss: 0.807166
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [285 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1383 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [285 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1383 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [285 / 1600] 17 %
+Accuracy of the network on test class  1: [1383 / 1600] 86 %
+Train Epoch: 2 [11008/12800 (86%)]	Loss: 0.811562Train Epoch: 2 [12032/12800 (94%)]	Loss: 0.840599
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [302 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1376 / 1600] 86 %
+Train Epoch: 3 [1024/12800 (8%)]	Loss: 0.628588Train Epoch: 3 [2048/12800 (16%)]	Loss: 0.642234Train Epoch: 3 [3072/12800 (24%)]	Loss: 0.673842Train Epoch: 3 [4096/12800 (32%)]	Loss: 0.610417Train Epoch: 3 [5120/12800 (40%)]	Loss: 0.632231Train Epoch: 3 [6016/12800 (47%)]	Loss: 0.614576Train Epoch: 3 [7040/12800 (55%)]	Loss: 0.786422Train Epoch: 3 [8064/12800 (63%)]	Loss: 0.791945Train Epoch: 3 [9088/12800 (71%)]	Loss: 0.799059Train Epoch: 3 [10112/12800 (79%)]	Loss: 0.810931
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1369 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1369 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [304 / 1600] 19 %
+Accuracy of the network on test class  1: [1369 / 1600] 85 %
+Train Epoch: 3 [11008/12800 (86%)]	Loss: 0.835174Train Epoch: 3 [12032/12800 (94%)]	Loss: 0.825705
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [298 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+Train Epoch: 4 [1024/12800 (8%)]	Loss: 0.663797Train Epoch: 4 [2048/12800 (16%)]	Loss: 0.655526Train Epoch: 4 [3072/12800 (24%)]	Loss: 0.626114Train Epoch: 4 [4096/12800 (32%)]	Loss: 0.620220Train Epoch: 4 [5120/12800 (40%)]	Loss: 0.647859Train Epoch: 4 [6016/12800 (47%)]	Loss: 0.633828Train Epoch: 4 [7040/12800 (55%)]	Loss: 0.818937Train Epoch: 4 [8064/12800 (63%)]	Loss: 0.817808Train Epoch: 4 [9088/12800 (71%)]	Loss: 0.795680Train Epoch: 4 [10112/12800 (79%)]	Loss: 0.788938
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [278 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1385 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 51 %
+Accuracy of the network on test loader class  0: [278 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1385 / 1600] 86 %
+Accuracy of the network on test images: 51 %
+Accuracy of the network on test class  0: [278 / 1600] 17 %
+Accuracy of the network on test class  1: [1385 / 1600] 86 %
+Train Epoch: 4 [11008/12800 (86%)]	Loss: 0.830368Train Epoch: 4 [12032/12800 (94%)]	Loss: 0.810882
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [293 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1379 / 1600] 86 %
+Train Epoch: 5 [1024/12800 (8%)]	Loss: 0.637774Train Epoch: 5 [2048/12800 (16%)]	Loss: 0.641520Train Epoch: 5 [3072/12800 (24%)]	Loss: 0.618735Train Epoch: 5 [4096/12800 (32%)]	Loss: 0.627624Train Epoch: 5 [5120/12800 (40%)]	Loss: 0.635899Train Epoch: 5 [6016/12800 (47%)]	Loss: 0.609022Train Epoch: 5 [7040/12800 (55%)]	Loss: 0.817278Train Epoch: 5 [8064/12800 (63%)]	Loss: 0.814534Train Epoch: 5 [9088/12800 (71%)]	Loss: 0.823868Train Epoch: 5 [10112/12800 (79%)]	Loss: 0.813158
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [309 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1370 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [309 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1370 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [309 / 1600] 19 %
+Accuracy of the network on test class  1: [1370 / 1600] 85 %
+Train Epoch: 5 [11008/12800 (86%)]	Loss: 0.825107Train Epoch: 5 [12032/12800 (94%)]	Loss: 0.804107
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [306 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1372 / 1600] 85 %
+Train Epoch: 6 [1024/12800 (8%)]	Loss: 0.654834Train Epoch: 6 [2048/12800 (16%)]	Loss: 0.605910Train Epoch: 6 [3072/12800 (24%)]	Loss: 0.617054Train Epoch: 6 [4096/12800 (32%)]	Loss: 0.599967Train Epoch: 6 [5120/12800 (40%)]	Loss: 0.633015Train Epoch: 6 [6016/12800 (47%)]	Loss: 0.630174Train Epoch: 6 [7040/12800 (55%)]	Loss: 0.829028Train Epoch: 6 [8064/12800 (63%)]	Loss: 0.821372Train Epoch: 6 [9088/12800 (71%)]	Loss: 0.842245Train Epoch: 6 [10112/12800 (79%)]	Loss: 0.807610
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [297 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1375 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [297 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1375 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [297 / 1600] 18 %
+Accuracy of the network on test class  1: [1375 / 1600] 85 %
+Train Epoch: 6 [11008/12800 (86%)]	Loss: 0.804063Train Epoch: 6 [12032/12800 (94%)]	Loss: 0.841602
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [299 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1381 / 1600] 86 %
+Train Epoch: 7 [1024/12800 (8%)]	Loss: 0.624922Train Epoch: 7 [2048/12800 (16%)]	Loss: 0.644361Train Epoch: 7 [3072/12800 (24%)]	Loss: 0.625060Train Epoch: 7 [4096/12800 (32%)]	Loss: 0.632106Train Epoch: 7 [5120/12800 (40%)]	Loss: 0.631488Train Epoch: 7 [6016/12800 (47%)]	Loss: 0.635767Train Epoch: 7 [7040/12800 (55%)]	Loss: 0.830597Train Epoch: 7 [8064/12800 (63%)]	Loss: 0.839277Train Epoch: 7 [9088/12800 (71%)]	Loss: 0.835913Train Epoch: 7 [10112/12800 (79%)]	Loss: 0.835729
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [294 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [294 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [294 / 1600] 18 %
+Accuracy of the network on test class  1: [1377 / 1600] 86 %
+Train Epoch: 7 [11008/12800 (86%)]	Loss: 0.813535Train Epoch: 7 [12032/12800 (94%)]	Loss: 0.829269
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [280 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1394 / 1600] 87 %
+Train Epoch: 8 [1024/12800 (8%)]	Loss: 0.596953Train Epoch: 8 [2048/12800 (16%)]	Loss: 0.632864Train Epoch: 8 [3072/12800 (24%)]	Loss: 0.603748Train Epoch: 8 [4096/12800 (32%)]	Loss: 0.603967Train Epoch: 8 [5120/12800 (40%)]	Loss: 0.633026Train Epoch: 8 [6016/12800 (47%)]	Loss: 0.611771Train Epoch: 8 [7040/12800 (55%)]	Loss: 0.772991Train Epoch: 8 [8064/12800 (63%)]	Loss: 0.824392Train Epoch: 8 [9088/12800 (71%)]	Loss: 0.804493Train Epoch: 8 [10112/12800 (79%)]	Loss: 0.813082
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1370 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1370 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [304 / 1600] 19 %
+Accuracy of the network on test class  1: [1370 / 1600] 85 %
+Train Epoch: 8 [11008/12800 (86%)]	Loss: 0.815086Train Epoch: 8 [12032/12800 (94%)]	Loss: 0.820022
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [295 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1380 / 1600] 86 %
+Train Epoch: 9 [1024/12800 (8%)]	Loss: 0.633192Train Epoch: 9 [2048/12800 (16%)]	Loss: 0.613688Train Epoch: 9 [3072/12800 (24%)]	Loss: 0.642398Train Epoch: 9 [4096/12800 (32%)]	Loss: 0.625722Train Epoch: 9 [5120/12800 (40%)]	Loss: 0.640704Train Epoch: 9 [6016/12800 (47%)]	Loss: 0.652318Train Epoch: 9 [7040/12800 (55%)]	Loss: 0.800349Train Epoch: 9 [8064/12800 (63%)]	Loss: 0.821690Train Epoch: 9 [9088/12800 (71%)]	Loss: 0.801605Train Epoch: 9 [10112/12800 (79%)]	Loss: 0.808192
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [292 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [292 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [292 / 1600] 18 %
+Accuracy of the network on test class  1: [1377 / 1600] 86 %
+Train Epoch: 9 [11008/12800 (86%)]	Loss: 0.823286Train Epoch: 9 [12032/12800 (94%)]	Loss: 0.810234
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [281 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1393 / 1600] 87 %
+Train Epoch: 10 [1024/12800 (8%)]	Loss: 0.651006Train Epoch: 10 [2048/12800 (16%)]	Loss: 0.641436Train Epoch: 10 [3072/12800 (24%)]	Loss: 0.631466Train Epoch: 10 [4096/12800 (32%)]	Loss: 0.653812Train Epoch: 10 [5120/12800 (40%)]	Loss: 0.638927Train Epoch: 10 [6016/12800 (47%)]	Loss: 0.643587Train Epoch: 10 [7040/12800 (55%)]	Loss: 0.810511Train Epoch: 10 [8064/12800 (63%)]	Loss: 0.838878Train Epoch: 10 [9088/12800 (71%)]	Loss: 0.804301Train Epoch: 10 [10112/12800 (79%)]	Loss: 0.835119
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [297 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1375 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [297 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1375 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [297 / 1600] 18 %
+Accuracy of the network on test class  1: [1375 / 1600] 85 %
+Train Epoch: 10 [11008/12800 (86%)]	Loss: 0.780732Train Epoch: 10 [12032/12800 (94%)]	Loss: 0.815604
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [294 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1380 / 1600] 86 %
+Train Epoch: 11 [1024/12800 (8%)]	Loss: 0.616368Train Epoch: 11 [2048/12800 (16%)]	Loss: 0.638112Train Epoch: 11 [3072/12800 (24%)]	Loss: 0.646117Train Epoch: 11 [4096/12800 (32%)]	Loss: 0.658882Train Epoch: 11 [5120/12800 (40%)]	Loss: 0.619047Train Epoch: 11 [6016/12800 (47%)]	Loss: 0.625248Train Epoch: 11 [7040/12800 (55%)]	Loss: 0.805154Train Epoch: 11 [8064/12800 (63%)]	Loss: 0.813102Train Epoch: 11 [9088/12800 (71%)]	Loss: 0.820136Train Epoch: 11 [10112/12800 (79%)]	Loss: 0.848575
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1367 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [304 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1367 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [304 / 1600] 19 %
+Accuracy of the network on test class  1: [1367 / 1600] 85 %
+Train Epoch: 11 [11008/12800 (86%)]	Loss: 0.797372Train Epoch: 11 [12032/12800 (94%)]	Loss: 0.825889
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [294 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1383 / 1600] 86 %
+Train Epoch: 12 [1024/12800 (8%)]	Loss: 0.610839Train Epoch: 12 [2048/12800 (16%)]	Loss: 0.644368Train Epoch: 12 [3072/12800 (24%)]	Loss: 0.628473Train Epoch: 12 [4096/12800 (32%)]	Loss: 0.644917Train Epoch: 12 [5120/12800 (40%)]	Loss: 0.609932Train Epoch: 12 [6016/12800 (47%)]	Loss: 0.642072Train Epoch: 12 [7040/12800 (55%)]	Loss: 0.809884Train Epoch: 12 [8064/12800 (63%)]	Loss: 0.827370Train Epoch: 12 [9088/12800 (71%)]	Loss: 0.811173Train Epoch: 12 [10112/12800 (79%)]	Loss: 0.814635
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [289 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1382 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [289 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1382 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [289 / 1600] 18 %
+Accuracy of the network on test class  1: [1382 / 1600] 86 %
+Train Epoch: 12 [11008/12800 (86%)]	Loss: 0.828363Train Epoch: 12 [12032/12800 (94%)]	Loss: 0.808864
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [308 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1374 / 1600] 85 %
+Train Epoch: 13 [1024/12800 (8%)]	Loss: 0.636356Train Epoch: 13 [2048/12800 (16%)]	Loss: 0.619055Train Epoch: 13 [3072/12800 (24%)]	Loss: 0.619893Train Epoch: 13 [4096/12800 (32%)]	Loss: 0.632220Train Epoch: 13 [5120/12800 (40%)]	Loss: 0.628285Train Epoch: 13 [6016/12800 (47%)]	Loss: 0.629542Train Epoch: 13 [7040/12800 (55%)]	Loss: 0.840118Train Epoch: 13 [8064/12800 (63%)]	Loss: 0.796409Train Epoch: 13 [9088/12800 (71%)]	Loss: 0.806491Train Epoch: 13 [10112/12800 (79%)]	Loss: 0.784562
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [288 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1382 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [288 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1382 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [288 / 1600] 18 %
+Accuracy of the network on test class  1: [1382 / 1600] 86 %
+Train Epoch: 13 [11008/12800 (86%)]	Loss: 0.787360Train Epoch: 13 [12032/12800 (94%)]	Loss: 0.822447
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [291 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1384 / 1600] 86 %
+Train Epoch: 14 [1024/12800 (8%)]	Loss: 0.633500Train Epoch: 14 [2048/12800 (16%)]	Loss: 0.651206Train Epoch: 14 [3072/12800 (24%)]	Loss: 0.616662Train Epoch: 14 [4096/12800 (32%)]	Loss: 0.646261Train Epoch: 14 [5120/12800 (40%)]	Loss: 0.611949Train Epoch: 14 [6016/12800 (47%)]	Loss: 0.625320Train Epoch: 14 [7040/12800 (55%)]	Loss: 0.818586Train Epoch: 14 [8064/12800 (63%)]	Loss: 0.818316Train Epoch: 14 [9088/12800 (71%)]	Loss: 0.821497Train Epoch: 14 [10112/12800 (79%)]	Loss: 0.850027
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [284 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1383 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [284 / 1600] 17 %
+Accuracy of the network on test loader class  1: [1383 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [284 / 1600] 17 %
+Accuracy of the network on test class  1: [1383 / 1600] 86 %
+Train Epoch: 14 [11008/12800 (86%)]	Loss: 0.795738Train Epoch: 14 [12032/12800 (94%)]	Loss: 0.813711
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [301 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1372 / 1600] 85 %
+Train Epoch: 15 [1024/12800 (8%)]	Loss: 0.619373Train Epoch: 15 [2048/12800 (16%)]	Loss: 0.647028Train Epoch: 15 [3072/12800 (24%)]	Loss: 0.638677Train Epoch: 15 [4096/12800 (32%)]	Loss: 0.628698Train Epoch: 15 [5120/12800 (40%)]	Loss: 0.645542Train Epoch: 15 [6016/12800 (47%)]	Loss: 0.658883Train Epoch: 15 [7040/12800 (55%)]	Loss: 0.808641Train Epoch: 15 [8064/12800 (63%)]	Loss: 0.841306Train Epoch: 15 [9088/12800 (71%)]	Loss: 0.821626Train Epoch: 15 [10112/12800 (79%)]	Loss: 0.807499
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [291 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1378 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [291 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1378 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [291 / 1600] 18 %
+Accuracy of the network on test class  1: [1378 / 1600] 86 %
+Train Epoch: 15 [11008/12800 (86%)]	Loss: 0.834584Train Epoch: 15 [12032/12800 (94%)]	Loss: 0.819123
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [289 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1382 / 1600] 86 %
+Train Epoch: 16 [1024/12800 (8%)]	Loss: 0.620511Train Epoch: 16 [2048/12800 (16%)]	Loss: 0.641895Train Epoch: 16 [3072/12800 (24%)]	Loss: 0.642677Train Epoch: 16 [4096/12800 (32%)]	Loss: 0.589391Train Epoch: 16 [5120/12800 (40%)]	Loss: 0.633579Train Epoch: 16 [6016/12800 (47%)]	Loss: 0.646606Train Epoch: 16 [7040/12800 (55%)]	Loss: 0.817587Train Epoch: 16 [8064/12800 (63%)]	Loss: 0.842745Train Epoch: 16 [9088/12800 (71%)]	Loss: 0.831812Train Epoch: 16 [10112/12800 (79%)]	Loss: 0.793990
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [293 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1376 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [293 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1376 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [293 / 1600] 18 %
+Accuracy of the network on test class  1: [1376 / 1600] 86 %
+Train Epoch: 16 [11008/12800 (86%)]	Loss: 0.809073Train Epoch: 16 [12032/12800 (94%)]	Loss: 0.798230
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [296 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1381 / 1600] 86 %
+Train Epoch: 17 [1024/12800 (8%)]	Loss: 0.663710Train Epoch: 17 [2048/12800 (16%)]	Loss: 0.640792Train Epoch: 17 [3072/12800 (24%)]	Loss: 0.652090Train Epoch: 17 [4096/12800 (32%)]	Loss: 0.623378Train Epoch: 17 [5120/12800 (40%)]	Loss: 0.596860Train Epoch: 17 [6016/12800 (47%)]	Loss: 0.607845Train Epoch: 17 [7040/12800 (55%)]	Loss: 0.836934Train Epoch: 17 [8064/12800 (63%)]	Loss: 0.826759Train Epoch: 17 [9088/12800 (71%)]	Loss: 0.803382Train Epoch: 17 [10112/12800 (79%)]	Loss: 0.811362
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [303 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1375 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [303 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1375 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [303 / 1600] 18 %
+Accuracy of the network on test class  1: [1375 / 1600] 85 %
+Train Epoch: 17 [11008/12800 (86%)]	Loss: 0.819984Train Epoch: 17 [12032/12800 (94%)]	Loss: 0.809278
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [294 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1380 / 1600] 86 %
+Train Epoch: 18 [1024/12800 (8%)]	Loss: 0.625768Train Epoch: 18 [2048/12800 (16%)]	Loss: 0.634839Train Epoch: 18 [3072/12800 (24%)]	Loss: 0.642544Train Epoch: 18 [4096/12800 (32%)]	Loss: 0.645702Train Epoch: 18 [5120/12800 (40%)]	Loss: 0.626833Train Epoch: 18 [6016/12800 (47%)]	Loss: 0.649720Train Epoch: 18 [7040/12800 (55%)]	Loss: 0.824419Train Epoch: 18 [8064/12800 (63%)]	Loss: 0.782812Train Epoch: 18 [9088/12800 (71%)]	Loss: 0.827935Train Epoch: 18 [10112/12800 (79%)]	Loss: 0.817343
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [295 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1374 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [295 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1374 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [295 / 1600] 18 %
+Accuracy of the network on test class  1: [1374 / 1600] 85 %
+Train Epoch: 18 [11008/12800 (86%)]	Loss: 0.821148Train Epoch: 18 [12032/12800 (94%)]	Loss: 0.830265
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [300 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+Train Epoch: 19 [1024/12800 (8%)]	Loss: 0.659403Train Epoch: 19 [2048/12800 (16%)]	Loss: 0.626322Train Epoch: 19 [3072/12800 (24%)]	Loss: 0.627190Train Epoch: 19 [4096/12800 (32%)]	Loss: 0.631564Train Epoch: 19 [5120/12800 (40%)]	Loss: 0.635450Train Epoch: 19 [6016/12800 (47%)]	Loss: 0.638780Train Epoch: 19 [7040/12800 (55%)]	Loss: 0.826600Train Epoch: 19 [8064/12800 (63%)]	Loss: 0.789423Train Epoch: 19 [9088/12800 (71%)]	Loss: 0.807879Train Epoch: 19 [10112/12800 (79%)]	Loss: 0.824573
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [300 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1378 / 1600] 86 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [300 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1378 / 1600] 86 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [300 / 1600] 18 %
+Accuracy of the network on test class  1: [1378 / 1600] 86 %
+Train Epoch: 19 [11008/12800 (86%)]	Loss: 0.798443Train Epoch: 19 [12032/12800 (94%)]	Loss: 0.833297
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [311 / 1600] 19 %
+Accuracy of the network on test loader class  1: [1361 / 1600] 85 %
+Train Epoch: 20 [1024/12800 (8%)]	Loss: 0.628715Train Epoch: 20 [2048/12800 (16%)]	Loss: 0.641537Train Epoch: 20 [3072/12800 (24%)]	Loss: 0.638493Train Epoch: 20 [4096/12800 (32%)]	Loss: 0.620228Train Epoch: 20 [5120/12800 (40%)]	Loss: 0.660917Train Epoch: 20 [6016/12800 (47%)]	Loss: 0.626415Train Epoch: 20 [7040/12800 (55%)]	Loss: 0.778308Train Epoch: 20 [8064/12800 (63%)]	Loss: 0.827274Train Epoch: 20 [9088/12800 (71%)]	Loss: 0.806684Train Epoch: 20 [10112/12800 (79%)]	Loss: 0.803658
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [296 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1374 / 1600] 85 %
+
+
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [296 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1374 / 1600] 85 %
+Accuracy of the network on test images: 52 %
+Accuracy of the network on test class  0: [296 / 1600] 18 %
+Accuracy of the network on test class  1: [1374 / 1600] 85 %
+Train Epoch: 20 [11008/12800 (86%)]	Loss: 0.793071Train Epoch: 20 [12032/12800 (94%)]	Loss: 0.811065
+Testing for test loader...
+128/3200256/3200384/3200512/3200640/3200768/3200896/32001024/32001152/32001280/32001408/32001536/32001664/32001792/32001920/32002048/32002176/32002304/32002432/32002560/32002688/32002816/32002944/32003072/32003200/3200
+Accuracy of the network on test loader images: 52 %
+Accuracy of the network on test loader class  0: [302 / 1600] 18 %
+Accuracy of the network on test loader class  1: [1377 / 1600] 86 %
+Train Epoch: 21 [1024/12800 (8%)]	Loss: 0.623281Train Epoch: 21 [2048/12800 (16%)]	Loss: 0.633380Train Epoch: 21 [3072/12800 (24%)]	Loss: 0.632969Train Epoch: 21 [4096/12800 (32%)]	Loss: 0.661024Train Epoch: 21 [5120/12800 (40%)]	Loss: 0.651931
