@@ -328,7 +328,7 @@ def train_best_model(*args, **kwargs):
 
 
 @wraps(train_best_model)
-def train_sizes(hyper_params, train_loader, test_loader, final_loader, net, copy_loaders=true, **kwargs):
+def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion copy_loaders=True, **kwargs):
     """
     :hyper_params: should be a list of list, each sublist containing the samples and epochs. Example:
                    samples = [10,   10,   50,   100,  200]
@@ -337,6 +337,7 @@ def train_sizes(hyper_params, train_loader, test_loader, final_loader, net, copy
 
     Have to pass parameters to train_best_model as **kwargs
     """
+    _net, _optimizer, _criterion = net, optimizer, criterion
 
     if copy_loaders:
         train_loader, test_loader = copy.deepcopy(train_loader), copy.deepcopy(test_loader)
@@ -345,6 +346,8 @@ def train_sizes(hyper_params, train_loader, test_loader, final_loader, net, copy
     dataset_test = train_loader.dataset
 
     for sample, epoch in hyper_params:
+        net, optimizer, criterion = copy.deepcopy(_net), copy.deepcopy(_optimizer), copy.deepcopy(_criterion)
+
         _train_dataset = subsample_dataset(dataset_train, math.floor(sample*.8), {0: 1, 1: 1})
         _test_dataset = subsample_dataset(dataset_test, math.floor(sample*.2), {0: 1, 1: 1})
 
@@ -358,7 +361,7 @@ def train_sizes(hyper_params, train_loader, test_loader, final_loader, net, copy
                 net=net,
                 **kwargs)
 
-        evaluator = evaluate(net, final_loader, copy_net=True)
-        results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final, final.total_percent_correct()) # Validation results, epoch, final results
-
+        final_evaluator = evaluate(net, final_loader, copy_net=True)
+        results[sample] = (evaluator, epoch, evaluator.total_percent_correct(), final_evaluator, final.total_percent_correct()) # Validation results, epoch, final results
+        return results
 

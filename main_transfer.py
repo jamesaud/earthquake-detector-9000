@@ -1,4 +1,4 @@
-from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train, load_checkpoint, train_best_model
+from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train, load_checkpoint, train_best_model, train_sample_sizes
 import models
 import copy
 import torch.nn as nn
