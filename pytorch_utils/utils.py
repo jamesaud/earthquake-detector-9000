@@ -360,7 +360,13 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
     dataset_test = train_loader.dataset
 
     for samples, epochs in hyper_params:
-        net, optimizer, criterion = copy.deepcopy(_net), copy.deepcopy(_optimizer), copy.deepcopy(_criterion)
+        net = copy.deepcopy(_net)
+        criterion = copy.deepcopy(_criterion)
+
+        # In case frozen parameters: https://github.com/amdegroot/ssd.pytorch/issues/109
+        optimizer = _optimizer.__class__(filter(lambda p: p.requires_grad, net.parameters()))
+        optimizer.load_state_dict(_optimizer.state_dict())
+
 
         _train_dataset = subsample_dataset(dataset_train, math.floor(samples * train_split), subsample_ratio)
         _test_dataset = subsample_dataset(dataset_test, math.floor(samples * (1 - train_split)), subsample_ratio)

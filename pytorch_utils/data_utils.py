@@ -1,7 +1,7 @@
 import copy
 import torch
 import math
-from torch.utils.data.sampler import SequentialSampler, BatchSampler
+from torch.utils.data.sampler import SequentialSampler, RandomSampler, BatchSampler
 
 def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weights: dict, copy_dataset=True):
     if copy_dataset: dataset = copy.deepcopy(dataset)
@@ -15,7 +15,7 @@ def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weig
 def replace_loader_dataset(dataloader: torch.utils.data.DataLoader, dataset: torch.utils.data.Dataset, sampler=None):
     dataloader.dataset = dataset
     if sampler is None:
-        print(f"* Warning - sampler {dataloader.sampler.__class__.__name__} is being replaced by SequentialSampler *")
-        sampler = SequentialSampler(dataset)
+        print(f"* Warning - sampler {dataloader.sampler.__class__.__name__} is being replaced by RandomSampler *")
+        sampler = RandomSampler(dataset)
     batch_sampler = BatchSampler(sampler, dataloader.batch_size, dataloader.drop_last)
     dataloader.batch_sampler = batch_sampler

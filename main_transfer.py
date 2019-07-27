@@ -92,9 +92,12 @@ net = load_net(CHECKPOINT_PATH)
 replace_model(net, feed_forward_size)
 net.cuda()
 net.train() 
-optimizer = optim.Adam(net.parameters())
 criterion = nn.CrossEntropyLoss().cuda()
 freeze_parameters(net)
+optimizer = optim.Adam([p for p in net.parameters() if p.requires_grad])
+
+
+
 
 hyper_params = zip(samples, epochs)
 
