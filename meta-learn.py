@@ -24,8 +24,9 @@ import glob
 import os 
 import copy
 from typing import List, Callable
-from pytorch_utils.utils import evaluation, save_checkpoint, load_checkpoint, write_evaluator
+from pytorch_utils.utils import evaluation, save_checkpoint, load_checkpoint, write_evaluator, train_sample_sizes
 from pytorch_utils.utils import train as train_model
+from utils import verify_dataset_integrity
 
 import sys
 from datetime import datetime
@@ -395,43 +396,59 @@ if __name__ == "__main__":
 
         test_train_samples = 800
         test_eval_samples = 1000
+        test_test_samples = 10000
         writer = SummaryWriter(path.replace('train', 'test'))
         
-        test_station_settings = _new_settings()
-        test_station_settings.weigh_classes = {0: 1, 1: 3}
+        test_settings = _new_settings()
+        test_settings.train.path = test_settings.test.path
 
-        print("Creating Train and Test Loaders")
-        test_train_loader = TaskCreator([test_path], 
-                            task_samples=test_train_samples, 
-                            batch_size=BATCH_SIZE,
-                            train=True,
-                            shuffle=True)()
+        print("Creating Train and Test Datasets")
+        dataset_train = create_dataset(test_settings, Model.transformations['train'], train=True)
+        dataset_test = create_dataset(test_settings, Model.transformations['test'], train=False)
 
-    
-        test_eval_loader = TaskCreator([test_path], 
-                            task_samples=test_eval_samples, 
-                            batch_size=BATCH_SIZE,
-                            train=False,
-                            shuffle=True)()
+        dataset_final = copy.deepcopy(dataset_train)
+        del dataset_final.file_paths[test_test_samples:]
+        del dataset_train.file_paths[:test_test_samples]
+
+        assert verify_dataset_integrity(dataset_train, dataset_test)
+        assert verify_dataset_integrity(dataset_train, dataset_final)
+
+        # Set up test loaders (using default batch size of 128)
+        train_loader = create_loader(dataset_train, train=True)
+        eval_loader = create_loader(dataset_test, train=False)
+        test_loader = create_loader(dataset_final, train=False)
 
         model = Model().cuda()
         opt = SGD(model.parameters(), lr=LR)
 
-        model, opt = load_checkpoint(checkpoint_path, model, opt, copy=False)
+        model, opt = load_checkpoint(checkpoint_path, model, opt)
         model.train()
 
-        def train_net(epochs):
-            for i in range(epochs):
-                train_model(i+1,
-                            test_train_loader,
-                            test_eval_loader,
-                            opt,
-                            criterion,
-                            model,
-                            writer,
-                            write=True,
-                            print_test_evaluation_every=90,
-                            print_loss_every=10)
 
-        train_net(100)
+        hyper_params = config.hyperparam_sample_sizes
+        csv_path = f'./visualize/csv/results-metalearning-samplesizes-99%.csv'
+
+        results = train_sample_sizes(hyper_params, train_loader, eval_loader, test_loader,
+                                    model, opt, criterion, 
+                                    csv_write_path = csv_path,
+                                    writer=writer,
+                                    write=False,
+                                    print_loss_every=1_000,
+                                    print_test_evaluation_every=10_000,
+                                    yield_every = 10_000)
+
+        # def train_net(epochs):
+        #     for i in range(epochs):
+        #         train_model(i+1,
+        #                     test_train_loader,
+        #                     test_eval_loader,
+        #                     opt,
+        #                     criterion,
+        #                     model,
+        #                     writer,
+        #                     write=True,
+        #                     print_test_evaluation_every=90,
+        #                     print_loss_every=10)
+
+        # train_net(100)
 

@@ -14,6 +14,10 @@ from itertools import islice
 import math
 from .data_utils import subsample_dataset, replace_loader_dataset
 
+import sys
+sys.path.append('..')
+from evaluator import csv_write  
+
 
 def evaluate(net: nn.Module,
              data_loader: DataLoader,
@@ -92,13 +96,8 @@ def save_checkpoint(path, name, model, optimizer, loss):
                 }, path)
 
 # Use existing model
-def load_checkpoint(checkpoint_path, model, optimizer, copy=False):
-        checkpoint = torch.load(checkpoint_path)
-
-        if copy:
-            model = copy.deepcopy(model)
-            optimizer = copy.deepcopy(optimizer)
-            
+def load_checkpoint(checkpoint_path, model, optimizer):
+        checkpoint = torch.load(checkpoint_path)            
         model.load_state_dict(checkpoint['model_state_dict'])
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
 
@@ -338,7 +337,7 @@ def train_best_model(epochs, *args, **kwargs):
 
 
 @wraps(train_best_model)
-def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion, copy_loaders=True, train_split=.8, subsample_ratio={0: 1, 1: 1}, **kwargs):
+def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, net, optimizer, criterion, copy_loaders=True, train_split=.8, subsample_ratio={0: 1, 1: 1}, csv_write_path=None, **kwargs):
     """
     :hyper_params: should be a list of list, each sublist containing the samples and epochs. Example:
                    samples = [10,   10,   50,   100,  200]
@@ -347,10 +346,11 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
 
     Have to pass parameters to train_best_model as **kwargs
     """
+
     if not (0 <= train_split <= 1):
         raise ValueError("train_split should be between 0 and 1")
         
-    results = {}
+    results = []
     _net, _optimizer, _criterion = net, optimizer, criterion
 
     if copy_loaders:
@@ -364,9 +364,8 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
         criterion = copy.deepcopy(_criterion)
 
         # In case frozen parameters: https://github.com/amdegroot/ssd.pytorch/issues/109
-        optimizer = _optimizer.__class__(filter(lambda p: p.requires_grad, net.parameters()))
+        optimizer = _optimizer.__class__(filter(lambda p: p.requires_grad, net.parameters()), **optimizer.defaults)
         optimizer.load_state_dict(_optimizer.state_dict())
-
 
         _train_dataset = subsample_dataset(dataset_train, math.floor(samples * train_split), subsample_ratio)
         _test_dataset = subsample_dataset(dataset_test, math.floor(samples * (1 - train_split)), subsample_ratio)
@@ -383,7 +382,14 @@ def train_sample_sizes(hyper_params, train_loader, test_loader, final_loader, ne
                 criterion=criterion,
                 **kwargs)
 
-        final_evaluator = evaluate(net, final_loader, copy_net=True)
-        results[samples] = (best_epoch, evaluator, final_evaluator) # epoch, validation results, final results
-    return results
+        final_evaluator = evaluation(net, final_loader, "Final Test", copy_net=True)
+        results.append( 
+            (samples, epochs, (best_epoch, evaluator, final_evaluator)) 
+            ) # epoch, validation results, final results
 
+    if csv_write_path:
+        for (sample_size, epochs, data) in results:
+            final_eval = data[-1]
+            csv_write.write_evaluator(final_eval, csv_write_path, extra_row_data=[sample_size, epochs], extra_header_data=['Samples', 'Epochs'])
+
+    return results

@@ -18,6 +18,10 @@ BORDER_COLOR_RGB = (68, 2, 85)  # R, G, B
 
 VISUALIZE_PATH = os.path.join(os.path.join(os.getcwd(), 'visualize/'))
 
+loader_args = dict(
+                   num_workers=8,
+                   pin_memory=True,
+                   )
 
 # Initialize Cross Validation Generalized Detection
 path = 'all-spectrograms-symlinks/99'
@@ -161,3 +165,7 @@ top_runs_gray = (                        # N   Quakes
 top_runs_rgb = (
     '92-0.9801-0.9702-0.9982.pt',
 )
+
+samples = [10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000, 256000]
+epochs =  [30,   30,   30,   30,   30,   30,   30,     30,    30,    30,    30,     20,    5,    3,      1]
+hyperparam_sample_sizes = tuple(zip(samples, epochs))

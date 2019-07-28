@@ -57,10 +57,10 @@ class Evaluator:
         except ZeroDivisionError:
             return 0
 
-    def total_percent_correct(self):
+    def total_percent_correct(self, normalized=True):
         amount_correct = 0
         amount_total = 0
-
+        
         for class_name, info in self.class_info.items():
             amount_correct += info.amount_correct
             amount_total += info.amount_total

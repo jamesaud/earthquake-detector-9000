@@ -1,9 +1,11 @@
-from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train, load_checkpoint, train_best_model, train_sample_sizes
+from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train, load_checkpoint, train_sample_sizes
 import models
 import copy
 import torch.nn as nn
 from main import *
 from main import _main_make_datasets, _main_make_loaders
+from evaluator.csv_write import write_evaluator
+import config
 
 NET = models.mnist_three_component_exp
 
@@ -69,12 +71,7 @@ def freeze_parameters(net):
 # Train it
 feed_forward_size = 64
 
-import math
-samples = [10000,10,   10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000, 256000]
-epochs =  [100,30,   30,   30,   30,   30,   30,   30,     30,    30,    30,    30,     20,    5,    3,      1]
-results = {}
-
-
+csv_path = f'./visualize/csv/results-transferlearning-samplesizes-{model_path}.csv'
 
 # Create a final test loader where it has unseen data
 dataset_final = copy.deepcopy(dataset_train)
@@ -83,10 +80,12 @@ del dataset_train.file_paths[:10000]
 
 assert verify_dataset_integrity(dataset_train, dataset_final)
 
-# IMPORTANT - CAN NOT USE WEIGHTED SAMPLER HERE
+# CAN NOT USE WEIGHTED SAMPLER HERE... Unfortunately
 train_loader = create_loader(dataset_train, train=True)
 test_loader = create_loader(dataset_test, train=False)
-final_test_loader = DataLoader(dataset_final, **loader_args)
+
+final_test_loader =  create_loader(dataset_final, train=False, batch_size=BATCH_SIZE)
+
 
 net = load_net(CHECKPOINT_PATH)
 replace_model(net, feed_forward_size)
@@ -98,18 +97,14 @@ optimizer = optim.Adam([p for p in net.parameters() if p.requires_grad])
 
 
 
-
-hyper_params = zip(samples, epochs)
+hyper_params = config.hyperparam_sample_sizes
 
 results = train_sample_sizes(hyper_params, train_loader, test_loader, final_test_loader,
-                             net, optimizer, criterion, 
+                             net, optimizer, criterion, csv_write_path = csv_path,
                              writer=writer,
                              write=False,
                              print_loss_every=1_000,
                              print_test_evaluation_every=10_000,
                              yield_every = 10_000)
 
-
-from pprint import pprint
-print("The format is: Validation Results, epoch, validation percent correct, Test results, test percent correct")
-pprint(results)
+print("\nWrote results to csv")

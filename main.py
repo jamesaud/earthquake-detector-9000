@@ -23,6 +23,7 @@ from pprint import pprint
 from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 import copy
+from config import loader_args
  
 if not torch.__version__.startswith("0.3"):
     print(f"PyTorch version should be 0.3.x, your version is {torch.__version__}.")
@@ -62,11 +63,6 @@ loaders = {
 }
 
 
-loader_args = dict(
-                   batch_size=BATCH_SIZE,
-                   num_workers=8,
-                   pin_memory=True,
-                   )
 
 # Added
 def create_dataset(settings: dict, transformations, train: bool):
@@ -126,13 +122,15 @@ def create_loader(dataset, train: bool, batch_size = BATCH_SIZE, weigh_classes =
                           shuffle=not train_sampler,
                           sampler=train_sampler,
                           drop_last=False,
+                          batch_size=batch_size,
                           **loader_args)
         
         return train_loader
     else:
         test_loader = DataLoader(dataset,
-                         drop_last=False,
-                         **loader_args)
+                          drop_last=False,
+                          batch_size=batch_size,
+                          **loader_args)
         return test_loader
 
 

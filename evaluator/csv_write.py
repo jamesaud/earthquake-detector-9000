@@ -3,7 +3,7 @@ import csv
 from .evaluator import NetEval
 from loaders.named_loader import AbstractSpectrogramNamedDataset
 import sys
-
+import os 
 
 def print_progress(i):
     sys.stdout.write('\r' + str(i))
@@ -72,3 +72,35 @@ def write_named_predictions_to_csv(net, named_dataloader: AbstractSpectrogramNam
 
         i += len(guesses)
         print_progress(i)
+
+def write_evaluator(evaluator, csv_path, extra_header_data=[], extra_row_data=[]):
+    headers = [] + extra_header_data
+    row = [] + extra_row_data
+
+    
+    for class_name, data in evaluator.class_info.items():
+        for description, value in data.items():
+            headers.append(description + f" (class {class_name})")
+            row.append(value)
+
+    for class_name, _ in evaluator.class_info.items():
+        percent_correct = evaluator.percent_correct(class_name)
+        headers.append(f"Percent Correct (class {class_name})")
+        row.append(percent_correct)
+
+    headers.append("Total Percent Correct")
+    row.append(evaluator.normalized_percent_correct())
+
+    exists = os.path.exists(csv_path)
+    os.makedirs(os.path.dirname(csv_path), exist_ok=True)
+
+    with open(csv_path, 'a+') as csvfile:
+        writer = csv.writer(csvfile)
+        if not exists:
+            writer.writerow(headers)
+        writer.writerow(row)
+            
+            
+            
+            
+
