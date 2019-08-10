@@ -24,7 +24,7 @@ loader_args = dict(
                    )
 
 # Initialize Cross Validation Generalized Detection
-path = 'all-spectrograms-symlinks/99'
+path = 'all-spectrograms-symlinks/97'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path) 
 test = 'benz'                             
@@ -166,6 +166,9 @@ top_runs_rgb = (
     '92-0.9801-0.9702-0.9982.pt',
 )
 
-samples = [10,   50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000, 256000]
-epochs =  [30,   30,   30,   30,   30,   30,   30,     30,    30,    30,    30,     20,    5,    3,      1]
+samples = [10, 20, 30, 40,  50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000]
+epochs =  [30, 30, 30, 30, 30,   30,   30,   30,     30,     30,   30,    30,     30,    20,    5]
+
+samples = range(4, 200, 4)
+epochs = [30] * len(samples)
 hyperparam_sample_sizes = tuple(zip(samples, epochs))

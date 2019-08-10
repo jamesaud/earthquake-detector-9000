@@ -21,7 +21,7 @@ from evaluator import csv_write
 
 def evaluate(net: nn.Module,
              data_loader: DataLoader,
-             copy_net=False):
+             copy_net=True):
     """
     :param net: neural net
     :param copy_net: boolean
@@ -33,6 +33,7 @@ def evaluate(net: nn.Module,
         Net.eval()
     else:
         Net = net
+        Net.eval()
 
     i = 0
     all_output_labels = torch.FloatTensor()
@@ -52,6 +53,7 @@ def evaluate(net: nn.Module,
 
     # Update the information in the Evaluator
     eval = Evaluator(all_true_labels, all_output_labels, 2)
+    Net.train()
     return eval
 
 
@@ -249,6 +251,8 @@ def train_epoch(epoch: int,
     :param print_train_evaluation_every:  when to print and write train_evaluation
     :param train_evaluation_loader: Use a different dataloader to test the train set (if you want to subsample to take less time)
     :return: Evaluator
+
+    TODO: Get rid of write, just check if writer is provided.
     """
     assert epoch > 0, "Epoch should start at 1"
 
@@ -323,9 +327,10 @@ def train(*args, **kwargs):
     return evaluator
 
 @wraps(train_epoch)
-def train_best_model(epochs, *args, **kwargs):
+def train_best_model(epochs, early_stopping=float('inf'), *args, **kwargs):
     best = None
     best_epoch = 1
+
     for epoch in range(epochs):
         for evaluator in train_epoch(epoch+1, *args, **kwargs):
             if best is None:
@@ -333,6 +338,11 @@ def train_best_model(epochs, *args, **kwargs):
             elif evaluator.normalized_percent_correct(weigh_events=1.1) >= best.normalized_percent_correct(weigh_events=1.1):
                 best = evaluator
                 best_epoch = epoch
+
+        # If accuracy hasn't improved in x epochs
+        if epoch >= best_epoch + early_stopping:
+            break
+
     return best, best_epoch
 
 

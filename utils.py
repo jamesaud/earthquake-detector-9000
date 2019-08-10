@@ -8,6 +8,8 @@ import math
 from torch.utils.data import Dataset
 #from loaders import SpectrogramBaseDataset
 from typing import Sequence
+import random
+random.seed(244)
 
 class dotdict(dict):
     def __init__(self, *args, **kwargs):
@@ -45,7 +47,10 @@ def make_weights_for_classes(images, nclasses, weigh_classes=None):
     N = sum(count)   # Total number of samples
 
     for i in range(nclasses):
-        weight_per_class[i] = N/count[i]         
+        if count[i] == 0:
+            weight_per_class[i] = 0
+        else:
+            weight_per_class[i] = N/count[i]         
 
     weight = [0] * len(images)
     for idx, val in enumerate(items):
@@ -88,12 +93,19 @@ def subset(dataset, indices: Sequence, copy_dataset=True):
     dataset.file_paths = [dataset.file_paths[i] for i in indices]
     return dataset
 
-def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weights: dict, copy_dataset=True):
+def subsample_dataset(dataset: torch.utils.data.Dataset, num_samples, class_weights: dict, random_shuffle=False, copy_dataset=True):
     if copy_dataset: dataset = copy.deepcopy(dataset)
     weight_sum = sum(class_weights.values())
     num_local = math.ceil(class_weights[1] / weight_sum * num_samples)
     num_noise = math.ceil(class_weights[0] / weight_sum * num_samples)
-    dataset.file_paths = dataset.local[:num_local] + dataset.noise[:num_noise]
+
+    if random_shuffle:
+        dataset.file_paths = random.sample(dataset.local, num_local) + random.sample(dataset.noise, num_noise)
+    else:
+        dataset.file_paths = dataset.local[:num_local] + dataset.noise[:num_noise]
+
+    dataset.shuffle()
+    
     return dataset
 
 def lmap(*args, **kwargs):

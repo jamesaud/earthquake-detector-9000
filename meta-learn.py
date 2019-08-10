@@ -19,7 +19,7 @@ from reptile.utils import ParamDict
 from models import mnist_three_component_exp
 from main import create_dataset, create_loader
 import config 
-from utils import dotdict, reduce_dataset, subset
+from utils import dotdict, reduce_dataset, subset, subsample_dataset
 import glob 
 import os 
 import copy
@@ -56,17 +56,17 @@ LR, META_LR = 0.02, 0.1  # Copy OpenAI's hyperparameters.
 
 # Training 
 SAMPLES_PER_TASK = 100    # Samples for each station: 50
-BATCH_SIZE, META_BATCH_SIZE = 10, 3
+BATCH_SIZE, META_BATCH_SIZE = 50, 3
 EPOCHS, META_EPOCHS = 1, 30000
 
 # Evaluation
-EVALUATION_TRAIN_SAMPLES = SAMPLES_PER_TASK
-EVALUATION_EVAL_SAMPLES = SAMPLES_PER_TASK * 3
+EVALUATION_TRAIN_SAMPLES = 100
+EVALUATION_EVAL_SAMPLES = 1000
 EVALUATION_EPOCHS = 5 
-EVALUATE_EVERY = 10         # Also evaluates every 
+EVALUATE_EVERY = 10        
 
 # Test
-TEST_TRAIN_SAMPLES = 100
+TEST_TRAIN_SAMPLES = 500
 TEST_EVALUATION_SAMPLES = 1000
 TEST_EPOCHS = 20
 TEST_EVERY = 30
@@ -123,9 +123,12 @@ class TaskCreator:
         """
         datasetIndex = next(self.iter_datasets)
         dataset, start_index = datasetIndex
-        end_task_index = start_index + self.task_samples
 
-        task_dataset = subset(dataset, range(start_index, end_task_index))
+        end_task_index = start_index + self.task_samples
+        end_task_index = min(end_task_index, len(dataset))
+        #task_dataset = subset(dataset, range(start_index, end_task_index))
+
+        task_dataset = subsample_dataset(dataset, self.task_samples, dict(enumerate(self.station_settings.weigh_classes)), random_shuffle=True)
         task_loader = self.task_loader(task_dataset)
 
         datasetIndex[1] = len(dataset) % end_task_index
@@ -169,11 +172,20 @@ class TaskCreator:
         for i, path in enumerate(station_paths):
             sys.stdout.flush()
             sys.stdout.write(f"\r...creating dataset [{i + 1} of {n}]")
-
-            # Use list, a mutable data structure, to store the Dataset and Current Index
-            datasets.append([self._create_dataset(path), 0])
+            
+            dataset = self._create_dataset(path)
+            if self._ensure_dataset_integrity(dataset):
+                # Use list, a mutable data structure, to store the Dataset and Current Index
+                datasets.append([dataset, 0])
         print()
         return datasets
+
+    @staticmethod
+    def _ensure_dataset_integrity(dataset):
+        if len(dataset) == 0:
+            print(f"!! Dataset length is 0, skipping dataset {dataset.station_path}!!")
+            return False
+        return True 
 
 
 def train_batch(x: List[Tensor], y: Tensor, model: Model, opt) -> None:
@@ -306,7 +318,7 @@ def write_info(writer):
 
 
 if __name__ == "__main__":
-    TRAIN = False
+    TRAIN = True
     TEST = not TRAIN
 
     station_paths = glob.glob(pj(settings.train.path, '*'))
@@ -348,7 +360,7 @@ if __name__ == "__main__":
         test_eval_task = TaskCreator([test_path], 
                                 task_samples=TEST_EVALUATION_SAMPLES, 
                                 batch_size=BATCH_SIZE,
-                                train=False).skip(3)()
+                                train=False).skip(5)()
 
 
         # Need to put model on GPU first for tensors to have the right type.
@@ -370,7 +382,6 @@ if __name__ == "__main__":
             if iteration == 1 or iteration % EVALUATE_EVERY == 0:
                 print()
                 model, opt = new_meta_model()
-
                 evaluator = evaluate_task(EVALUATION_EPOCHS, evaluation_train_task, evaluation_eval_task, model, opt, "Eval Task", copy=False, writer=writer, iteration=iteration)            
 
                 name = make_checkpoint_name(evaluator, f"metaepoch-{iteration}")
@@ -391,8 +402,8 @@ if __name__ == "__main__":
 
 
     if TEST:
-        model_name = 'metaepoch-670-total-92.0-class0-92.51-class1-91.15.pt'
-        checkpoint_path = pj(config.VISUALIZE_PATH, f'runs/meta-learning/train/long_run/checkpoints/{model_name}')
+        model_name = 'metaepoch-900-total-91.67-class0-95.19-class1-85.84.pt'
+        checkpoint_path = pj(config.VISUALIZE_PATH, f'runs/meta-learning/train/99%/checkpoints/{model_name}')
 
         test_train_samples = 800
         test_eval_samples = 1000
@@ -426,29 +437,15 @@ if __name__ == "__main__":
 
 
         hyper_params = config.hyperparam_sample_sizes
-        csv_path = f'./visualize/csv/results-metalearning-samplesizes-99%.csv'
+        csv_path = f'./visualize/csv/results-metalearning-samplesizes-97%.csv'
 
         results = train_sample_sizes(hyper_params, train_loader, eval_loader, test_loader,
                                     model, opt, criterion, 
-                                    csv_write_path = csv_path,
+                                    csv_write_path=csv_path,
                                     writer=writer,
                                     write=False,
                                     print_loss_every=1_000,
                                     print_test_evaluation_every=10_000,
-                                    yield_every = 10_000)
+                                    yield_every=10_000)
 
-        # def train_net(epochs):
-        #     for i in range(epochs):
-        #         train_model(i+1,
-        #                     test_train_loader,
-        #                     test_eval_loader,
-        #                     opt,
-        #                     criterion,
-        #                     model,
-        #                     writer,
-        #                     write=True,
-        #                     print_test_evaluation_every=90,
-        #                     print_loss_every=10)
-
-        # train_net(100)
 

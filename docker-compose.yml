@@ -7,7 +7,7 @@ services:
        context: ./visualize
        dockerfile: ./Dockerfile-Tensorboard
    ports:
-       - 6007:6006
+       - 6006:6006
    volumes:
       - ./visualize/runs/meta-learning:/data
 
@@ -16,6 +16,6 @@ services:
        context: ./visualize
        dockerfile: ./Dockerfile-Tensorboard
    ports:
-       - 6006:6006
+       - 6007:6006
    volumes:
       - ./visualize/saved:/data

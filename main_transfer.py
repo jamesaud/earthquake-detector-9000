@@ -71,13 +71,14 @@ def freeze_parameters(net):
 # Train it
 feed_forward_size = 64
 
-csv_path = f'./visualize/csv/results-transferlearning-samplesizes-{model_path}.csv'
+csv_path = f'./visualize/csv/results-convnet-samplesizes-{model_path}.csv'
 
 # Create a final test loader where it has unseen data
 dataset_final = copy.deepcopy(dataset_train)
 del dataset_final.file_paths[10000:]
 del dataset_train.file_paths[:10000]
 
+assert verify_dataset_integrity(dataset_train, dataset_test)
 assert verify_dataset_integrity(dataset_train, dataset_final)
 
 # CAN NOT USE WEIGHTED SAMPLER HERE... Unfortunately
@@ -87,15 +88,14 @@ test_loader = create_loader(dataset_test, train=False)
 final_test_loader =  create_loader(dataset_final, train=False, batch_size=BATCH_SIZE)
 
 
-net = load_net(CHECKPOINT_PATH)
-replace_model(net, feed_forward_size)
+net = NET() # load_net(CHECKPOINT_PATH)
+# replace_model(net, feed_forward_size)
 net.cuda()
 net.train() 
+
 criterion = nn.CrossEntropyLoss().cuda()
-freeze_parameters(net)
+# freeze_parameters(net)
 optimizer = optim.Adam([p for p in net.parameters() if p.requires_grad])
-
-
 
 hyper_params = config.hyperparam_sample_sizes
 

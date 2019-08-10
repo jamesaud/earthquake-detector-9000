@@ -186,6 +186,7 @@ def write_stats(evaluator, name):
 
 if __name__ == '__main__':
     print_config()
+
     TRAIN_MODE = True
 
     net, optimizer, criterion = create_model()
@@ -194,16 +195,23 @@ if __name__ == '__main__':
     # TRAINING NEW MODEL
     #################
 
-    dataset_train, dataset_test = _main_make_datasets()
-    train_loader, test_loader = _main_make_loaders()
-
     # Subsample to evaluate train accuracy... because it has too many samples and will take too long
-    num_train_evaluation_samples = 20000
+    num_train_evaluation_samples = 1000
+    num_train_samples = 80
+    num_test_samples = 1000
+
+
+    dataset_train, dataset_test = _main_make_datasets()
+    dataset_train = reduce_dataset(dataset_train, num_train_samples)
+    dataset_test = reduce_dataset(dataset_test, num_test_samples)
+
+    train_loader = create_loader(dataset_train, train=True, weigh_classes=WEIGH_CLASSES)
+    test_loader = create_loader(dataset_test, train=False)
+
     train_evaluation_loader = DataLoader(reduce_dataset(dataset_train, num_train_evaluation_samples), **loader_args)
 
 
     if TRAIN_MODE:
-
         write_initial(writer, net, settings, dataset_train)
 
         def train_net(epochs):
