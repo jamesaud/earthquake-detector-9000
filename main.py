@@ -1,5 +1,5 @@
 import matplotlib
-from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train
+from pytorch_utils.utils import evaluate, write_images, load_model, print_evaluation, write_info, train, load_checkpoint
 matplotlib.use('agg')
 matplotlib.interactive(False)
 
@@ -24,12 +24,13 @@ from evaluator.csv_write import write_named_predictions_to_csv
 from writer_util.stats_writer import StatsWriter
 import copy
 from config import loader_args
+import sys
  
 if not torch.__version__.startswith("0.3"):
     print(f"PyTorch version should be 0.3.x, your version is {torch.__version__}.")
     exit()
 
-configuration = 'benz_train_set'
+configuration = 'benz_train_set' 
 settings = config.options[configuration]
 settings = dotdict(settings)
 
@@ -39,7 +40,7 @@ CWD = os.getcwd()
 make_path = lambda path: os.path.join(CWD, os.path.join('data', path))
  
 # Variables
-BATCH_SIZE = 128
+BATCH_SIZE = 512
 NUM_CLASSES = 2
 iterations = 0
 
@@ -110,7 +111,7 @@ def create_dataset(settings: dict, transformations, train: bool):
                        divide_test=settings.test.divide_test,
                        test=True,
                        crop_padding=crop_padding_test,
-                       crop_center=False,
+                       crop_center=False,    
                        **dataset_args)
         return dataset_test
 
@@ -195,13 +196,14 @@ if __name__ == '__main__':
     # TRAINING NEW MODEL
     #################
 
-    # Subsample to evaluate train accuracy... because it has too many samples and will take too long
-    num_train_evaluation_samples = 1000
-    num_train_samples = 80
-    num_test_samples = 1000
-
+    # Subsample if desired
+    num_train_evaluation_samples = 10000 
+    num_train_samples =  sys.maxsize
+    num_test_samples =   sys.maxsize 
 
     dataset_train, dataset_test = _main_make_datasets()
+    dataset_train.shuffle()
+    
     dataset_train = reduce_dataset(dataset_train, num_train_samples)
     dataset_test = reduce_dataset(dataset_test, num_test_samples)
 
@@ -219,8 +221,8 @@ if __name__ == '__main__':
                 train(epoch + 1, train_loader, test_loader, optimizer, criterion, net, writer,
                       write=True,
                       checkpoint_path=checkpoint_path,
-                      print_test_evaluation_every=2_000,  # 30,000
-                      print_train_evaluation_every=3_000,
+                      print_test_evaluation_every=5_000,  
+                      print_train_evaluation_every=20_000,
                       train_evaluation_loader=train_evaluation_loader
                       )
 
@@ -233,32 +235,48 @@ if __name__ == '__main__':
     # Test Mode
     else:
         # Load Net
+
+        # Deep Learning Model (used for most of results) (requires the old load_model function)
         MODEL = f'benz-training/checkpoints'
         model_name = "iterations-780416-total-99.07-class0-98.91-class1-99.37.pt"
-        MODEL_PATH = f'./visualize/runs/{NET.__name__}/{MODEL}/{model_name}'
+
+        # Monthly
+        # MODEL = 'benz-monthly/checkpoints'
+        # model_name = 'iterations-244736-total-98.82-class0-99.11-class1-98.29.pt'
+
+        # New Model
+        # MODEL = 'benz-modified-gridsearch(nextmonthastest)/crop-vert-.8/checkpoints'
+        # model_name = 'iterations-350720-total-96.48-class0-97.57-class1-95.26.pt'
+
+        # Path to load model
+        MODEL_PATH = f'./visualize/saved/2019/{NET.__name__}/{MODEL}/{model_name}'
 
         # Set model to evaluation mode
         print("Loading Net")
+
+        # Old models that didn't use the new api
         load_model(net, MODEL_PATH)
+
+        # New Load Model
+        # model, _ = load_checkpoint(MODEL_PATH, net, optimizer)
         net.eval()
 
-        # Make compatible with functions that  expect loaders to return 2 items (if using namedloader)
-        dataset_test.return_name = False
-
-        # Test the evaluator (to see results output)
-        print("Testing Net")
-        test_evaluator = evaluate(net, test_loader, copy_net=True)
-        print()
-        print_evaluation(test_evaluator, 'test')
+        # Test the evaluator (to see results output) (sanity check for the model)
+        # print("Testing Net")
+        # test_evaluator = evaluate(net, test_loader, copy_net=True)
+        # print()
+        # print_evaluation(test_evaluator, 'test')
 
         # Write figures
-        print("Writing stats...")
-        write_stats(test_evaluator, f'{model_name}-{configuration}')
+        # print("Writing stats...")
+        # _path = f'tmp/{model_name}-{configuration}'
+        # write_stats(test_evaluator, _path)
+        # print("Wrote to", _path)
 
-        # Compatible with csv write functions that expect 3 items (components, label, name)
-        dataset_test.return_name = True
+        # # Compatible with csv write function that expect 3 items (components, label, name) for named loader
+        dataset_test.return_name = True 
 
-        # Write CSV predictions
-        write_named_predictions_to_csv(net, test_loader, f'evaluator/predictions({model_name}-{configuration}).csv')
+        # # # Write CSV predictions
+        write_named_predictions_to_csv(net, test_loader, f'visualize/predictions/predictions({model_name}-{configuration}).csv')
         print("\nWrote csv")
             

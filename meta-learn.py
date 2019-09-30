@@ -47,7 +47,7 @@ settings = _new_settings()
 MODEL = mnist_three_component_exp
 
 Weights = ParamDict
-criterion = nn.CrossEntropyLoss().cuda() #F.l1_loss
+criterion = nn.CrossEntropyLoss().cuda() 
 
 PLOT = True
 NUM_OF_TRAIN_STATIONS = None # all of them
@@ -318,7 +318,7 @@ def write_info(writer):
 
 
 if __name__ == "__main__":
-    TRAIN = True
+    TRAIN = False
     TEST = not TRAIN
 
     station_paths = glob.glob(pj(settings.train.path, '*'))
@@ -402,11 +402,16 @@ if __name__ == "__main__":
 
 
     if TEST:
-        model_name = 'metaepoch-900-total-91.67-class0-95.19-class1-85.84.pt'
+        # 99% model:
+              # - metaepoch-900-total-91.67-class0-95.19-class1-85.84.pt
+              # - metaepoch-1410-total-93.0-class0-94.65-class1-90.27.pt
+              # - metaepoch-4260-total-94.33-class0-95.72-class1-92.04.pt
+        # 97% model:
+              # - metaepoch-14090-total-95.8-class0-97.4-class1-94.2.pt
+
+        model_name = 'metaepoch-4260-total-94.33-class0-95.72-class1-92.04.pt'
         checkpoint_path = pj(config.VISUALIZE_PATH, f'runs/meta-learning/train/99%/checkpoints/{model_name}')
 
-        test_train_samples = 800
-        test_eval_samples = 1000
         test_test_samples = 10000
         writer = SummaryWriter(path.replace('train', 'test'))
         
@@ -437,6 +442,7 @@ if __name__ == "__main__":
 
 
         hyper_params = config.hyperparam_sample_sizes
+
         csv_path = f'./visualize/csv/results-metalearning-samplesizes-97%.csv'
 
         results = train_sample_sizes(hyper_params, train_loader, eval_loader, test_loader,

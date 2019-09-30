@@ -70,7 +70,7 @@ def Add1DNoise(IGNORE_COLOR, NOISE_RGB_AMOUNT):
 def Add3DNoise(IGNORE_COLOR, NOISE_RGB_AMOUNT):
     """ Adds noise to every pixel except the 'ignore_color'. useful to not add noise to borders """
     return Lambda(lambda img: _add_noise_3d(img, IGNORE_COLOR, NOISE_RGB_AMOUNT),
-                  f"Add1DNoise(IGNORE_COLOR={IGNORE_COLOR}, NOISE_RGB_AMOUNT={NOISE_RGB_AMOUNT})")
+                  f"Add3DNoise(IGNORE_COLOR={IGNORE_COLOR}, NOISE_RGB_AMOUNT={NOISE_RGB_AMOUNT})")
 
 def Gaussian_Blur(radius):
     return Lambda(lambda img: img.filter(ImageFilter.GaussianBlur(radius=radius)),

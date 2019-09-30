@@ -75,5 +75,6 @@ dependencies:
     - scikit-plot==0.3.7
     - scipy==1.2.1
     - torch==0.3.0.post4
+    - torchsummary==1.5.1
 prefix: /home/audretjm/anaconda3/envs/earthquake
 

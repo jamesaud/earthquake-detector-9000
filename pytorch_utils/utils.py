@@ -129,13 +129,15 @@ def write_info(writer: SummaryWriter, net: nn.Module, settings: dict, resize: tu
     transforms = ['Resize: ' + str(resize), 'Crop: ' + str(crop)]
 
     step = 0
+
+    # .__str__ only works on lambda local functions and not str().... why? Just the way it is.
     for transformation in transforms + net._train + net._transformations:
-        writer.add_text('Transformations_Train', str(transformation), global_step=step)
+        writer.add_text('Transformations_Train', transformation.__str__(), global_step=step)
         step += 1
 
     step = 0
     for transformation in transforms + net._test + net._transformations:
-        writer.add_text('Transformations_Test', str(transformation), global_step=step)
+        writer.add_text('Transformations_Test', transformation.__str__(), global_step=step)
         step += 1
 
     writer.add_text('Configuration', str(settings))

@@ -14,7 +14,7 @@ from itertools import islice
 import sys
 
 
-IMG_PATH = './data/Benz/spectrograms/test_set_benz_2'  # './data/Benz/spectrograms/train_set_benz'
+IMG_PATH = './data/Benz/spectrograms/benz_monthly'  # './data/Benz/spectrograms/train_set_benz'
 IMG_EXT = '.png'
 BATCH_SIZE = 256
 
@@ -58,7 +58,6 @@ def compute_mean_and_std(grayscale=False, samples=5000):
     dataset_train = SpectrogramSingleDataset(IMG_PATH,
                                              divide_test=0,
                                              shuffle=True)
-
     # Computationally intense, so only use a subset
     del dataset_train.file_paths[samples:]
 
@@ -158,8 +157,28 @@ if __name__ == '__main__':
     #
     # ## VIEW IMAGES ##
 
-    fig = preview_multiple_dataset(label=0)
-    plt.savefig(write_path / 'fig_noise.png')
+    # fig = preview_multiple_dataset(label=0)
+    # plt.savefig(write_path / 'fig_noise.png')
 
-    fig = preview_multiple_dataset(label=1)
-    plt.savefig(write_path / 'fig_event.png')
+    # fig = preview_multiple_dataset(label=1)
+    # plt.savefig(write_path / 'fig_event.png')
+
+
+    # Create Summary
+    # To fix torchsummary for earlier pytorch version, you need to delete .numpy() call
+    #  pico /home/audretjm/anaconda3/envs/earthquake/lib/python3.6/site-packages/torchsummary/torchsummary.py
+    from torchsummary import summary
+    from models import mnist_three_component_exp
+    from torch.autograd import Variable
+
+    class mnist_three_component_exp_summary(mnist_three_component_exp):
+        def forward(self, n, z, e):
+            n, z, e = Variable(n), Variable(z), Variable(e)
+            return super().forward([n, z, e])
+
+
+    model = mnist_three_component_exp_summary()
+    model.cuda()
+
+
+    summary(model, input_size=[(3, 32, 32), (3, 32, 32), (3, 32, 32)])

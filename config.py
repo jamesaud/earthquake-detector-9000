@@ -9,8 +9,8 @@ from copy import deepcopy
 RGB_MEAN = [0.0009950225259743484, 0.000795141388388241, 0.0018111652018977147]
 RGB_STD = [0.0001881388618665583, 0.0006368028766968671, 0.00028853512862149407]
 
-GRAY_MEAN = [0.0009710071717991548, 0.0009710071717991548, 0.0009710071717991548]
-GRAY_STD = [0.00037422115896262377, 0.00037422115896262377, 0.00037422115896262377]
+GRAY_MEAN = [0.0008378496941398172, 0.0008378496941398172, 0.0008378496941398172]
+GRAY_STD = [0.00033416534755744185, 0.00033416534755744185, 0.00033416534755744185]
 
 BORDER_COLOR_GRAY = 38  # 30
 BORDER_COLOR_RGB = (68, 2, 85)  # R, G, B
@@ -23,12 +23,13 @@ loader_args = dict(
                    pin_memory=True,
                    )
 
-# Initialize Cross Validation Generalized Detection
-path = 'all-spectrograms-symlinks/97'
+# For training on all data
+path = 'all-spectrograms-symlinks/99'
 everywhere_path = os.path.join(os.getcwd(), 'data', path)
 everywhere_folders = os.listdir(everywhere_path) 
 test = 'benz'                             
 everywhere_folders.remove(test)
+
 
 options = dict(
     meta_learning={
@@ -93,58 +94,64 @@ options = dict(
         'loader': 'direct',
         'weigh_classes': [1, 3]
     },
-    benz_test_set={
+    benz_monthly={
+        # ['03-14', '04-14', '05-14', '06-14', '07-14', '08-14']
         'train': {
-            'path': f'Benz/spectrograms/test_set_benz_2',
-            'divide_test': .999,
+            'path': 'Benz/spectrograms/benz_monthly',
+            'divide_test': .2,
+            'ignore': ['08-14'],       
         },
         'test': {
-            'path': f'Benz/spectrograms/test_set_benz_2',
-            'divide_test': .999,
+            'path': 'Benz/spectrograms/benz_monthly',
+            'divide_test': .2,
+            'ignore': ['08-14'],       
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
+          'crop':  (1, 1),  # height, width
           'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
-          'padding_test': (0, 0, 0, 0)    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)  # left, right, top, bottom
+
         },
-        'loader': 'named',
-        'weigh_classes': [1, 1]
+        'weigh_classes': [1, 1],
+        'loader': 'custom'
     },
-    benz_experiment_set={
-         'train': {
-            'path': f'Benz/spectrograms/train_set_benz',
+    benz_modified={
+        'train': {
+            'path': 'Benz/spectrograms/modified_benz_without_08_2014',
             'divide_test': 0,
         },
         'test': {
-            'path': f'Benz/spectrograms/test_set_benz_2',
-            'divide_test': .999,
+            'path': 'Benz/spectrograms/modified_benz_08_2014',
+            'divide_test': .5,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1),
-          'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
-          'padding_test': (0, 0, 0, 0)   # Centered
+          'crop':  (.6, .95),  # height, width
+          'padding_train': (0, 0, .3, 0),    # left, right, top, bottom
+          'padding_test': (0.025, 0.025, .4, 0)  # left, right, top, bottom
+
         },
-        'loader': 'direct',
-        'weigh_classes': [1, 3]
+        'weigh_classes': [1, 1],
+        'loader': 'direct'
     },
     continuous_unlabeled_set={
         'train': {
-            'path': f'Benz/continuous_data_gs29',
-            'divide_test': 1,
+            'path': f'',
+            'divide_test': 0,
         },
         'test': {
-            'path': f'Benz/continuous_data_gs29',
+            'path': f'Benz/continuous_data_gs29_8_2014',   # 1 week of data
             'divide_test': 1,
         },
         'image': {
           'height': int(258 * 1),
           'width': int(293 * 1), 
           'crop':  (1, 1),  # height, width   (.6, .8)  (0, 0, .4, 0)
-          'padding': (0, 0, 0, 0)    # left, right, top, bottom
+          'padding_train': (0, 0, 0, 0),    # left, right, top, bottom
+          'padding_test': (0, 0, 0, 0)   # # left, right, top, bottom
         },
         'loader': 'named_timestamp',
     })
@@ -154,21 +161,7 @@ default_config_path = os.path.join(os.getcwd(), 'validator/config_crossvalidatio
 configuration = os.environ.get('CONFIGURATION', default_config_path)
 options['environment'] = json.loads(open(configuration).read())
 
-# Model names for the top runs
-top_runs_gray = (                        # N   Quakes
-    '76-0.9815-0.9727-0.9978.pt',        # 97, 97
-    '60-0.9905-0.992-0.9877.pt',         # 99, 93
-    '72-0.9273-0.8879-0.9997.pt',        # 88, 99
-    '48-0.966-0.9483-0.9985.pt',         # 95, 98
-)
+samples = [6, 10, 20, 30, 40,  50, 60, 70, 80, 90, 100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000]
+epochs =  [30,30, 30, 30, 30,  30, 30, 30, 30, 30,  30,   30,   30,    30,     30,    30,    30,     30,     30,     20,    10]
 
-top_runs_rgb = (
-    '92-0.9801-0.9702-0.9982.pt',
-)
-
-samples = [10, 20, 30, 40,  50,   100,  200,  500,  1000,   2000,  4000,  8000,  16000,  32000, 64000, 128000]
-epochs =  [30, 30, 30, 30, 30,   30,   30,   30,     30,     30,   30,    30,     30,    20,    5]
-
-samples = range(4, 200, 4)
-epochs = [30] * len(samples)
 hyperparam_sample_sizes = tuple(zip(samples, epochs))

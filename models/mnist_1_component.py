@@ -61,7 +61,7 @@ class mnist_one_component(nn.Module):
         )
 
     def forward(self, components):
-        inputs = components[0]  # the z component, I think
+        inputs = components[0]  
         out = self.feats(inputs)
         out = self.dropout(out)
         out = self.classifier(out)

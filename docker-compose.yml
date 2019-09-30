@@ -9,7 +9,7 @@ services:
    ports:
        - 6006:6006
    volumes:
-      - ./visualize/runs/meta-learning:/data
+      - ./visualize/runs:/data
 
  tensorboard-saved:
    build:

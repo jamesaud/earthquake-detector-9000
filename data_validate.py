@@ -49,13 +49,15 @@ def initialize_csv(csv_path):
                     'Epochs')
 
 
-def new_cv(file, skip_existing=True):
+def new_cv(skip_existing=True):
     import copy
 
     configuration = dv.read_config(file)
+    configuration['train']['path'] = folder
+    configuration['test']['path'] = folder
 
     dirs = list(map(os.path.basename, 
-                    map(get_name, dv.get_paths(spectrogram_path))))
+                    map(get_name, dv.get_paths(folder))))
     
     initialize_csv(csv_path)
     if skip_existing:
@@ -120,5 +122,4 @@ def new_cv(file, skip_existing=True):
 
 if __name__ == '__main__':
     import glob
-    run_cross_validation()
-    # run_environ(skip_existing=True)           # Make sure 'environment' is set as configuration in main.py
+    run_cv()

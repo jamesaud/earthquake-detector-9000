@@ -51,7 +51,8 @@ def write_named_csv_prediction(names, guesses, true_labels, csv_file):
         writer = csv.writer(csvfile)
 
         for guess, true_label, name in zip(guesses, true_labels, names):
-            guess, true_label, name = guess.item(), true_label.item(), name
+            guess = guess.data[0]
+            #guess, true_label, name = guess.item(), true_label.item(), name   # Pytorch 0.4+
             writer.writerow([name, guess, true_label])
 
 

@@ -7,7 +7,7 @@ from mytransforms import Group, transform_group
 
 class mnist_three_component(nn.Module):
 
-    NOISE_RGB_AMOUNT = 15  # 15
+    NOISE_AMOUNT = 15  # 15
     BLUR = 2               # 2
     DIM = 32
     F_DIM = 64             # 64
@@ -15,13 +15,13 @@ class mnist_three_component(nn.Module):
     _transformations = Group([tf.Grayscale(num_output_channels=3),   # Need 3 channels for
                               tf.Resize((DIM, DIM)),
                               tf.ToTensor(),
-  #                            mytransforms.NormalizeGray
+                              mytransforms.NormalizeGray
                         ])
  
     # Random Apply should not be in Group, so that the same random apply is applied to all 3 images
     _train = [transform_group(tf.Grayscale(num_output_channels=1)), 
-      #        tf.RandomApply(Group([mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT)]), p=.5),
-      #        tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
+             tf.RandomApply(Group([mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_AMOUNT)]), p=.5),
+             tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
              ]
 
 
@@ -81,7 +81,7 @@ class mnist_three_component(nn.Module):
 
 class mnist_three_component_exp(nn.Module):
     DIM = 32               # 32
-    NOISE_RGB_AMOUNT = 3   # 15 
+    NOISE_AMOUNT = 15      # 15 
     BLUR = 2               # 2
     F_DIM = 32             # 64
 
@@ -92,9 +92,9 @@ class mnist_three_component_exp(nn.Module):
                         ])
  
     # Random Apply should not be in Group, so that the same random apply is applied to all 3 images
-    _train = [ #transform_group(tf.Grayscale(num_output_channels=1)), 
-        #      tf.RandomApply(Group([mytransforms.Add3DNoise(config.BORDER_COLOR_RGB, NOISE_RGB_AMOUNT)]), p=.5),
-        #      tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
+    _train = [#transform_group(tf.Grayscale(num_output_channels=1)), 
+              #tf.RandomApply(Group([mytransforms.Add1DNoise(config.BORDER_COLOR_GRAY, NOISE_AMOUNT)]), p=.5),
+              #tf.RandomApply(Group([mytransforms.Gaussian_Blur(BLUR)]), p=.5)
              ]
 
     _test = []
