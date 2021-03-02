@@ -1,5 +1,9 @@
 # Building a Generalized Earthquake Detector: G.E.D 9000
 
+## Thesis
+
+Please refer to this MS thesis for details: https://repository.kaust.edu.sa/bitstream/handle/10754/662251/jamesAudretschThesis.pdf?sequence=5
+
 ## Idea 
 
 The idea is to feed in Spectrogram images to a convolutional neural network in order to detect earthquakes.
